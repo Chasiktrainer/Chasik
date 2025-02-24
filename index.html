@@ -449,10 +449,6 @@
         const hourHand2 = document.getElementById('hour-hand-2');
         const minuteHand2 = document.getElementById('minute-hand-2');
 
-        function init() {
-            if (!localStorage.getItem('theoryRead')) {
-                window.location.href = 'theory.html';
-            }
             setupClock();
             generateNewTask();
             updateClock2();
