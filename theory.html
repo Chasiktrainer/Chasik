@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Теория - Часики</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .theory-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .theory-container h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .theory-container p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .start-button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #3498db;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="theory-container">
+        <h1>Теория для тренажёра "Часики"</h1>
+        <p>
+            В этом тренажёре вы научитесь определять время по аналоговым часам. 
+            В первом задании вам нужно будет установить стрелки на заданное время, 
+            а во втором — определить время по положению стрелок.
+        </p>
+        <p>
+            Для вращения стрелок используйте мышь или касание на сенсорных устройствах. 
+            После выполнения задания нажмите кнопку "Проверить", чтобы узнать результат.
+        </p>
+        <button class="start-button" onclick="window.location.href = 'index.html';">Начать тренировку</button>
+    </div>
+</body>
+</html>
