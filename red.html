@@ -68,6 +68,29 @@
             gap: 15px;
         }
 
+        .level-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .level-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent2);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .level-buttons button:hover {
+            background: var(--accent1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
         .progress-container {
             width: 100%;
             max-width: 800px;
@@ -380,6 +403,13 @@
         </h1>
     </div>
 
+    <!-- Кнопки для выбора уровня -->
+    <div class="level-buttons">
+        <button onclick="switchLevel('level1')">Уровень 1</button>
+        <button onclick="switchLevel('level2')">Уровень 2</button>
+        <button onclick="switchLevel('level3')">Уровень 3</button>
+    </div>
+
     <div class="progress-container">
         <div class="progress-bar">
             <div class="progress-fill"></div>
@@ -400,6 +430,7 @@
         </div>
     </div>
 
+    <!-- Уровень 1 -->
     <div class="clock-section" id="level1">
         <div class="clock-wrapper">
             <div class="clock-face">
@@ -450,6 +481,7 @@
         </div>
     </div>
 
+    <!-- Уровень 2 -->
     <div class="clock-section hidden" id="level2">
         <div class="clock-wrapper">
             <div class="clock-face" id="clock2">
@@ -499,6 +531,7 @@
         </div>
     </div>
 
+    <!-- Уровень 3 -->
     <div class="clock-section hidden" id="level3">
         <div class="clock-wrapper">
             <div class="clock-face" id="clock3">
@@ -560,8 +593,9 @@
         <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
     </div>
 
+    <!-- Новая Lo-Fi музыка -->
     <audio id="background-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-chill-abstract-loop-229.mp3" type="audio/mpeg">
         Ваш браузер не поддерживает аудио элемент.
     </audio>
 
