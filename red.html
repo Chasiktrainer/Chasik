@@ -114,6 +114,13 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             position: relative;
             overflow: hidden;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .clock-section.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
         }
 
         .clock-section::before {
@@ -293,6 +300,44 @@
             transform: translateY(0);
         }
 
+        .achievements {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .achievement {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .achievement.unlocked {
+            background: var(--success);
+            color: white;
+        }
+
+        .volume-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .volume-control input[type="range"] {
+            width: 100px;
+        }
+
         @media (max-width: 768px) {
             .clock-wrapper {
                 width: 200px;
@@ -355,7 +400,7 @@
         </div>
     </div>
 
-    <div class="clock-section">
+    <div class="clock-section" id="level1">
         <div class="clock-wrapper">
             <div class="clock-face">
                 <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
@@ -405,7 +450,7 @@
         </div>
     </div>
 
-    <div class="clock-section">
+    <div class="clock-section hidden" id="level2">
         <div class="clock-wrapper">
             <div class="clock-face" id="clock2">
                 <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
@@ -454,6 +499,72 @@
         </div>
     </div>
 
+    <div class="clock-section hidden" id="level3">
+        <div class="clock-wrapper">
+            <div class="clock-face" id="clock3">
+                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
+                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
+                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
+                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
+                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
+                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
+                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
+                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
+                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
+                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
+                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
+                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
+                
+                <div class="center-dot"></div>
+                <div id="hour-hand-3" class="hand hour-hand"></div>
+                <div id="minute-hand-3" class="hand minute-hand"></div>
+            </div>
+        </div>
+
+        <div class="task-card">
+            <div class="task-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Установите время (точное)</span>
+            </div>
+            <p id="target-time-3" style="font-size: 1.2em; margin: 15px 0;"></p>
+            <div class="controls">
+                <button onclick="checkTime3()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <path d="M22 4L12 14.01l-3-3"/>
+                    </svg>
+                    Проверить
+                </button>
+                <button onclick="generateNewTask3()" style="background: #95a5a6;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    Новое время
+                </button>
+            </div>
+            <div id="task3-result" class="result-feedback"></div>
+        </div>
+    </div>
+
+    <div class="achievements">
+        <div class="achievement" id="achievement1">🎯 10 правильных ответов</div>
+        <div class="achievement" id="achievement2">🏆 25 правильных ответов</div>
+        <div class="achievement" id="achievement3">🚀 50 правильных ответов</div>
+    </div>
+
+    <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+
     <script>
         let stats = {
             correct: 0,
@@ -464,7 +575,9 @@
         let targetHours = 3;
         let targetMinutes = 0;
         let currentClock2Time = {h: 9, m: 0};
+        let currentClock3Time = {h: 9, m: 0};
         let currentRotation = { hour: 90, minute: 0 };
+        let currentRotation3 = { hour: 90, minute: 0 };
         let isDragging = false;
         let activeHand = null;
 
@@ -472,11 +585,16 @@
         const minuteHand = document.getElementById('minute-hand');
         const hourHand2 = document.getElementById('hour-hand-2');
         const minuteHand2 = document.getElementById('minute-hand-2');
+        const hourHand3 = document.getElementById('hour-hand-3');
+        const minuteHand3 = document.getElementById('minute-hand-3');
+        const backgroundMusic = document.getElementById('background-music');
+        const volumeSlider = document.getElementById('volume-slider');
 
-            setupClock();
-            generateNewTask();
-            updateClock2();
-            updateStats();
+        setupClock();
+        generateNewTask();
+        updateClock2();
+        generateNewTask3();
+        updateStats();
 
         function updateStats() {
             document.querySelectorAll('.stat-value')[0].textContent = stats.correct;
@@ -485,6 +603,20 @@
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
             document.querySelector('.progress-fill').style.width = 
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
+
+            checkAchievements();
+        }
+
+        function checkAchievements() {
+            if (stats.correct >= 10) {
+                document.getElementById('achievement1').classList.add('unlocked');
+            }
+            if (stats.correct >= 25) {
+                document.getElementById('achievement2').classList.add('unlocked');
+            }
+            if (stats.correct >= 50) {
+                document.getElementById('achievement3').classList.add('unlocked');
+            }
         }
 
         function setupClock() {
@@ -499,9 +631,32 @@
             minuteHand.addEventListener('touchstart', touchStart, { passive: false });
             document.addEventListener('touchend', endDrag);
             document.addEventListener('touchmove', touchDrag, { passive: false });
+
+            hourHand3.addEventListener('mousedown', startDrag3);
+            minuteHand3.addEventListener('mousedown', startDrag3);
+            document.addEventListener('mouseup', endDrag3);
+            document.addEventListener('mousemove', drag3);
+
+            hourHand3.addEventListener('touchstart', touchStart3, { passive: false });
+            minuteHand3.addEventListener('touchstart', touchStart3, { passive: false });
+            document.addEventListener('touchend', endDrag3);
+            document.addEventListener('touchmove', touchDrag3, { passive: false });
+
+            backgroundMusic.play();
+            volumeSlider.addEventListener('input', () => {
+                backgroundMusic.volume = volumeSlider.value;
+            });
         }
 
         function startDrag(e) {
+            isDragging = true;
+            activeHand = e.target.closest('.hand');
+            activeHand.style.transition = 'none';
+            document.body.classList.add('no-scroll');
+            e.preventDefault();
+        }
+
+        function startDrag3(e) {
             isDragging = true;
             activeHand = e.target.closest('.hand');
             activeHand.style.transition = 'none';
@@ -514,10 +669,26 @@
             e.preventDefault();
         }
 
+        function touchStart3(e) {
+            startDrag3(e.touches[0]);
+            e.preventDefault();
+        }
+
         function endDrag() {
             isDragging = false;
             if (activeHand) {
                 activeHand.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                snapToNearest();
+                activeHand = null;
+            }
+            document.body.classList.remove('no-scroll');
+        }
+
+        function endDrag3() {
+            isDragging = false;
+            if (activeHand) {
+                activeHand.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                snapToNearest3();
                 activeHand = null;
             }
             document.body.classList.remove('no-scroll');
@@ -528,9 +699,20 @@
             handleMove(e.clientX, e.clientY);
         }
 
+        function drag3(e) {
+            if (!isDragging || !activeHand) return;
+            handleMove3(e.clientX, e.clientY);
+        }
+
         function touchDrag(e) {
             if (!isDragging || !activeHand) return;
             handleMove(e.touches[0].clientX, e.touches[0].clientY);
+            e.preventDefault();
+        }
+
+        function touchDrag3(e) {
+            if (!isDragging || !activeHand) return;
+            handleMove3(e.touches[0].clientX, e.touches[0].clientY);
             e.preventDefault();
         }
 
@@ -550,10 +732,57 @@
             }
         }
 
+        function handleMove3(x, y) {
+            const rect = hourHand3.getBoundingClientRect();
+            const centerX = rect.left + rect.width/2;
+            const centerY = rect.top + rect.height/2;
+            const angle = Math.atan2(y - centerY, x - centerX);
+            const degrees = (angle * (180/Math.PI) + 90) % 360;
+
+            if (activeHand === hourHand3) {
+                currentRotation3.hour = degrees;
+                hourHand3.style.transform = `rotate(${degrees}deg)`;
+            } else {
+                currentRotation3.minute = degrees;
+                minuteHand3.style.transform = `rotate(${degrees}deg)`;
+            }
+        }
+
+        function snapToNearest() {
+            if (activeHand === hourHand) {
+                const snapDegrees = Math.round(currentRotation.hour / 30) * 30;
+                currentRotation.hour = snapDegrees;
+                hourHand.style.transform = `rotate(${snapDegrees}deg)`;
+            } else {
+                const snapDegrees = Math.round(currentRotation.minute / 6) * 6;
+                currentRotation.minute = snapDegrees;
+                minuteHand.style.transform = `rotate(${snapDegrees}deg)`;
+            }
+        }
+
+        function snapToNearest3() {
+            if (activeHand === hourHand3) {
+                const snapDegrees = Math.round(currentRotation3.hour / 30) * 30;
+                currentRotation3.hour = snapDegrees;
+                hourHand3.style.transform = `rotate(${snapDegrees}deg)`;
+            } else {
+                const snapDegrees = Math.round(currentRotation3.minute / 6) * 6;
+                currentRotation3.minute = snapDegrees;
+                minuteHand3.style.transform = `rotate(${snapDegrees}deg)`;
+            }
+        }
+
         function generateNewTask() {
             targetHours = Math.floor(Math.random() * 12);
             targetMinutes = Math.floor(Math.random() * 12) * 5;
             document.getElementById('target-time').textContent = 
+                `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+        }
+
+        function generateNewTask3() {
+            targetHours = Math.floor(Math.random() * 12);
+            targetMinutes = Math.floor(Math.random() * 60);
+            document.getElementById('target-time-3').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
         }
 
@@ -565,6 +794,32 @@
             const currentMinutes = Math.round(minuteDegrees / 6 % 60);
 
             const result = document.getElementById('task1-result');
+            
+            if (currentHours === targetHours && currentMinutes === targetMinutes) {
+                result.textContent = "✓ Верно! Отличная работа!";
+                result.className = "result-feedback success";
+                stats.correct++;
+            } else {
+                result.textContent = "✗ Попробуйте ещё раз";
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 2000);
+        }
+
+        function checkTime3() {
+            const hourDegrees = currentRotation3.hour;
+            const minuteDegrees = currentRotation3.minute;
+            
+            const currentHours = Math.round(hourDegrees / 30 % 12);
+            const currentMinutes = Math.round(minuteDegrees / 6 % 60);
+
+            const result = document.getElementById('task3-result');
             
             if (currentHours === targetHours && currentMinutes === targetMinutes) {
                 result.textContent = "✓ Верно! Отличная работа!";
@@ -620,6 +875,15 @@
                 updateStats();
             }, 3000);
         }
+
+        function switchLevel(level) {
+            document.querySelectorAll('.clock-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(level).classList.remove('hidden');
+        }
+
+        document.getElementById('level1').classList.remove('hidden');
     </script>
 </body>
 </html>
