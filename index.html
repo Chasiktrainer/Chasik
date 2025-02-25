@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Теория - Часики</title>
+    <title>Основы времени - Часики</title>
     <style>
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -16,6 +16,7 @@
             margin: 0;
             padding: 20px;
             color: #2c3e50;
+            line-height: 1.6;
         }
 
         .theory-container {
@@ -26,122 +27,176 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .theory-container h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
+        h1 {
+            text-align: center;
             color: #2c3e50;
-            text-align: center;
-        }
-
-        .theory-container h2 {
-            font-size: 1.4em;
-            color: #7f8c8d;
             margin-bottom: 30px;
-            text-align: center;
         }
 
-        .method-block {
+        .step {
             margin: 25px 0;
             padding: 20px;
             background: #f8f9fa;
             border-radius: 12px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            position: relative;
         }
 
-        .method-block h3 {
-            margin: 0 0 15px 0;
-            color: #2c3e50;
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        .method-block p {
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-
-        .research-sources {
-            margin-top: 30px;
+        .clock-diagram {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
             padding: 15px;
-            background: #e9f5ff;
+            background: #fff;
             border-radius: 10px;
-            font-size: 0.9em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .research-sources ul {
-            padding-left: 20px;
-            margin: 10px 0;
+        .hand-example {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin-right: 20px;
         }
 
-        .research-sources li {
-            margin: 8px 0;
+        .hour-hand-example {
+            position: absolute;
+            width: 4px;
+            height: 30px;
+            background: #e74c3c;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+        }
+
+        .minute-hand-example {
+            position: absolute;
+            width: 2px;
+            height: 45px;
+            background: #3498db;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
         }
 
         .start-button {
-            padding: 12px 25px;
+            padding: 15px 30px;
             border: none;
             border-radius: 8px;
-            background: #3498db;
+            background: #2ecc71;
             color: white;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 20px;
+            margin-top: 30px;
             width: 100%;
             font-size: 1.1em;
         }
 
         .start-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .tip {
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffeeba;
+            margin: 15px 0;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="theory-container">
-        <h1>Инновационная методика обучения времени</h1>
-        
-        <h2>Наша трёхступенчатая система основана на последних исследованиях:</h2>
-        
-        <div class="method-block">
-            <h3>🎯 1. Визуальное погружение</h3>
-            <p>Используем анатомию часов с цветовым кодированием:
-                <br>- <span style="color: #e74c3c">Красная часовая стрелка</span> - короткая и толстая
-                <br>- <span style="color: #3498db">Синяя минутная стрелка</span> - длинная и тонкая
-            </p>
-            <p>Реалистичная 3D-модель с тенями и градиентами помогает визуально отделять стрелки даже новичкам</p>
+        <h1>⏰ Первые шаги в мире времени</h1>
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <h2>Что такое циферблат?</h2>
+            <p>Это круг, разделённый на 12 равных частей-часов. Каждая цифра:</p>
+            <div class="clock-diagram">
+                <div class="hand-example">
+                    <div class="hour-hand-example" style="transform: rotate(90deg)"></div>
+                    <div class="minute-hand-example" style="transform: rotate(0deg)"></div>
+                </div>
+                <div>
+                    <p>🔴 <strong>Красная стрелка</strong> (короткая) показывает часы<br>
+                    🔵 <strong>Синяя стрелка</strong> (длинная) показывает минуты</p>
+                </div>
+            </div>
         </div>
 
-        <div class="method-block">
-            <h3>📈 2. Постепенное усложнение</h3>
-            <p>Программа обучения разделена на этапы:
-                <br>1) Целые часы (9:00, 3:00)
-                <br>2) Половины и четверти (9:30, 2:45)
-                <br>3) Произвольные минуты (9:12, 2:37)
-            </p>
-            <p>Каждый этап закрепляется интерактивными заданиями с системой прогресса</p>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h2>Как читать часы?</h2>
+            <p>1. Сначала смотрите на красную стрелку:<br>
+            <span class="tip">Пример: Если она указывает на 3 → сейчас 3 часа</span></p>
+            
+            <p>2. Затем на синюю стрелку:<br>
+            <span class="tip">Каждое деление = 5 минут (12 → 0, 1 → 5, 2 → 10 и т.д.)</span></p>
+            
+            <div class="clock-diagram">
+                <div class="hand-example">
+                    <div class="hour-hand-example" style="transform: rotate(120deg)"></div>
+                    <div class="minute-hand-example" style="transform: rotate(180deg)"></div>
+                </div>
+                <div>
+                    <p>⏲️ Пример времени:<br>
+                    Красная на 4 (4 часа)<br>
+                    Синяя на 6 → 6×5 = 30 минут<br>
+                    <strong>Итого: 4:30</strong></p>
+                </div>
+            </div>
         </div>
 
-        <div class="method-block">
-            <h3>🔁 3. Практическая интеграция</h3>
-            <p>Тренажёр включает:
-                <br>- Симулятор реальных ситуаций (расписание уроков, TV-программа)
-                <br>- Игровые сценарии ("Успей на автобус за 15 минут")
-                <br>- Персонализированные напоминания для ежедневной практики
-            </p>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h2>Практические правила</h2>
+            <div class="tip">❗ Запомните:<br>
+            - Полный круг = 60 минут<br>
+            - Каждый час = 30° поворота стрелки<br>
+            - Каждая минута = 6° поворота</div>
+
+            <p>🎮 Тренируйтесь определять время в 3 этапа:<br>
+            1. Только целые часы (3:00, 7:00)<br>
+            2. Полчаса и четверти (3:15, 7:45)<br>
+            3. Любое время (3:23, 7:58)</p>
         </div>
 
-        <div class="research-sources">
-            <h3>Методология основана на исследованиях:</h3>
-            <ul>
-                <li>Education.com - когнитивная визуализация</li>
-                <li>Toy Theater - геймификация обучения</li>
-                <li>Khan Academy - контекстное запоминание</li>
-            </ul>
+        <div class="step">
+            <div class="step-number">4</div>
+            <h2>Живые примеры</h2>
+            <div class="clock-diagram">
+                <div class="hand-example">
+                    <div class="hour-hand-example" style="transform: rotate(180deg)"></div>
+                    <div class="minute-hand-example" style="transform: rotate(90deg)"></div>
+                </div>
+                <div>
+                    <p>🕛 6:00 - стрелки напротив друг друга<br>
+                    🕒 3:15 - часовая между 3 и 4<br>
+                    🕗 8:45 - минутная на 9 (45 минут)</p>
+                </div>
+            </div>
         </div>
 
-        <button class="start-button" onclick="window.location.href = 'red.html';">Начать интерактивное обучение</button>
+        <button class="start-button" onclick="window.location.href = 'red.html';">
+            Перейти к интерактивному тренажёру →
+        </button>
     </div>
 </body>
 </html>
