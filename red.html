@@ -28,6 +28,31 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            overflow: hidden;
+            touch-action: none;
+            position: relative;
+        }
+
+        .theory-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .theory-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(52,152,219,0.3);
         }
 
         .header {
@@ -179,7 +204,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 4;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1));
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
         }
 
         .task-card {
@@ -228,7 +253,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3));
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
 
         input {
@@ -289,10 +314,19 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .theory-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
+    <a href="index.html" class="theory-button">← Вернуться к теории</a>
+
     <div class="header">
         <h1>
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -441,10 +475,10 @@
         const hourHand2 = document.getElementById('hour-hand-2');
         const minuteHand2 = document.getElementById('minute-hand-2');
 
-        setupClock();
-        generateNewTask();
-        updateClock2();
-        updateStats();
+            setupClock();
+            generateNewTask();
+            updateClock2();
+            updateStats();
 
         function updateStats() {
             document.querySelectorAll('.stat-value')[0].textContent = stats.correct;
@@ -569,17 +603,7 @@
             const result = document.getElementById('task2-result');
             const [hours, minutes] = input.value.split(':').map(Number);
 
-            // Проверка на корректность введенного времени
-            if (isNaN(hours) || isNaN(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-                result.textContent = "✗ Неверный формат времени. Введите время в формате ЧЧ:ММ (0-23:0-59).";
-                result.className = "result-feedback error";
-                return;
-            }
-
-            // Преобразуем 24-часовой формат в 12-часовой
-            const hours12 = hours % 12 || 12; // 0 становится 12
-
-            if (hours12 === currentClock2Time.h && minutes === currentClock2Time.m) {
+            if (hours === currentClock2Time.h && minutes === currentClock2Time.m) {
                 result.textContent = "✓ Правильно!";
                 result.className = "result-feedback success";
                 input.value = '';
