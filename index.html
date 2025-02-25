@@ -3,86 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тренажёр определения времени</title>
+    <title>Обучение определению времени</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: #f0f4f8;
+            margin: 20px;
+            padding: 0;
             line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #333;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 30px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin: 1.5em 0 0.5em;
         }
 
         h1 {
+            font-size: 2.2em;
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 40px;
-            font-size: 2.5em;
+            margin: 1em 0;
         }
 
-        .theory-section {
-            margin: 40px 0;
-            padding: 25px;
-            background: #f8f9fa;
-            border-radius: 12px;
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.3em;
+        }
+
+        p {
+            margin: 0.8em 0;
+        }
+
+        ul {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
         }
 
         .clock-diagram {
             position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 30px auto;
-            border: 3px solid #3498db;
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            border: 2px solid #3498db;
             border-radius: 50%;
-            background: #fff;
         }
 
         .clock-number {
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-weight: 500;
             transform-origin: center;
         }
 
         .hour-hand {
             position: absolute;
-            width: 6px;
-            height: 70px;
+            width: 4px;
+            height: 60px;
             background: #e74c3c;
-            left: calc(50% - 3px);
+            left: calc(50% - 2px);
             bottom: 50%;
             transform-origin: bottom;
-            border-radius: 4px 4px 0 0;
         }
 
         .minute-hand {
             position: absolute;
-            width: 4px;
-            height: 100px;
+            width: 3px;
+            height: 80px;
             background: #3498db;
-            left: calc(50% - 2px);
+            left: calc(50% - 1.5px);
             bottom: 50%;
             transform-origin: bottom;
-            border-radius: 3px 3px 0 0;
         }
 
         .center-dot {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: #2c3e50;
             border-radius: 50%;
             top: 50%;
@@ -90,114 +92,52 @@
             transform: translate(-50%, -50%);
         }
 
-        .example-block {
-            background: #e8f4fc;
-            padding: 20px;
-            margin: 25px 0;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
-        }
-
-        .step-by-step {
-            display: grid;
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .step {
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-
-        .interactive-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        button {
-            padding: 12px 25px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(52,152,219,0.3);
+        .example {
+            margin: 1.2em 0;
+            padding: 0.8em;
+            background-color: transparent;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>⏰ Тренажёр определения времени</h1>
+    <h1>Обучение определению времени</h1>
 
-        <div class="theory-section">
-            <h2>Основы работы с часами</h2>
-            <div class="clock-diagram">
-                <!-- Цифры циферблата -->
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -120px)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -120px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -120px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -120px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -120px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -120px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -120px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -120px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -120px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -120px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -120px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -120px) rotate(-330deg)">11</div>
-                
-                <!-- Стрелки -->
-                <div class="hour-hand" style="transform: rotate(90deg)"></div>
-                <div class="minute-hand" style="transform: rotate(180deg)"></div>
-                <div class="center-dot"></div>
-            </div>
-        </div>
-
-        <div class="step-by-step">
-            <div class="step">
-                <h3>Шаг 1: Понимание циферблата</h3>
-                <ul>
-                    <li>12 секций = 12 часов</li>
-                    <li>Каждая маленькая метка = 1 минута</li>
-                    <li>Полный оборот = 60 минут</li>
-                </ul>
-            </div>
-
-            <div class="step">
-                <h3>Шаг 2: Чтение времени</h3>
-                <div class="example-block">
-                    <p>🔴 Красная стрелка (часовая): 
-                    <br>Направлена на 3 → 3 часа</p>
-                    
-                    <p>🔵 Синяя стрелка (минутная): 
-                    <br>Направлена на 6 → 6×5 = 30 минут</p>
-                    
-                    <p>🕒 Итоговое время: 3:30</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="interactive-section">
-            <h2>Практические задания</h2>
-            <div class="example-block">
-                <p>Определите время:</p>
-                <div class="clock-diagram" style="width: 200px; height: 200px; margin: 20px auto;">
-                    <div class="hour-hand" style="transform: rotate(150deg)"></div>
-                    <div class="minute-hand" style="transform: rotate(270deg)"></div>
-                    <div class="center-dot"></div>
-                </div>
-                <button>Показать ответ</button>
-            </div>
-        </div>
+    <h2>Основные принципы</h2>
+    <p>Часы состоят из циферблата с 12 цифрами и двух стрелок:</p>
+    
+    <div class="clock-diagram">
+        <div class="clock-number" style="transform: rotate(0deg) translate(0, -100px)">12</div>
+        <div class="clock-number" style="transform: rotate(30deg) translate(0, -100px) rotate(-30deg)">1</div>
+        <div class="clock-number" style="transform: rotate(60deg) translate(0, -100px) rotate(-60deg)">2</div>
+        <div class="clock-number" style="transform: rotate(90deg) translate(0, -100px) rotate(-90deg)">3</div>
+        <div class="clock-number" style="transform: rotate(120deg) translate(0, -100px) rotate(-120deg)">4</div>
+        <div class="clock-number" style="transform: rotate(150deg) translate(0, -100px) rotate(-150deg)">5</div>
+        <div class="clock-number" style="transform: rotate(180deg) translate(0, -100px) rotate(-180deg)">6</div>
+        <div class="clock-number" style="transform: rotate(210deg) translate(0, -100px) rotate(-210deg)">7</div>
+        <div class="clock-number" style="transform: rotate(240deg) translate(0, -100px) rotate(-240deg)">8</div>
+        <div class="clock-number" style="transform: rotate(270deg) translate(0, -100px) rotate(-270deg)">9</div>
+        <div class="clock-number" style="transform: rotate(300deg) translate(0, -100px) rotate(-300deg)">10</div>
+        <div class="clock-number" style="transform: rotate(330deg) translate(0, -100px) rotate(-330deg)">11</div>
+        <div class="hour-hand" style="transform: rotate(90deg)"></div>
+        <div class="minute-hand" style="transform: rotate(180deg)"></div>
+        <div class="center-dot"></div>
     </div>
+
+    <h3>Как определять время:</h3>
+    <ul>
+        <li>Красная стрелка (короткая) показывает часы</li>
+        <li>Синяя стрелка (длинная) показывает минуты</li>
+        <li>Каждое деление между цифрами = 5 минут</li>
+    </ul>
+
+    <h2>Примеры</h2>
+    
+    <div class="example">
+        <p><strong>Пример 1:</strong> Когда часовая стрелка на 3, а минутная на 12 → 3:00</p>
+        <p><strong>Пример 2:</strong> Часовая между 3 и 4, минутная на 6 → 3:30</p>
+    </div>
+
+    <h2>Практические советы</h2>
+    <p>Тренируйтесь ежедневно, сверяя время с электронными часами. Начинайте с целых часов, постепенно переходя к минутам.</p>
 </body>
 </html>
