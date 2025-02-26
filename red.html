@@ -324,23 +324,6 @@
             transform: translateY(0);
         }
 
-        .volume-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .volume-control input[type="range"] {
-            width: 100px;
-        }
-
         @media (max-width: 768px) {
             .clock-wrapper {
                 width: 200px;
@@ -698,17 +681,6 @@
         </div>
     </div>
 
-    <div class="volume-control">
-        <span>🔊</span>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-    </div>
-
-    <!-- Новая Lo-Fi музыка -->
-    <audio id="background-music" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-chill-abstract-loop-229.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио элемент.
-    </audio>
-
     <script>
         let stats = {
             correct: 0,
@@ -737,8 +709,6 @@
         const minuteHand5 = document.getElementById('minute-hand-5');
         const hourHand6 = document.getElementById('hour-hand-6');
         const minuteHand6 = document.getElementById('minute-hand-6');
-        const backgroundMusic = document.getElementById('background-music');
-        const volumeSlider = document.getElementById('volume-slider');
 
         setupClock();
         generateNewTask();
@@ -777,11 +747,6 @@
             minuteHand3.addEventListener('touchstart', touchStart3, { passive: false });
             document.addEventListener('touchend', endDrag3);
             document.addEventListener('touchmove', touchDrag3, { passive: false });
-
-            backgroundMusic.play();
-            volumeSlider.addEventListener('input', () => {
-                backgroundMusic.volume = volumeSlider.value;
-            });
         }
 
         function startDrag(e) {
@@ -954,37 +919,6 @@
                 updateStats();
             }, 2000);
         }
-        function updateClockHands(hours, minutes) {
-    const hourDegrees = (hours % 12) * 30 + (minutes / 60) * 30;
-    const minuteDegrees = minutes * 6;
-
-    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-    minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
-}
-
-function generateNewTask() {
-    targetHours = Math.floor(Math.random() * 12);
-    targetMinutes = Math.floor(Math.random() * 12) * 5;
-    document.getElementById('target-time').textContent = 
-        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
-    updateClockHands(targetHours, targetMinutes);
-}
-
-function generateNewTask2() {
-    targetHours = Math.floor(Math.random() * 12);
-    targetMinutes = Math.floor(Math.random() * 60);
-    document.getElementById('target-time-2').textContent = 
-        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
-    updateClockHands(targetHours, targetMinutes);
-}
-
-function generateNewTask3() {
-    targetHours = Math.floor(Math.random() * 12);
-    targetMinutes = Math.floor(Math.random() * 60);
-    document.getElementById('target-time-3').textContent = 
-        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
-    updateClockHands(targetHours, targetMinutes);
-}
 
         function checkTime2() {
             const hourDegrees = currentRotation.hour;
