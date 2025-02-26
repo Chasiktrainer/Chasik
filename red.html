@@ -323,27 +323,6 @@
             transform: translateY(0);
         }
 
-        .achievements {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .achievement {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            font-size: 0.9em;
-            color: var(--primary);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .achievement.unlocked {
-            background: var(--success);
-            color: white;
-        }
-
         .volume-control {
             position: fixed;
             bottom: 20px;
@@ -432,27 +411,7 @@
 
     <!-- Уровень 1 -->
     <div class="clock-section" id="level1">
-        <div class="clock-wrapper">
-            <div class="clock-face">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand" class="hand hour-hand"></div>
-                <div id="minute-hand" class="hand minute-hand"></div>
-            </div>
-        </div>
-
+        <!-- Задание 1 -->
         <div class="task-card">
             <div class="task-header">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -479,31 +438,8 @@
             </div>
             <div id="task1-result" class="result-feedback"></div>
         </div>
-    </div>
 
-    <!-- Уровень 2 -->
-    <div class="clock-section hidden" id="level2">
-        <div class="clock-wrapper">
-            <div class="clock-face" id="clock2">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand-2" class="hand hour-hand"></div>
-                <div id="minute-hand-2" class="hand minute-hand"></div>
-            </div>
-        </div>
-
+        <!-- Задание 2 -->
         <div class="task-card">
             <div class="task-header">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -531,35 +467,73 @@
         </div>
     </div>
 
-    <!-- Уровень 3 -->
-    <div class="clock-section hidden" id="level3">
-        <div class="clock-wrapper">
-            <div class="clock-face" id="clock3">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand-3" class="hand hour-hand"></div>
-                <div id="minute-hand-3" class="hand minute-hand"></div>
-            </div>
-        </div>
-
+    <!-- Уровень 2 -->
+    <div class="clock-section hidden" id="level2">
+        <!-- Задание 1 -->
         <div class="task-card">
             <div class="task-header">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 <span>Установите время (точное)</span>
+            </div>
+            <p id="target-time-2" style="font-size: 1.2em; margin: 15px 0;"></p>
+            <div class="controls">
+                <button onclick="checkTime2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <path d="M22 4L12 14.01l-3-3"/>
+                    </svg>
+                    Проверить
+                </button>
+                <button onclick="generateNewTask2()" style="background: #95a5a6;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 4v6h-6M1 20v-6h6"/>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                    </svg>
+                    Новое время
+                </button>
+            </div>
+            <div id="task3-result" class="result-feedback"></div>
+        </div>
+
+        <!-- Задание 2 -->
+        <div class="task-card">
+            <div class="task-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Определите время (точное)</span>
+            </div>
+            <input type="text" id="time-input-2" placeholder="Введите время в формате ЧЧ:ММ">
+            <div class="controls" style="margin-top: 15px;">
+                <button onclick="checkInput2()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                    Проверить ответ
+                </button>
+                <button onclick="generateNewClock2Time2()" style="background: #95a5a6;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6M12 18h.01M16 18h.01M8 21h.01M12 21h.01M16 21h.01"/>
+                    </svg>
+                    Новое время
+                </button>
+            </div>
+            <div id="task4-result" class="result-feedback"></div>
+        </div>
+    </div>
+
+    <!-- Уровень 3 -->
+    <div class="clock-section hidden" id="level3">
+        <!-- Задание 1 -->
+        <div class="task-card">
+            <div class="task-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span>Установите время (сложное)</span>
             </div>
             <p id="target-time-3" style="font-size: 1.2em; margin: 15px 0;"></p>
             <div class="controls">
@@ -578,14 +552,35 @@
                     Новое время
                 </button>
             </div>
-            <div id="task3-result" class="result-feedback"></div>
+            <div id="task5-result" class="result-feedback"></div>
         </div>
-    </div>
 
-    <div class="achievements">
-        <div class="achievement" id="achievement1">🎯 10 правильных ответов</div>
-        <div class="achievement" id="achievement2">🏆 25 правильных ответов</div>
-        <div class="achievement" id="achievement3">🚀 50 правильных ответов</div>
+        <!-- Задание 2 -->
+        <div class="task-card">
+            <div class="task-header">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Определите время (сложное)</span>
+            </div>
+            <input type="text" id="time-input-3" placeholder="Введите время в формате ЧЧ:ММ">
+            <div class="controls" style="margin-top: 15px;">
+                <button onclick="checkInput3()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                    Проверить ответ
+                </button>
+                <button onclick="generateNewClock2Time3()" style="background: #95a5a6;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <path d="M14 2v6h6M12 18h.01M16 18h.01M8 21h.01M12 21h.01M16 21h.01"/>
+                    </svg>
+                    Новое время
+                </button>
+            </div>
+            <div id="task6-result" class="result-feedback"></div>
+        </div>
     </div>
 
     <div class="volume-control">
@@ -637,20 +632,6 @@
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
             document.querySelector('.progress-fill').style.width = 
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
-
-            checkAchievements();
-        }
-
-        function checkAchievements() {
-            if (stats.correct >= 10) {
-                document.getElementById('achievement1').classList.add('unlocked');
-            }
-            if (stats.correct >= 25) {
-                document.getElementById('achievement2').classList.add('unlocked');
-            }
-            if (stats.correct >= 50) {
-                document.getElementById('achievement3').classList.add('unlocked');
-            }
         }
 
         function setupClock() {
@@ -813,6 +794,13 @@
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
         }
 
+        function generateNewTask2() {
+            targetHours = Math.floor(Math.random() * 12);
+            targetMinutes = Math.floor(Math.random() * 60);
+            document.getElementById('target-time-2').textContent = 
+                `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+        }
+
         function generateNewTask3() {
             targetHours = Math.floor(Math.random() * 12);
             targetMinutes = Math.floor(Math.random() * 60);
@@ -846,6 +834,32 @@
             }, 2000);
         }
 
+        function checkTime2() {
+            const hourDegrees = currentRotation.hour;
+            const minuteDegrees = currentRotation.minute;
+            
+            const currentHours = Math.round(hourDegrees / 30 % 12);
+            const currentMinutes = Math.round(minuteDegrees / 6 % 60);
+
+            const result = document.getElementById('task3-result');
+            
+            if (currentHours === targetHours && currentMinutes === targetMinutes) {
+                result.textContent = "✓ Верно! Отличная работа!";
+                result.className = "result-feedback success";
+                stats.correct++;
+            } else {
+                result.textContent = "✗ Попробуйте ещё раз";
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 2000);
+        }
+
         function checkTime3() {
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
@@ -853,7 +867,7 @@
             const currentHours = Math.round(hourDegrees / 30 % 12);
             const currentMinutes = Math.round(minuteDegrees / 6 % 60);
 
-            const result = document.getElementById('task3-result');
+            const result = document.getElementById('task5-result');
             
             if (currentHours === targetHours && currentMinutes === targetMinutes) {
                 result.textContent = "✓ Верно! Отличная работа!";
@@ -880,6 +894,22 @@
             updateClock2();
         }
 
+        function generateNewClock2Time2() {
+            currentClock2Time = {
+                h: Math.floor(Math.random() * 12),
+                m: Math.floor(Math.random() * 60)
+            };
+            updateClock2();
+        }
+
+        function generateNewClock2Time3() {
+            currentClock2Time = {
+                h: Math.floor(Math.random() * 12),
+                m: Math.floor(Math.random() * 60)
+            };
+            updateClock2();
+        }
+
         function updateClock2() {
             hourHand2.style.transform = `rotate(${currentClock2Time.h * 30}deg)`;
             minuteHand2.style.transform = `rotate(${currentClock2Time.m * 6}deg)`;
@@ -896,6 +926,56 @@
                 input.value = '';
                 stats.correct++;
                 generateNewClock2Time();
+            } else {
+                result.textContent = "✗ Неверно. Правильное время: " + 
+                    `${currentClock2Time.h}:${currentClock2Time.m.toString().padStart(2, '0')}`;
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 3000);
+        }
+
+        function checkInput2() {
+            const input = document.getElementById('time-input-2');
+            const result = document.getElementById('task4-result');
+            const [hours, minutes] = input.value.split(':').map(Number);
+
+            if (hours === currentClock2Time.h && minutes === currentClock2Time.m) {
+                result.textContent = "✓ Правильно!";
+                result.className = "result-feedback success";
+                input.value = '';
+                stats.correct++;
+                generateNewClock2Time2();
+            } else {
+                result.textContent = "✗ Неверно. Правильное время: " + 
+                    `${currentClock2Time.h}:${currentClock2Time.m.toString().padStart(2, '0')}`;
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 3000);
+        }
+
+        function checkInput3() {
+            const input = document.getElementById('time-input-3');
+            const result = document.getElementById('task6-result');
+            const [hours, minutes] = input.value.split(':').map(Number);
+
+            if (hours === currentClock2Time.h && minutes === currentClock2Time.m) {
+                result.textContent = "✓ Правильно!";
+                result.className = "result-feedback success";
+                input.value = '';
+                stats.correct++;
+                generateNewClock2Time3();
             } else {
                 result.textContent = "✗ Неверно. Правильное время: " + 
                     `${currentClock2Time.h}:${currentClock2Time.m.toString().padStart(2, '0')}`;
