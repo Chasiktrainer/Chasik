@@ -232,7 +232,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 4;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            box-shadow: 0 0 8px rgba(0,0,0,0.1));
         }
 
         .task-card {
@@ -321,44 +321,6 @@
             color: white;
             opacity: 1;
             transform: translateY(0);
-        }
-
-        .achievements {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .achievement {
-            display: inline-block;
-            margin: 5px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            font-size: 0.9em;
-            color: var(--primary);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .achievement.unlocked {
-            background: var(--success);
-            color: white;
-        }
-
-        .volume-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .volume-control input[type="range"] {
-            width: 100px;
         }
 
         @media (max-width: 768px) {
@@ -582,23 +544,6 @@
         </div>
     </div>
 
-    <div class="achievements">
-        <div class="achievement" id="achievement1">🎯 10 правильных ответов</div>
-        <div class="achievement" id="achievement2">🏆 25 правильных ответов</div>
-        <div class="achievement" id="achievement3">🚀 50 правильных ответов</div>
-    </div>
-
-    <div class="volume-control">
-        <span>🔊</span>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.1" value="0.5">
-    </div>
-
-    <!-- Новая Lo-Fi музыка -->
-    <audio id="background-music" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-chill-abstract-loop-229.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает аудио элемент.
-    </audio>
-
     <script>
         let stats = {
             correct: 0,
@@ -621,8 +566,6 @@
         const minuteHand2 = document.getElementById('minute-hand-2');
         const hourHand3 = document.getElementById('hour-hand-3');
         const minuteHand3 = document.getElementById('minute-hand-3');
-        const backgroundMusic = document.getElementById('background-music');
-        const volumeSlider = document.getElementById('volume-slider');
 
         setupClock();
         generateNewTask();
@@ -637,20 +580,6 @@
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
             document.querySelector('.progress-fill').style.width = 
                 Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100) + '%';
-
-            checkAchievements();
-        }
-
-        function checkAchievements() {
-            if (stats.correct >= 10) {
-                document.getElementById('achievement1').classList.add('unlocked');
-            }
-            if (stats.correct >= 25) {
-                document.getElementById('achievement2').classList.add('unlocked');
-            }
-            if (stats.correct >= 50) {
-                document.getElementById('achievement3').classList.add('unlocked');
-            }
         }
 
         function setupClock() {
@@ -675,11 +604,6 @@
             minuteHand3.addEventListener('touchstart', touchStart3, { passive: false });
             document.addEventListener('touchend', endDrag3);
             document.addEventListener('touchmove', touchDrag3, { passive: false });
-
-            backgroundMusic.play();
-            volumeSlider.addEventListener('input', () => {
-                backgroundMusic.volume = volumeSlider.value;
-            });
         }
 
         function startDrag(e) {
