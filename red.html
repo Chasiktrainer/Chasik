@@ -954,6 +954,37 @@
                 updateStats();
             }, 2000);
         }
+        function updateClockHands(hours, minutes) {
+    const hourDegrees = (hours % 12) * 30 + (minutes / 60) * 30;
+    const minuteDegrees = minutes * 6;
+
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+    minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
+}
+
+function generateNewTask() {
+    targetHours = Math.floor(Math.random() * 12);
+    targetMinutes = Math.floor(Math.random() * 12) * 5;
+    document.getElementById('target-time').textContent = 
+        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+    updateClockHands(targetHours, targetMinutes);
+}
+
+function generateNewTask2() {
+    targetHours = Math.floor(Math.random() * 12);
+    targetMinutes = Math.floor(Math.random() * 60);
+    document.getElementById('target-time-2').textContent = 
+        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+    updateClockHands(targetHours, targetMinutes);
+}
+
+function generateNewTask3() {
+    targetHours = Math.floor(Math.random() * 12);
+    targetMinutes = Math.floor(Math.random() * 60);
+    document.getElementById('target-time-3').textContent = 
+        `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+    updateClockHands(targetHours, targetMinutes);
+}
 
         function checkTime2() {
             const hourDegrees = currentRotation.hour;
