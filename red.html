@@ -365,7 +365,6 @@
         </h1>
     </div>
 
-    <!-- Кнопки для выбора уровня -->
     <div class="level-buttons">
         <button onclick="switchLevel('level1')">Уровень 1</button>
         <button onclick="switchLevel('level2')">Уровень 2</button>
@@ -411,7 +410,6 @@
                 
                 <div class="center-dot"></div>
                 <div id="hour-hand" class="hand hour-hand"></div>
-                <div id="minute-hand" class="hand minute-hand"></div>
             </div>
         </div>
 
@@ -841,6 +839,124 @@
             document.getElementById(level).classList.remove('hidden');
         }
 
+        // Уровень 1: Только целые часы
+        function generateNewTask() {
+            targetHours = Math.floor(Math.random() * 24); // От 0 до 23 часов
+            targetMinutes = 0; // Минуты всегда 0
+            document.getElementById('target-time').textContent = 
+                `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
+        }
+
+        function checkTime() {
+            const hourDegrees = currentRotation.hour;
+            const currentHours = Math.round(hourDegrees / 30 % 24); // От 0 до 23 часов
+
+            const result = document.getElementById('task1-result');
+            
+            if (currentHours === targetHours) {
+                result.textContent = "✓ Верно! Отличная работа!";
+                result.className = "result-feedback success";
+                stats.correct++;
+            } else {
+                result.textContent = "✗ Попробуйте ещё раз";
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 2000);
+        }
+
+        // Уровень 2: Четверти часа, полчаса и целый час
+        function generateNewClock2Time() {
+            const minutesOptions = [0, 15, 30, 45]; // Только четверти часа
+            currentClock2Time = {
+                h: Math.floor(Math.random() * 12), // От 0 до 11 часов
+                m: minutesOptions[Math.floor(Math.random() * minutesOptions.length)] // Случайная четверть часа
+            };
+            updateClock2();
+        }
+
+        function updateClock2() {
+            hourHand2.style.transform = `rotate(${currentClock2Time.h * 30 + (currentClock2Time.m / 60) * 30}deg)`;
+            minuteHand2.style.transform = `rotate(${currentClock2Time.m * 6}deg)`;
+        }
+
+        function checkInput() {
+            const input = document.getElementById('time-input');
+            const result = document.getElementById('task2-result');
+            const [hours, minutes] = input.value.split(':').map(Number);
+
+            if (hours === currentClock2Time.h && minutes === currentClock2Time.m) {
+                result.textContent = "✓ Правильно!";
+                result.className = "result-feedback success";
+                input.value = '';
+                stats.correct++;
+                generateNewClock2Time();
+            } else {
+                result.textContent = "✗ Неверно. Правильное время: " + 
+                    `${currentClock2Time.h}:${currentClock2Time.m.toString().padStart(2, '0')}`;
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 3000);
+        }
+
+        // Уровень 3: Каждые 5 минут
+        function generateNewTask3() {
+            targetHours = Math.floor(Math.random() * 12); // От 0 до 11 часов
+            targetMinutes = Math.floor(Math.random() * 12) * 5; // Кратные 5 минутам (0, 5, 10, ..., 55)
+            document.getElementById('target-time-3').textContent = 
+                `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+        }
+
+        function checkTime3() {
+            const hourDegrees = currentRotation3.hour;
+            const minuteDegrees = currentRotation3.minute;
+            
+            const currentHours = Math.round(hourDegrees / 30 % 12);
+            const currentMinutes = Math.round(minuteDegrees / 6 % 60);
+
+            const result = document.getElementById('task3-result');
+            
+            if (currentHours === targetHours && currentMinutes === targetMinutes) {
+                result.textContent = "✓ Верно! Отличная работа!";
+                result.className = "result-feedback success";
+                stats.correct++;
+            } else {
+                result.textContent = "✗ Попробуйте ещё раз";
+                result.className = "result-feedback error";
+                stats.wrong++;
+            }
+            stats.total++;
+            
+            setTimeout(() => {
+                result.className = "result-feedback";
+                updateStats();
+            }, 2000);
+        }
+
+        // Автодоводчик для уровня 2 (четверти часа)
+        function snapToNearestQuarter(degrees) {
+            const snapDegrees = Math.round(degrees / 90) * 90; // Доводка до 0, 90, 180, 270 градусов
+            return snapDegrees % 360;
+        }
+
+        // Автодоводчик для уровня 3 (каждые 5 минут)
+        function snapToNearestFiveMinutes(degrees) {
+            const snapDegrees = Math.round(degrees / 30) * 30; // Доводка до 0, 30, 60, ..., 330 градусов
+            return snapDegrees % 360;
+        }
+
+        // Инициализация
         document.getElementById('level1').classList.remove('hidden');
     </script>
 </body>
