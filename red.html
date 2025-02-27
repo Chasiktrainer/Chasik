@@ -558,6 +558,7 @@
         let currentRotation3 = { hour: 90, minute: 0 };
         let isDragging = false;
         let activeHand = null;
+        let isFirstAttemptLevel1 = true; // Флаг для отслеживания первого ответа в уровне 1
 
         const hourHand = document.getElementById('hour-hand');
         const minuteHand = document.getElementById('minute-hand');
@@ -689,10 +690,11 @@
             targetHours = Math.floor(Math.random() * 24); // От 0 до 23 часов
             document.getElementById('target-time').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
+            isFirstAttemptLevel1 = true; // Сбрасываем флаг при генерации нового задания
         }
 
         function generateNewTask3() {
-            targetHours = Math.floor(Math.random() * 12);
+            targetHours = Math.floor(Math.random() * 24); // От 0 до 23 часов для уровня 3
             targetMinutes = Math.floor(Math.random() * 12) * 5;
             document.getElementById('target-time-3').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
@@ -704,18 +706,34 @@
 
             const result = document.getElementById('task1-result');
             
-            // Заданное время (17:00) преобразуем в 24-часовой формат для сравнения
-            const targetTimeIn24h = targetHours; // targetHours уже в 24-часовом формате (0-23)
+            // Заданное время (например, 13:00 или 23:00) в 24-часовом формате
+            const targetTimeIn24h = targetHours;
 
-            if (currentHours === targetTimeIn24h) {
-                result.textContent = "✓ Верно! Отличная работа!";
-                result.className = "result-feedback success";
-                stats.correct++;
+            if (isFirstAttemptLevel1) {
+                // Первый ответ всегда правильный, если время установлено верно
+                if (currentHours === targetTimeIn24h) {
+                    result.textContent = "✓ Верно! Отличная работа!";
+                    result.className = "result-feedback success";
+                    stats.correct++;
+                } else {
+                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
+                        `${targetHours.toString().padStart(2, '0')}:00`;
+                    result.className = "result-feedback error";
+                    stats.wrong++;
+                }
+                isFirstAttemptLevel1 = false; // Сбрасываем флаг после первой проверки
             } else {
-                result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
-                    `${targetHours.toString().padStart(2, '0')}:00`;
-                result.className = "result-feedback error";
-                stats.wrong++;
+                // Последующие попытки проверяются нормально
+                if (currentHours === targetTimeIn24h) {
+                    result.textContent = "✓ Верно! Отличная работа!";
+                    result.className = "result-feedback success";
+                    stats.correct++;
+                } else {
+                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
+                        `${targetHours.toString().padStart(2, '0')}:00`;
+                    result.className = "result-feedback error";
+                    stats.wrong++;
+                }
             }
             stats.total++;
             
@@ -729,7 +747,7 @@
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
             
-            const currentHours = Math.round(hourDegrees / 30 % 12);
+            const currentHours = Math.round(hourDegrees / 30 % 24); // Изменили на 24-часовой формат
             const currentMinutes = Math.round(minuteDegrees / 6 % 60);
 
             const result = document.getElementById('task3-result');
@@ -752,10 +770,9 @@
         }
 
         function generateNewClock2Time() {
-            const minutesOptions = [0, 15, 30, 45];
             currentClock2Time = {
-                h: Math.floor(Math.random() * 12),
-                m: minutesOptions[Math.floor(Math.random() * minutesOptions.length)]
+                h: Math.floor(Math.random() * 24), // От 0 до 23 часов для уровня 2
+                m: Math.floor(Math.random() * 12) * 5 // Кратные 5 минутам
             };
             updateClock2();
         }
