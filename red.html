@@ -702,16 +702,17 @@
 
         function checkTime() {
             const hourDegrees = currentRotation.hour;
-            const currentHours = Math.round(hourDegrees / 30 % 24); // Убедимся, что часы могут быть от 0 до 23
-
+            // Получаем положение часовой стрелки в 12-часовом формате (0-11)
+            const currentHour12 = Math.round(hourDegrees / 30) % 12;
+            
             const result = document.getElementById('task1-result');
             
-            // Заданное время (например, 13:00 или 23:00) в 24-часовом формате
-            const targetTimeIn24h = targetHours;
+            // Заданное время (например, 16:00) преобразуем в 12-часовой формат для сравнения с положением стрелки
+            const targetHour12 = targetHours % 12; // Преобразуем 24-часовое время в 12-часовое (например, 16 -> 4)
 
             if (isFirstAttemptLevel1) {
                 // Первый ответ всегда правильный, если время установлено верно
-                if (currentHours === targetTimeIn24h) {
+                if (currentHour12 === targetHour12) {
                     result.textContent = "✓ Верно! Отличная работа!";
                     result.className = "result-feedback success";
                     stats.correct++;
@@ -724,7 +725,7 @@
                 isFirstAttemptLevel1 = false; // Сбрасываем флаг после первой проверки
             } else {
                 // Последующие попытки проверяются нормально
-                if (currentHours === targetTimeIn24h) {
+                if (currentHour12 === targetHour12) {
                     result.textContent = "✓ Верно! Отличная работа!";
                     result.className = "result-feedback success";
                     stats.correct++;
@@ -747,7 +748,7 @@
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
             
-            const currentHours = Math.round(hourDegrees / 30 % 24); // Изменили на 24-часовой формат
+            const currentHours = Math.round(hourDegrees / 30 % 24); // Оставляем 24-часовой формат для уровня 3
             const currentMinutes = Math.round(minuteDegrees / 6 % 60);
 
             const result = document.getElementById('task3-result');
