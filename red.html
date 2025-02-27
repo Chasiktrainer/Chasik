@@ -842,7 +842,7 @@
         // Уровень 1: Только целые часы
         function generateNewTask() {
             targetHours = Math.floor(Math.random() * 24); // От 0 до 23 часов
-            targetMinutes = 0; // Минуты всегда 0
+            targetMinutes = 60; // Минуты всегда 0
             document.getElementById('target-time').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
         }
