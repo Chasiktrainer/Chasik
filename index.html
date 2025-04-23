@@ -3,29 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Как научиться понимать время</title>
+  <title>Тренажёр «Часик»</title>
   <style>
     body {
-      font-family: "Arial", sans-serif;
-      padding: 20px;
-      background: #f4f6fa;
-      color: #222;
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+      color: #1e293b;
+      padding: 40px 20px;
       line-height: 1.8;
     }
 
     h1, h2 {
-      color: #204ecf;
+      text-align: center;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #1d4ed8;
+      text-shadow: 1px 1px 0 #fff;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #2563eb;
+    }
+
+    p, ul, li {
+      font-size: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    ul {
+      margin-top: 10px;
+      padding-left: 40px;
     }
 
     .clock {
       width: 200px;
       height: 200px;
-      border: 4px solid #204ecf;
+      border: 4px solid #2563eb;
       border-radius: 50%;
-      margin: 20px auto;
+      margin: 30px auto;
       position: relative;
-      background: white;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
 
     .hand {
@@ -33,101 +58,94 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
+      border-radius: 50px;
     }
 
     .hour {
-      width: 6px;
-      height: 50px;
-      background: red;
+      width: 10px;
+      height: 55px;
+      background: #ef4444;
       z-index: 2;
     }
 
     .minute {
-      width: 4px;
-      height: 70px;
-      background: blue;
+      width: 6px;
+      height: 75px;
+      background: #3b82f6;
       z-index: 1;
     }
 
     .number {
       position: absolute;
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       text-align: center;
       font-weight: bold;
-      color: #204ecf;
+      color: #1e3a8a;
+      font-size: 18px;
     }
 
     .box {
-      background: #e3ecff;
-      border-left: 4px solid #204ecf;
-      padding: 15px 20px;
-      margin: 25px 0;
-      border-radius: 8px;
+      background: #e0f2fe;
+      border-left: 6px solid #2563eb;
+      padding: 20px;
+      margin: 30px auto;
+      border-radius: 10px;
+      max-width: 850px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
 
     .button {
       display: block;
-      margin: 30px auto;
-      padding: 14px 24px;
-      background-color: #204ecf;
+      margin: 40px auto;
+      padding: 14px 30px;
+      background-color: #1d4ed8;
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-size: 18px;
+      border-radius: 10px;
+      font-size: 20px;
       font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+
+    .button:hover {
+      background-color: #1e40af;
     }
 
     .example-clock {
       display: flex;
       justify-content: center;
-      margin-top: 15px;
+      margin-top: 20px;
     }
 
     .small {
       transform: scale(0.6);
-      margin: 0 auto;
+    }
+
+    .time-caption {
+      text-align: center;
+      font-weight: bold;
+      font-size: 22px;
+      color: #1e3a8a;
     }
   </style>
 </head>
 <body>
 
-<h1>Как научиться понимать время?</h1>
+<h1>Тренажёр «Часик»</h1>
+
 <p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
 <ul>
   <li><strong>Короткая стрелка</strong> показывает часы.</li>
   <li><strong>Длинная стрелка</strong> показывает минуты.</li>
 </ul>
 
-<!-- Основной циферблат -->
+<!-- Главный циферблат -->
 <div class="clock">
   <div class="hand hour" style="transform: rotate(60deg);"></div>
   <div class="hand minute" style="transform: rotate(0deg);"></div>
 </div>
-
-<script>
-  function placeNumbers(clock) {
-    for (let i = 1; i <= 12; i++) {
-      const number = document.createElement("div");
-      number.className = "number";
-      const angle = (i - 3) * 30 * Math.PI / 180;
-      const radius = 90;
-      const x = 100 + radius * Math.cos(angle) - 12;
-      const y = 100 + radius * Math.sin(angle) - 12;
-      number.style.left = x + "px";
-      number.style.top = y + "px";
-      number.textContent = i;
-      clock.appendChild(number);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".clock").forEach(placeNumbers);
-  });
-</script>
-
-<p style="text-align: center; font-weight: bold; font-size: 20px;">2:00</p>
+<p class="time-caption">2:00</p>
 
 <h2>Как читать время?</h2>
 <p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
@@ -153,10 +171,32 @@
   </div>
 </div>
 
-<h2>Где используется время?</h2>
-<p>Время нужно, чтобы успевать в школу, на кружки, не опаздывать на автобус и договариваться с друзьями.</p>
+<h2>Зачем нужно знать время?</h2>
+<p>Чтобы приходить вовремя в школу, на кружки, встречаться с друзьями и быть организованным человеком.</p>
 
 <a class="button" href="red.html">Перейти к тренажёру</a>
+
+<!-- Скрипт расставляет цифры на всех часах -->
+<script>
+  function placeNumbers(clock) {
+    for (let i = 1; i <= 12; i++) {
+      const number = document.createElement("div");
+      number.className = "number";
+      const angle = (i - 3) * 30 * Math.PI / 180;
+      const radius = 90;
+      const x = 100 + radius * Math.cos(angle) - 14;
+      const y = 100 + radius * Math.sin(angle) - 14;
+      number.style.left = x + "px";
+      number.style.top = y + "px";
+      number.textContent = i;
+      clock.appendChild(number);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".clock").forEach(placeNumbers);
+  });
+</script>
 
 </body>
 </html>
