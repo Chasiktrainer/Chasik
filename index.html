@@ -2,88 +2,149 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Что такое механические часы?</title>
+  <title>Изучаем время</title>
   <style>
     body {
-      font-family: "Arial", sans-serif;
-      line-height: 1.6;
-      background-color: #f4f4f4;
+      background-color: #fdf6ec;
+      font-family: 'Segoe UI', sans-serif;
       color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 50px auto;
+      background: #fff;
       padding: 40px;
-      max-width: 800px;
-      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border-radius: 10px;
     }
+
     h1, h2 {
+      color: #4a90e2;
       text-align: center;
-      color: #2c3e50;
     }
-    .clock-image {
-      text-align: center;
-      margin: 20px 0;
+
+    p, li {
+      font-size: 18px;
+      line-height: 1.6;
     }
-    img {
-      max-width: 200px;
-      height: auto;
+
+    ul {
+      padding-left: 20px;
     }
+
     .example {
-      background: #e1f5fe;
-      border-left: 6px solid #03a9f4;
-      padding: 10px 15px;
+      background: #eaf3fc;
+      border-left: 6px solid #4a90e2;
+      padding: 12px 18px;
       margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .button-wrapper {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .button-link {
+      display: inline-block;
+      background-color: #4a90e2;
+      color: white;
+      padding: 14px 28px;
+      text-decoration: none;
+      font-size: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: background 0.3s ease;
+    }
+
+    .button-link:hover {
+      background-color: #3b7dc4;
+    }
+
+    .clock-draw {
+      width: 150px;
+      height: 150px;
+      border: 4px solid #4a90e2;
+      border-radius: 50%;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .hand-hour, .hand-minute {
+      position: absolute;
+      background-color: #4a90e2;
+      transform-origin: bottom center;
+      left: 50%;
+      bottom: 50%;
+    }
+
+    .hand-hour {
+      width: 6px;
+      height: 40px;
+      transform: rotate(60deg); /* пример на 2:00 */
+    }
+
+    .hand-minute {
+      width: 4px;
+      height: 60px;
+      transform: rotate(0deg); /* на 12 */
+    }
+
+    .clock-label {
+      text-align: center;
+      margin-top: 5px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-<h1>Что такое механические часы?</h1>
+<div class="container">
+  <h1>Как научиться понимать время?</h1>
 
-<p>Механические часы — это такие часы, у которых есть круглый циферблат и две стрелки: <strong>часовая</strong> и <strong>минутная</strong>.</p>
+  <p>Часы помогают нам узнать, сколько времени. У механических часов есть круглый циферблат и две стрелки:</p>
+  <ul>
+    <li><strong>Часовая</strong> — короткая стрелка. Показывает, который сейчас час.</li>
+    <li><strong>Минутная</strong> — длинная стрелка. Показывает, сколько минут прошло в этом часу.</li>
+  </ul>
 
-<div class="clock-image">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Clock_face.svg/512px-Clock_face.svg.png" alt="Циферблат часов">
-  <p><small>Циферблат с цифрами от 1 до 12</small></p>
-</div>
+  <div class="clock-draw">
+    <div class="hand-hour"></div>
+    <div class="hand-minute"></div>
+  </div>
+  <div class="clock-label">2:00</div>
 
-<h2>Что показывают стрелки?</h2>
-<ul>
-  <li><strong>Часовая стрелка</strong> — короткая. Она показывает, который сейчас час.</li>
-  <li><strong>Минутная стрелка</strong> — длинная. Она показывает, сколько минут прошло в этом часу.</li>
-</ul>
+  <h2>Как читать время?</h2>
 
-<div class="clock-image">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Clock_analog.svg/512px-Clock_analog.svg.png" alt="Пример времени">
-  <p><small>Пример: 10 часов 10 минут</small></p>
-</div>
+  <p>Сначала посмотри на часовую стрелку — она укажет на час. Затем — на минутную стрелку, она покажет минуты.</p>
 
-<h2>Как читать время?</h2>
-<p>Сначала смотри на часовую стрелку — она показывает часы. Затем смотри на минутную стрелку — она указывает минуты.</p>
+  <div class="example">
+    Если короткая стрелка указывает на 7, а длинная на 12 — это <strong>7:00</strong>.
+  </div>
 
-<div class="example">
-  <strong>Пример:</strong> Если короткая стрелка указывает на 7, а длинная на 12 — это <strong>7:00</strong>.
-</div>
+  <div class="example">
+    Если короткая стрелка между 2 и 3, а длинная на 6 — это <strong>2:30</strong>.
+  </div>
 
-<div class="example">
-  <strong>Пример:</strong> Если короткая стрелка между 2 и 3, а длинная на 6 — это <strong>2:30</strong>.
-</div>
+  <h2>Зачем нужно знать время?</h2>
+  <p>Чтобы быть пунктуальным и организованным. Вот как это помогает:</p>
+  <ul>
+    <li>Приходить вовремя в школу</li>
+    <li>Успевать на автобус или кружок</li>
+    <li>Знать, когда обед и отдых</li>
+  </ul>
 
-<h2>Зачем знать время?</h2>
-<p>Это нужно, чтобы:</p>
-<ul>
-  <li>не опаздывать в школу</li>
-  <li>приходить вовремя на кружки</li>
-  <li>знать, когда обед или отдых</li>
-  <li>учиться планировать день</li>
-</ul>
+  <div class="example">
+    Урок начинается в 8:30. Если сейчас 8:25 — пора идти в класс!
+  </div>
 
-<div class="example">
-  <strong>Пример из жизни:</strong> Если обед в <strong>13:00</strong>, а сейчас <strong>12:45</strong>, значит, скоро пора идти в столовую!
-</div>
-
-<h2>Готов попробовать?</h2>
-<p>Теперь ты знаешь, как работают часы. Попробуй пройти тренажёр и проверить себя!</p>
-
-<div style="text-align: center; margin-top: 30px;">
-  <a href="red.html" style="font-size: 24px; background: #4CAF50; color: white; padding: 12px 25px; text-decoration: none; border-radius: 6px;">Перейти к тренажёру</a>
+  <div class="button-wrapper">
+    <a href="red.html" class="button-link">Перейти к тренажёру</a>
+  </div>
 </div>
 
 </body>
