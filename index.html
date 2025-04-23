@@ -10,54 +10,56 @@
       color: #333;
       margin: 0;
       padding: 0;
+      font-size: 20px; /* Крупнее шрифт */
+      line-height: 1.8;
     }
 
     .container {
-      max-width: 850px;
-      margin: 50px auto;
+      max-width: 900px;
+      margin: 60px auto;
       background: #fff;
-      padding: 40px;
+      padding: 50px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      border-radius: 12px;
     }
 
     h1, h2 {
       color: #4a90e2;
       text-align: center;
-    }
-
-    p, li {
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 32px;
     }
 
     ul {
-      padding-left: 20px;
+      padding-left: 25px;
+    }
+
+    li {
+      margin-bottom: 12px;
     }
 
     .example {
       background: #eaf3fc;
       border-left: 6px solid #4a90e2;
-      padding: 12px 18px;
-      margin: 20px 0;
+      padding: 16px 22px;
+      margin: 30px 0;
       border-radius: 6px;
       font-weight: 500;
     }
 
     .button-wrapper {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 60px;
     }
 
     .button-link {
       display: inline-block;
       background-color: #4a90e2;
       color: white;
-      padding: 14px 28px;
+      padding: 16px 32px;
       text-decoration: none;
-      font-size: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      font-size: 22px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       transition: background 0.3s ease;
     }
 
@@ -66,11 +68,11 @@
     }
 
     .clock-draw {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       border: 4px solid #4a90e2;
       border-radius: 50%;
-      margin: 20px auto;
+      margin: 40px auto 10px;
       position: relative;
       background-color: #fff;
     }
@@ -84,25 +86,39 @@
 
     .hand-hour {
       width: 6px;
-      height: 50px;
+      height: 60px;
       background-color: #e74c3c; /* красная часовая */
       transform: rotate(60deg); /* 2 часа */
     }
 
     .hand-minute {
       width: 4px;
-      height: 70px;
+      height: 80px;
       background-color: #4a90e2; /* синяя минутная */
       transform: rotate(0deg); /* 00 минут */
     }
 
     .clock-number {
       position: absolute;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: bold;
       color: #333;
       transform: translate(-50%, -50%);
     }
+
+    /* Позиционирование цифр */
+    .n12 { top: 10%; left: 50%; }
+    .n1  { top: 18%; left: 82%; }
+    .n2  { top: 32%; left: 92%; }
+    .n3  { top: 50%; left: 96%; }
+    .n4  { top: 68%; left: 91%; }
+    .n5  { top: 82%; left: 78%; }
+    .n6  { top: 90%; left: 50%; }
+    .n7  { top: 82%; left: 22%; }
+    .n8  { top: 68%; left: 9%; }
+    .n9  { top: 50%; left: 4%; }
+    .n10 { top: 32%; left: 8%; }
+    .n11 { top: 18%; left: 18%; }
 
     .clock-label {
       text-align: center;
@@ -123,23 +139,22 @@
   </ul>
 
   <div class="clock-draw">
-    <!-- Стрелки -->
     <div class="hand-hour"></div>
     <div class="hand-minute"></div>
 
     <!-- Цифры -->
-    <div class="clock-number" style="top: 10%; left: 50%;">12</div>
-    <div class="clock-number" style="top: 18%; left: 85%;">1</div>
-    <div class="clock-number" style="top: 35%; left: 95%;">2</div>
-    <div class="clock-number" style="top: 55%; left: 95%;">3</div>
-    <div class="clock-number" style="top: 72%; left: 85%;">4</div>
-    <div class="clock-number" style="top: 83%; left: 65%;">5</div>
-    <div class="clock-number" style="top: 88%; left: 50%;">6</div>
-    <div class="clock-number" style="top: 83%; left: 35%;">7</div>
-    <div class="clock-number" style="top: 72%; left: 15%;">8</div>
-    <div class="clock-number" style="top: 55%; left: 5%;">9</div>
-    <div class="clock-number" style="top: 35%; left: 5%;">10</div>
-    <div class="clock-number" style="top: 18%; left: 15%;">11</div>
+    <div class="clock-number n12">12</div>
+    <div class="clock-number n1">1</div>
+    <div class="clock-number n2">2</div>
+    <div class="clock-number n3">3</div>
+    <div class="clock-number n4">4</div>
+    <div class="clock-number n5">5</div>
+    <div class="clock-number n6">6</div>
+    <div class="clock-number n7">7</div>
+    <div class="clock-number n8">8</div>
+    <div class="clock-number n9">9</div>
+    <div class="clock-number n10">10</div>
+    <div class="clock-number n11">11</div>
   </div>
   <div class="clock-label">2:00</div>
 
