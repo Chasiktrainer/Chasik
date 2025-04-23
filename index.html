@@ -48,7 +48,7 @@
     }
     .btn:hover { background: #2980b9; }
 
-    /* Циферблат общий стиль */
+    /* Циферблаты */
     .clock {
       position: relative;
       width: 200px; height: 200px;
@@ -61,31 +61,45 @@
       width: 120px; height: 120px;
       border-width: 3px;
     }
+
+    /* Стрелки */
     .hand {
       position: absolute;
       bottom: 50%; left: 50%;
       transform-origin: bottom center;
       border-radius: 50px;
     }
+    /* Часовая стрелка: короче */
     .hand.hour {
-      width: 8px; height: 60px;
-      background: #ef4444;  /* красная */
+      width: 6px;    /* чуть тоньше */
+      height: 40px;  /* уменьшили с 60px до 40px */
+      background: #ef4444;
+      transform: rotate(60deg);
     }
+    /* Минутная стрелка: короче */
     .hand.minute {
-      width: 6px; height: 90px;
-      background: #3b82f6;  /* синяя */
+      width: 4px;    /* чуть тоньше */
+      height: 70px;  /* уменьшили с 90px до 70px */
+      background: #3b82f6;
+      transform: rotate(0deg);
     }
+
+    /* Малые стрелки */
+    .clock.small .hand.hour   { height: 25px; }
+    .clock.small .hand.minute { height: 45px; }
+
+    /* Цифры */
     .number {
       position: absolute;
       width: 24px; height: 24px;
       text-align: center; font-weight: bold;
       color: #2c3e50; font-size: 1rem;
     }
-    .clock.small .hand.hour  { height: 40px; }
-    .clock.small .hand.minute{ height: 60px; }
-    .clock.small .number     { font-size: 0.8rem; width: 16px; height: 16px; }
+    .clock.small .number {
+      font-size: 0.8rem; width: 16px; height: 16px;
+    }
 
-    /* Эмодзи в тексте */
+    /* Эмодзи */
     .emoji { margin-right: 6px; }
   </style>
 </head>
@@ -97,12 +111,12 @@
   <div class="card">
     <p>Механические часы состоят из циферблата и двух стрелок:</p>
     <ul>
-      <li>🔴 <strong>Короткая стрелка</strong> (часовая) показывает текущий час.</li>
-      <li>🔵 <strong>Длинная стрелка</strong> (минутная) показывает минуты.</li>
+      <li>🔴 <strong>Короткая стрелка</strong> показывает текущий час.</li>
+      <li>🔵 <strong>Длинная стрелка</strong> показывает минуты.</li>
     </ul>
     <div class="clock" id="mainClock">
-      <div class="hand hour" style="transform: rotate(60deg);"></div>
-      <div class="hand minute" style="transform: rotate(0deg);"></div>
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
     </div>
   </div>
 
@@ -116,9 +130,7 @@
           <div class="hand hour" style="transform: rotate(210deg);"></div>
           <div class="hand minute" style="transform: rotate(0deg);"></div>
         </div>
-        <p style="text-align:center; margin-top:8px;">
-          <strong>7:00</strong>
-        </p>
+        <p style="text-align:center; margin-top:8px;"><strong>7:00</strong></p>
       </div>
       <!-- Пример 2 -->
       <div>
@@ -126,9 +138,7 @@
           <div class="hand hour" style="transform: rotate(75deg);"></div>
           <div class="hand minute" style="transform: rotate(180deg);"></div>
         </div>
-        <p style="text-align:center; margin-top:8px;">
-          <strong>2:30</strong>
-        </p>
+        <p style="text-align:center; margin-top:8px;"><strong>2:30</strong></p>
       </div>
     </div>
   </div>
@@ -149,29 +159,24 @@
   </div>
 
   <script>
-    function placeNumbers(clock, radiusOffset) {
-      const rect = clock.getBoundingClientRect();
-      const size = rect.width;
-      const cx = size/2, cy = size/2;
-      const r = size/2 - radiusOffset;
+    function placeNumbers(clock, offset) {
+      const size = clock.clientWidth;
+      const cx = size/2, cy = size/2, r = size/2 - offset;
       for (let i = 1; i <= 12; i++) {
         const ang = (i - 3) * (Math.PI / 6);
-        const x = cx + r * Math.cos(ang) - (clock.classList.contains('small') ? 8 : 12);
-        const y = cy + r * Math.sin(ang) - (clock.classList.contains('small') ? 8 : 12);
         const num = document.createElement('div');
         num.className = 'number';
-        num.style.left = x + 'px';
-        num.style.top = y + 'px';
+        const adj = clock.classList.contains('small') ? 8 : 12;
+        num.style.left = cx + r * Math.cos(ang) - adj + 'px';
+        num.style.top  = cy + r * Math.sin(ang) - adj + 'px';
         num.textContent = i;
         clock.appendChild(num);
       }
     }
-
     document.addEventListener('DOMContentLoaded', () => {
-      // Основной и примеры
       placeNumbers(document.getElementById('mainClock'), 15);
-      placeNumbers(document.getElementById('ex1'),        12);
-      placeNumbers(document.getElementById('ex2'),        12);
+      placeNumbers(document.getElementById('ex1'), 12);
+      placeNumbers(document.getElementById('ex2'), 12);
     });
   </script>
 
