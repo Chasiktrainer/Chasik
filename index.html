@@ -2,196 +2,114 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Изучаем время</title>
+  <title>Как научиться понимать время?</title>
   <style>
     body {
-      background: linear-gradient(to bottom, #f9f7f1, #ece9e6);
-      font-family: 'Segoe UI', sans-serif;
-      color: #333;
-      margin: 0;
-      padding: 0;
-      font-size: 30px;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: white;
-      padding: 60px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9fbff;
+      color: #222;
     }
 
     h1, h2 {
-      color: #3b78c7;
+      color: #2a77d4;
       text-align: center;
-      font-size: 45px;
     }
 
-    p, li {
-      font-size: 30px;
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
 
-    ul {
-      padding-left: 40px;
+    .clock {
+      display: block;
+      margin: 30px auto;
     }
 
-    li {
-      margin-bottom: 20px;
-    }
-
-    .example {
-      background: #eef4fb;
-      border-left: 10px solid #3b78c7;
-      padding: 30px 40px;
-      margin: 40px 0;
-      border-radius: 12px;
-      font-weight: 600;
-    }
-
-    .button-wrapper {
+    .time {
+      font-size: 28px;
       text-align: center;
-      margin-top: 60px;
+      font-weight: bold;
     }
 
-    .button-link {
-      display: inline-block;
-      background: #3b78c7;
+    .examples {
+      background: #eef6ff;
+      padding: 15px;
+      margin: 20px 0;
+      border-left: 5px solid #2a77d4;
+    }
+
+    button {
+      display: block;
+      margin: 40px auto 0;
+      padding: 15px 25px;
+      font-size: 18px;
+      background-color: #2a77d4;
       color: white;
-      padding: 20px 50px;
-      font-size: 32px;
-      border-radius: 15px;
-      text-decoration: none;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-      transition: background 0.3s ease;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
-    .button-link:hover {
-      background: #345fa3;
-    }
-
-    .clock-draw {
-      width: 300px;
-      height: 300px;
-      margin: 60px auto 20px;
-      position: relative;
-      background: radial-gradient(circle at center, #ffffff, #e1e7f0);
-      border-radius: 50%;
-      border: 8px solid #3b78c7;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
-    }
-
-    .hand-hour, .hand-minute {
-      position: absolute;
-      transform-origin: bottom center;
-      left: 50%;
-      bottom: 50%;
-      border-radius: 4px;
-    }
-
-    .hand-hour {
-      width: 10px;
-      height: 75px;
-      background-color: #ff4c4c;
-      transform: rotate(60deg);
-    }
-
-    .hand-minute {
-      width: 6px;
-      height: 130px;
-      background-color: #448aff;
-      transform: rotate(0deg);
-    }
-
-    .clock-number {
-      position: absolute;
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    /* Расположение цифр */
-    .clock-number:nth-child(3)  { transform: rotate(0deg)   translateY(-135px) translateX(-50%) rotate(-0deg);  }
-    .clock-number:nth-child(4)  { transform: rotate(30deg)  translateY(-135px) translateX(-50%) rotate(-30deg); }
-    .clock-number:nth-child(5)  { transform: rotate(60deg)  translateY(-135px) translateX(-50%) rotate(-60deg); }
-    .clock-number:nth-child(6)  { transform: rotate(90deg)  translateY(-135px) translateX(-50%) rotate(-90deg); }
-    .clock-number:nth-child(7)  { transform: rotate(120deg) translateY(-135px) translateX(-50%) rotate(-120deg);}
-    .clock-number:nth-child(8)  { transform: rotate(150deg) translateY(-135px) translateX(-50%) rotate(-150deg);}
-    .clock-number:nth-child(9)  { transform: rotate(180deg) translateY(-135px) translateX(-50%) rotate(-180deg);}
-    .clock-number:nth-child(10) { transform: rotate(210deg) translateY(-135px) translateX(-50%) rotate(-210deg);}
-    .clock-number:nth-child(11) { transform: rotate(240deg) translateY(-135px) translateX(-50%) rotate(-240deg);}
-    .clock-number:nth-child(12) { transform: rotate(270deg) translateY(-135px) translateX(-50%) rotate(-270deg);}
-    .clock-number:nth-child(13) { transform: rotate(300deg) translateY(-135px) translateX(-50%) rotate(-300deg);}
-    .clock-number:nth-child(14) { transform: rotate(330deg) translateY(-135px) translateX(-50%) rotate(-330deg);}
-
-    .clock-label {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 36px;
-      font-weight: bold;
+    button:hover {
+      background-color: #1a5cb8;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Как научиться понимать время?</h1>
+    <p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
+    <ul>
+      <li><strong>Короткая стрелка</strong> показывает часы.</li>
+      <li><strong>Длинная стрелка</strong> показывает минуты.</li>
+    </ul>
 
-<div class="container">
-  <h1>Как научиться понимать время?</h1>
+    <svg class="clock" width="300" height="300">
+      <!-- Циферблат -->
+      <circle cx="150" cy="150" r="100" stroke="#2a77d4" stroke-width="4" fill="#fefefe" />
+      
+      <!-- Часовые метки -->
+      <text x="200" y="63.4" text-anchor="middle" font-size="16">1</text>
+      <text x="236.6" y="100" text-anchor="middle" font-size="16">2</text>
+      <text x="250" y="150" text-anchor="middle" font-size="16">3</text>
+      <text x="236.6" y="200" text-anchor="middle" font-size="16">4</text>
+      <text x="200" y="236.6" text-anchor="middle" font-size="16">5</text>
+      <text x="150" y="250" text-anchor="middle" font-size="16">6</text>
+      <text x="100" y="236.6" text-anchor="middle" font-size="16">7</text>
+      <text x="63.4" y="200" text-anchor="middle" font-size="16">8</text>
+      <text x="50" y="150" text-anchor="middle" font-size="16">9</text>
+      <text x="63.4" y="100" text-anchor="middle" font-size="16">10</text>
+      <text x="100" y="63.4" text-anchor="middle" font-size="16">11</text>
+      <text x="150" y="50" text-anchor="middle" font-size="16">12</text>
 
-  <p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
-  <ul>
-    <li><strong>Короткая стрелка</strong> показывает часы.</li>
-    <li><strong>Длинная стрелка</strong> показывает минуты.</li>
-  </ul>
+      <!-- Часовая стрелка -->
+      <line x1="150" y1="150" x2="190" y2="150" stroke="red" stroke-width="5" stroke-linecap="round" />
+      <!-- Минутная стрелка -->
+      <line x1="150" y1="150" x2="150" y2="70" stroke="blue" stroke-width="3" stroke-linecap="round" />
+    </svg>
 
-  <div class="clock-draw">
-    <div class="hand-hour"></div>
-    <div class="hand-minute"></div>
-    <div class="clock-number">12</div>
-    <div class="clock-number">1</div>
-    <div class="clock-number">2</div>
-    <div class="clock-number">3</div>
-    <div class="clock-number">4</div>
-    <div class="clock-number">5</div>
-    <div class="clock-number">6</div>
-    <div class="clock-number">7</div>
-    <div class="clock-number">8</div>
-    <div class="clock-number">9</div>
-    <div class="clock-number">10</div>
-    <div class="clock-number">11</div>
+    <div class="time">2:00</div>
+
+    <h2>Как читать время?</h2>
+    <p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
+
+    <div class="examples">
+      <p><strong>Если короткая стрелка на 7, а длинная на 12</strong> — это 7:00.</p>
+    </div>
+
+    <div class="examples">
+      <p><strong>Если короткая стрелка между 2 и 3, а длинная на 6</strong> — это 2:30.</p>
+    </div>
+
+    <h2>Где используется время?</h2>
+    <p>Время помогает планировать день, ходить в школу, приходить вовремя на занятия и встречаться с друзьями.</p>
+
+    <button onclick="location.href='red.html'">Перейти к тренажёру</button>
   </div>
-  <div class="clock-label">2:00</div>
-
-  <h2>Как читать время?</h2>
-
-  <p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
-
-  <div class="example">
-    Если короткая стрелка на 7, а длинная на 12 — это <strong>7:00</strong>.
-  </div>
-
-  <div class="example">
-    Если короткая стрелка между 2 и 3, а длинная на 6 — это <strong>2:30</strong>.
-  </div>
-
-  <h2>Где используется время?</h2>
-  <ul>
-    <li>Чтобы прийти вовремя на уроки</li>
-    <li>Чтобы не опоздать на автобус</li>
-    <li>Чтобы знать, когда начинается обед</li>
-  </ul>
-
-  <div class="example">
-    Урок начинается в 8:30. Если сейчас 8:25 — пора собираться!
-  </div>
-
-  <div class="button-wrapper">
-    <a href="red.html" class="button-link">Перейти к тренажёру</a>
-  </div>
-</div>
-
 </body>
 </html>
