@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Тренажёр «Часик» — Теория ⏰😊</title>
+  <title>Тренажёр «Часики» — Теория</title>
   <style>
-    /* Сброс и базовые стили */
+    /* Сброс */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: "Segoe UI", sans-serif;
@@ -22,7 +22,7 @@
     h1 { font-size: 2rem; margin-top: 10px; }
     h2 { font-size: 1.5rem; margin-top: 30px; }
 
-    /* Карточки */
+    /* Карточка */
     .card {
       background: #fff;
       border-radius: 12px;
@@ -33,7 +33,7 @@
       border-left: 6px solid #3498db;
     }
 
-    /* Кнопка перехода */
+    /* Кнопка */
     .btn {
       display: inline-block;
       background: #3498db;
@@ -48,7 +48,7 @@
     }
     .btn:hover { background: #2980b9; }
 
-    /* Clock preview */
+    /* Циферблат */
     .clock {
       position: relative;
       width: 200px; height: 200px;
@@ -63,30 +63,37 @@
       transform-origin: bottom center;
       border-radius: 50px;
     }
+    /* Часовая стрелка — красная и короче */
     .hand.hour {
-      width: 8px; height: 70px;
-      background: #e74c3c;
+      width: 8px;
+      height: 60px;
+      background: #ef4444;  /* красная */
       transform: rotate(60deg);
       z-index: 2;
     }
+    /* Минутная стрелка — синяя и чуть короче */
     .hand.minute {
-      width: 6px; height: 100px;
-      background: #2c3e50;
+      width: 6px;
+      height: 90px;
+      background: #3b82f6;  /* синяя */
       transform: rotate(0deg);
     }
     .number {
       position: absolute;
       width: 24px; height: 24px;
-      text-align: center; font-weight: bold;
-      color: #2c3e50; font-size: 1rem;
+      text-align: center;
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 1rem;
     }
+
     /* Эмодзи в тексте */
     .emoji { margin-right: 6px; }
   </style>
 </head>
 <body>
 
-  <h1>🎓 Тренажёр «Часик» ⏰</h1>
+  <h1>🎓 Тренажёр «Часики» ⏰</h1>
 
   <h2>🔧 Как устроены механические часы?</h2>
   <div class="card">
@@ -127,7 +134,7 @@
   <script>
     // Расставляем цифры по кругу
     function placeNumbers(clock) {
-      const cx = 100, cy = 100, r = 90;
+      const cx = 100, cy = 100, r = 85; // r чуть меньше, чтобы стрелки не перекрывали
       for (let i = 1; i <= 12; i++) {
         const ang = (i - 3) * (Math.PI / 6);
         const x = cx + r * Math.cos(ang) - 12;
