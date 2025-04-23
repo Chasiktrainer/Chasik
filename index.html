@@ -63,7 +63,6 @@
       bottom: 50%; left: 50%;
       transform-origin: bottom center;
       border-radius: 50px;
-      z-index: 1;
     }
     .hand.hour {
       width: 6px;
@@ -78,15 +77,21 @@
       transform: rotate(0deg);
     }
 
-    .clock.small .hand.hour   { height: 25px; }
-    .clock.small .hand.minute { height: 45px; }
+    /* Уменьшенные пропорции стрелок */
+    .clock.small .hand.hour {
+      height: 24px;  /* 40px * 0.6 */
+      width: 4px;
+    }
+    .clock.small .hand.minute {
+      height: 42px;  /* 70px * 0.6 */
+      width: 3px;
+    }
 
     .number {
       position: absolute;
       width: 24px; height: 24px;
       text-align: center; font-weight: bold;
       color: #2c3e50; font-size: 1rem;
-      z-index: 2;
     }
     .clock.small .number {
       font-size: 0.8rem; width: 16px; height: 16px;
@@ -151,14 +156,14 @@
   <script>
     function placeNumbers(clock, offset) {
       const size = clock.clientWidth;
-      const cx = size/2, cy = size/2, r = size/2 - offset;
+      const cx = size / 2, cy = size / 2, r = size / 2 - offset;
       for (let i = 1; i <= 12; i++) {
         const ang = (i - 3) * (Math.PI / 6);
         const num = document.createElement('div');
         num.className = 'number';
         const adj = clock.classList.contains('small') ? 8 : 12;
         num.style.left = cx + r * Math.cos(ang) - adj + 'px';
-        num.style.top  = cy + r * Math.sin(ang) - adj + 'px';
+        num.style.top = cy + r * Math.sin(ang) - adj + 'px';
         num.textContent = i;
         clock.appendChild(num);
       }
