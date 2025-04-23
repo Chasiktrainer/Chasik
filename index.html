@@ -2,152 +2,173 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Часики</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Тренажёр «Часики» — Теория</title>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: sans-serif;
-      background: #eef6fa;
-      color: #1e2a36;
+      font-family: "Segoe UI", sans-serif;
+      background: #f4f7fc;
+      color: #2c3e50;
+      line-height: 1.6;
       padding: 20px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #34495e;
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 2rem; margin-top: 10px; }
+    h2 { font-size: 1.5rem; margin-top: 30px; }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border-left: 6px solid #3498db;
     }
 
-    .section {
-      border-left: 5px solid #4da6ff;
-      padding: 20px;
-      margin-bottom: 40px;
-      background: white;
+    .btn {
+      display: inline-block;
+      background: #3498db;
+      color: #fff;
+      padding: 12px 24px;
       border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background .2s;
+      margin: 0 auto;
     }
+    .btn:hover { background: #2980b9; }
 
     .clock {
-      width: 200px;
-      height: 200px;
-      border: 4px solid #3399ff;
-      border-radius: 50%;
       position: relative;
+      width: 200px; height: 200px;
       margin: 20px auto;
+      border: 4px solid #3498db;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fff, #eceff4);
     }
-
     .clock.small {
-      width: 100px;
-      height: 100px;
+      width: 120px; height: 120px;
       border-width: 3px;
     }
 
     .hand {
       position: absolute;
-      bottom: 50%;
-      left: 50%;
-      transform-origin: bottom;
-      background: black;
+      bottom: 50%; left: 50%;
+      transform-origin: bottom center;
+      border-radius: 50px;
+      z-index: 1;
     }
-
     .hand.hour {
+      width: 6px;
       height: 40px;
-      width: 4px;
-      background: red;
+      background: #ef4444;
+      transform: rotate(60deg);
     }
-
     .hand.minute {
-      height: 60px;
-      width: 3px;
-      background: blue;
+      width: 4px;
+      height: 70px;
+      background: #3b82f6;
+      transform: rotate(0deg);
     }
 
-    .clock.small .hand.hour {
-      height: 20px;
-      width: 3px;
-    }
+    .clock.small .hand.hour   { height: 25px; }
+    .clock.small .hand.minute { height: 45px; }
 
-    .clock.small .hand.minute {
-      height: 30px;
-      width: 2px;
-    }
-
-    .center {
-      width: 10px;
-      height: 10px;
-      background: black;
-      border-radius: 50%;
+    .number {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      width: 24px; height: 24px;
+      text-align: center; font-weight: bold;
+      color: #2c3e50; font-size: 1rem;
+      z-index: 2;
+    }
+    .clock.small .number {
+      font-size: 0.8rem; width: 16px; height: 16px;
     }
 
-    .number span {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      font-size: 14px;
-    }
-
-    .clock.small .number span {
-      font-size: 10px;
-    }
+    .emoji { margin-right: 6px; }
   </style>
 </head>
 <body>
 
-<div class="section">
-  <h3>Как устроены механические часы?</h3>
-  <ul>
-    <li><b style="color: red;">Короткая стрелка</b> (часовая) показывает текущий час.</li>
-    <li><b style="color: blue;">Длинная стрелка</b> (минутная) показывает минуты.</li>
-  </ul>
+  <h1>🎓 Тренажёр «Часики» ⏰</h1>
 
-  <div class="clock">
-    <div class="number">
-      <span style="top: 10%; left: 50%;">12</span>
-      <span style="top: 20%; left: 80%;">1</span>
-      <span style="top: 50%; left: 90%;">3</span>
-      <span style="top: 80%; left: 80%;">5</span>
-      <span style="top: 90%; left: 50%;">6</span>
-      <span style="top: 80%; left: 20%;">7</span>
-      <span style="top: 50%; left: 10%;">9</span>
-      <span style="top: 20%; left: 20%;">11</span>
-    </div>
-    <div class="hand hour" style="transform: rotate(60deg);"></div>
-    <div class="hand minute" style="transform: rotate(0deg);"></div>
-    <div class="center"></div>
-  </div>
-</div>
-
-<div class="section">
-  <h3>Как читать время?</h3>
-  <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
-
-  <div style="display: flex; justify-content: space-around;">
-    <div style="text-align: center;">
-      <div class="clock small">
-        <div class="number">
-          <span style="top: 10%; left: 50%;">12</span>
-          <span style="top: 50%; left: 90%;">3</span>
-          <span style="top: 90%; left: 50%;">6</span>
-          <span style="top: 50%; left: 10%;">9</span>
-        </div>
-        <div class="hand hour" style="transform: rotate(210deg);"></div>
-        <div class="hand minute" style="transform: rotate(0deg);"></div>
-        <div class="center"></div>
-      </div>
-      <div>7:00</div>
-    </div>
-
-    <div style="text-align: center;">
-      <div class="clock small">
-        <div class="number">
-          <span style="top: 10%; left: 50%;">12</span>
-          <span style="top: 50%; left: 90%;">3</span>
-          <span style="top: 90%; left: 50%;">6</span>
-          <span style="top: 50%; left: 10%;">9</span>
-        </div>
-        <div class="hand hour" style="transform: rotate(75deg);"></div>
-        <div class="hand minute" style="transform: rotate(180deg);"></div>
-        <div class="center"></div>
-      </div>
-      <div>2:30</div>
+  <h2>🔧 Как устроены механические часы?</h2>
+  <div class="card">
+    <p>Механические часы состоят из циферблата и двух стрелок:</p>
+    <ul>
+      <li>🔴 <strong>Короткая стрелка</strong> показывает текущий час.</li>
+      <li>🔵 <strong>Длинная стрелка</strong> показывает минуты.</li>
+    </ul>
+    <div class="clock" id="mainClock">
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
     </div>
   </div>
-</div>
+
+  <h2>📖 Как читать время?</h2>
+  <div class="card">
+    <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
+      <div>
+        <div class="clock small" id="ex1">
+          <div class="hand hour" style="transform: rotate(210deg);"></div>
+          <div class="hand minute" style="transform: rotate(0deg);"></div>
+        </div>
+        <p style="text-align:center; margin-top:8px;"><strong>7:00</strong></p>
+      </div>
+      <div>
+        <div class="clock small" id="ex2">
+          <div class="hand hour" style="transform: rotate(75deg);"></div>
+          <div class="hand minute" style="transform: rotate(180deg);"></div>
+        </div>
+        <p style="text-align:center; margin-top:8px;"><strong>2:30</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <h2>❓ Зачем уметь определять время?</h2>
+  <div class="card">
+    <p>Умение читать время помогает:</p>
+    <ul>
+      <li>🏫 приходить вовремя в школу;</li>
+      <li>🚌 успевать на автобус;</li>
+      <li>📅 планировать день и отдых;</li>
+      <li>🤝 встречаться с друзьями вовремя.</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center; margin: 30px;">
+    <a href="red.html" class="btn">▶️ Перейти к тренажёру</a>
+  </div>
+
+  <script>
+    function placeNumbers(clock, offset) {
+      const size = clock.clientWidth;
+      const cx = size/2, cy = size/2, r = size/2 - offset;
+      for (let i = 1; i <= 12; i++) {
+        const ang = (i - 3) * (Math.PI / 6);
+        const num = document.createElement('div');
+        num.className = 'number';
+        const adj = clock.classList.contains('small') ? 8 : 12;
+        num.style.left = cx + r * Math.cos(ang) - adj + 'px';
+        num.style.top  = cy + r * Math.sin(ang) - adj + 'px';
+        num.textContent = i;
+        clock.appendChild(num);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      placeNumbers(document.getElementById('mainClock'), 15);
+      placeNumbers(document.getElementById('ex1'), 12);
+      placeNumbers(document.getElementById('ex2'), 12);
+    });
+  </script>
 
 </body>
 </html>
