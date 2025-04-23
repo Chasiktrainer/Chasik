@@ -8,22 +8,24 @@
     body {
       font-family: "Arial", sans-serif;
       padding: 20px;
-      background: #f8f9fb;
+      background: #f4f6fa;
       color: #222;
       line-height: 1.8;
     }
 
     h1, h2 {
-      color: #2a74d9;
+      color: #204ecf;
     }
 
     .clock {
       width: 200px;
       height: 200px;
-      border: 4px solid #2a74d9;
+      border: 4px solid #204ecf;
       border-radius: 50%;
       margin: 20px auto;
       position: relative;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     .hand {
@@ -31,7 +33,6 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      transform: rotate(0deg);
     }
 
     .hour {
@@ -54,25 +55,28 @@
       height: 24px;
       text-align: center;
       font-weight: bold;
+      color: #204ecf;
     }
 
     .box {
-      background: #e9f2fd;
-      border-left: 4px solid #2a74d9;
-      padding: 10px 15px;
-      margin: 20px 0;
+      background: #e3ecff;
+      border-left: 4px solid #204ecf;
+      padding: 15px 20px;
+      margin: 25px 0;
+      border-radius: 8px;
     }
 
     .button {
       display: block;
-      width: fit-content;
       margin: 30px auto;
-      padding: 12px 20px;
-      background-color: #2a74d9;
+      padding: 14px 24px;
+      background-color: #204ecf;
       color: white;
       text-decoration: none;
       border-radius: 6px;
+      font-size: 18px;
       font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .example-clock {
@@ -80,69 +84,79 @@
       justify-content: center;
       margin-top: 15px;
     }
+
+    .small {
+      transform: scale(0.6);
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Как научиться понимать время?</h1>
-  <p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
-  <ul>
-    <li><strong>Короткая стрелка</strong> показывает часы.</li>
-    <li><strong>Длинная стрелка</strong> показывает минуты.</li>
-  </ul>
+<h1>Как научиться понимать время?</h1>
+<p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
+<ul>
+  <li><strong>Короткая стрелка</strong> показывает часы.</li>
+  <li><strong>Длинная стрелка</strong> показывает минуты.</li>
+</ul>
 
-  <div class="clock">
-    <div class="hand hour" style="transform: rotate(60deg);"></div>
-    <div class="hand minute" style="transform: rotate(0deg);"></div>
-    <!-- Numbers -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const clock = document.querySelector('.clock');
-        for (let i = 1; i <= 12; i++) {
-          const number = document.createElement("div");
-          number.className = "number";
-          const angle = (i - 3) * 30 * (Math.PI / 180);
-          const radius = 90;
-          const x = 100 + radius * Math.cos(angle) - 12;
-          const y = 100 + radius * Math.sin(angle) - 12;
-          number.style.left = `${x}px`;
-          number.style.top = `${y}px`;
-          number.innerText = i;
-          clock.appendChild(number);
-        }
-      });
-    </script>
-  </div>
+<!-- Основной циферблат -->
+<div class="clock">
+  <div class="hand hour" style="transform: rotate(60deg);"></div>
+  <div class="hand minute" style="transform: rotate(0deg);"></div>
+</div>
 
-  <p style="text-align: center; font-weight: bold; font-size: 20px;">2:00</p>
+<script>
+  function placeNumbers(clock) {
+    for (let i = 1; i <= 12; i++) {
+      const number = document.createElement("div");
+      number.className = "number";
+      const angle = (i - 3) * 30 * Math.PI / 180;
+      const radius = 90;
+      const x = 100 + radius * Math.cos(angle) - 12;
+      const y = 100 + radius * Math.sin(angle) - 12;
+      number.style.left = x + "px";
+      number.style.top = y + "px";
+      number.textContent = i;
+      clock.appendChild(number);
+    }
+  }
 
-  <h2>Как читать время?</h2>
-  <p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".clock").forEach(placeNumbers);
+  });
+</script>
 
-  <div class="box">
-    <strong>Если короткая стрелка на 7, а длинная на 12</strong> — это 7:00.
-    <div class="example-clock">
-      <div class="clock" style="transform: scale(0.6);">
-        <div class="hand hour" style="transform: rotate(210deg);"></div>
-        <div class="hand minute" style="transform: rotate(0deg);"></div>
-      </div>
+<p style="text-align: center; font-weight: bold; font-size: 20px;">2:00</p>
+
+<h2>Как читать время?</h2>
+<p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
+
+<!-- Примеры -->
+<div class="box">
+  <strong>Если короткая стрелка на 7, а длинная на 12</strong> — это 7:00.
+  <div class="example-clock">
+    <div class="clock small">
+      <div class="hand hour" style="transform: rotate(210deg);"></div>
+      <div class="hand minute" style="transform: rotate(0deg);"></div>
     </div>
   </div>
+</div>
 
-  <div class="box">
-    <strong>Если короткая стрелка между 2 и 3, а длинная на 6</strong> — это 2:30.
-    <div class="example-clock">
-      <div class="clock" style="transform: scale(0.6);">
-        <div class="hand hour" style="transform: rotate(75deg);"></div>
-        <div class="hand minute" style="transform: rotate(180deg);"></div>
-      </div>
+<div class="box">
+  <strong>Если короткая стрелка между 2 и 3, а длинная на 6</strong> — это 2:30.
+  <div class="example-clock">
+    <div class="clock small">
+      <div class="hand hour" style="transform: rotate(75deg);"></div>
+      <div class="hand minute" style="transform: rotate(180deg);"></div>
     </div>
   </div>
+</div>
 
-  <h2>Где используется время?</h2>
-  <p>Время помогает планировать день, ходить в школу, приходить вовремя на занятия и встречаться с друзьями.</p>
+<h2>Где используется время?</h2>
+<p>Время нужно, чтобы успевать в школу, на кружки, не опаздывать на автобус и договариваться с друзьями.</p>
 
-  <a class="button" href="red.html">Перейти к тренажёру</a>
+<a class="button" href="red.html">Перейти к тренажёру</a>
 
 </body>
 </html>
