@@ -1,202 +1,149 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Тренажёр «Часик»</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Тренажёр «Часик» — Теория ⏰😊</title>
   <style>
+    /* Сброс и базовые стили */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
-      color: #1e293b;
-      padding: 40px 20px;
-      line-height: 1.8;
+      background: #f4f7fc;
+      color: #2c3e50;
+      line-height: 1.6;
+      padding: 20px;
     }
-
     h1, h2 {
       text-align: center;
-      font-weight: 700;
-      margin-bottom: 20px;
+      color: #34495e;
+      margin-bottom: 16px;
+    }
+    h1 { font-size: 2rem; margin-top: 10px; }
+    h2 { font-size: 1.5rem; margin-top: 30px; }
+
+    /* Карточки */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px auto;
+      max-width: 800px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border-left: 6px solid #3498db;
     }
 
-    h1 {
-      font-size: 40px;
-      color: #1d4ed8;
-      text-shadow: 1px 1px 0 #fff;
+    /* Кнопка перехода */
+    .btn {
+      display: inline-block;
+      background: #3498db;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background .2s;
+      margin: 0 auto;
     }
+    .btn:hover { background: #2980b9; }
 
-    h2 {
-      font-size: 28px;
-      color: #2563eb;
-    }
-
-    p, ul, li {
-      font-size: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    ul {
-      margin-top: 10px;
-      padding-left: 40px;
-    }
-
+    /* Clock preview */
     .clock {
-      width: 200px;
-      height: 200px;
-      border: 4px solid #2563eb;
-      border-radius: 50%;
-      margin: 30px auto;
       position: relative;
-      background: #ffffff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      width: 200px; height: 200px;
+      margin: 20px auto;
+      border: 4px solid #3498db;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fff, #eceff4);
     }
-
     .hand {
       position: absolute;
-      bottom: 50%;
-      left: 50%;
+      bottom: 50%; left: 50%;
       transform-origin: bottom center;
       border-radius: 50px;
     }
-
-    .hour {
-      width: 10px;
-      height: 55px;
-      background: #ef4444;
+    .hand.hour {
+      width: 8px; height: 70px;
+      background: #e74c3c;
+      transform: rotate(60deg);
       z-index: 2;
     }
-
-    .minute {
-      width: 6px;
-      height: 75px;
-      background: #3b82f6;
-      z-index: 1;
+    .hand.minute {
+      width: 6px; height: 100px;
+      background: #2c3e50;
+      transform: rotate(0deg);
     }
-
     .number {
       position: absolute;
-      width: 28px;
-      height: 28px;
-      text-align: center;
-      font-weight: bold;
-      color: #1e3a8a;
-      font-size: 18px;
+      width: 24px; height: 24px;
+      text-align: center; font-weight: bold;
+      color: #2c3e50; font-size: 1rem;
     }
-
-    .box {
-      background: #e0f2fe;
-      border-left: 6px solid #2563eb;
-      padding: 20px;
-      margin: 30px auto;
-      border-radius: 10px;
-      max-width: 850px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    .button {
-      display: block;
-      margin: 40px auto;
-      padding: 14px 30px;
-      background-color: #1d4ed8;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-size: 20px;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-
-    .button:hover {
-      background-color: #1e40af;
-    }
-
-    .example-clock {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .small {
-      transform: scale(0.6);
-    }
-
-    .time-caption {
-      text-align: center;
-      font-weight: bold;
-      font-size: 22px;
-      color: #1e3a8a;
-    }
+    /* Эмодзи в тексте */
+    .emoji { margin-right: 6px; }
   </style>
 </head>
 <body>
 
-<h1>Тренажёр «Часик»</h1>
+  <h1>🎓 Тренажёр «Часик» ⏰</h1>
 
-<p>Механические часы — это прибор, у которого есть циферблат и две стрелки:</p>
-<ul>
-  <li><strong>Короткая стрелка</strong> показывает часы.</li>
-  <li><strong>Длинная стрелка</strong> показывает минуты.</li>
-</ul>
+  <h2>🔧 Как устроены механические часы?</h2>
+  <div class="card">
+    <p>Механические часы состоят из циферблата и двух стрелок:</p>
+    <ul>
+      <li>🔴 <strong>Короткая стрелка</strong> (часовая) показывает текущий час.</li>
+      <li>🔵 <strong>Длинная стрелка</strong> (минутная) показывает минуты.</li>
+    </ul>
 
-<!-- Главный циферблат -->
-<div class="clock">
-  <div class="hand hour" style="transform: rotate(60deg);"></div>
-  <div class="hand minute" style="transform: rotate(0deg);"></div>
-</div>
-<p class="time-caption">2:00</p>
-
-<h2>Как читать время?</h2>
-<p>Сначала смотри на короткую стрелку — она подскажет, который час. Затем на длинную — она покажет минуты.</p>
-
-<!-- Примеры -->
-<div class="box">
-  <strong>Если короткая стрелка на 7, а длинная на 12</strong> — это 7:00.
-  <div class="example-clock">
-    <div class="clock small">
-      <div class="hand hour" style="transform: rotate(210deg);"></div>
-      <div class="hand minute" style="transform: rotate(0deg);"></div>
+    <div class="clock" id="mainClock">
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
     </div>
   </div>
-</div>
 
-<div class="box">
-  <strong>Если короткая стрелка между 2 и 3, а длинная на 6</strong> — это 2:30.
-  <div class="example-clock">
-    <div class="clock small">
-      <div class="hand hour" style="transform: rotate(75deg);"></div>
-      <div class="hand minute" style="transform: rotate(180deg);"></div>
-    </div>
+  <h2>📖 Как читать время?</h2>
+  <div class="card">
+    <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
+    <p>💡 <strong>Пример 1:</strong> если часовая стрелка на 7, а минутная на 12 — это 7:00.</p>
+    <p>💡 <strong>Пример 2:</strong> если часовая стрелка между 2 и 3, а минутная на 6 — это 2:30.</p>
   </div>
-</div>
 
-<h2>Зачем нужно знать время?</h2>
-<p>Чтобы приходить вовремя в школу, на кружки, встречаться с друзьями и быть организованным человеком.</p>
+  <h2>❓ Зачем уметь определять время?</h2>
+  <div class="card">
+    <p>Умение читать время помогает:</p>
+    <ul>
+      <li>🏫 приходить вовремя в школу;</li>
+      <li>🚌 успевать на автобус;</li>
+      <li>📅 планировать день и отдых;</li>
+      <li>🤝 встречаться с друзьями вовремя.</li>
+    </ul>
+  </div>
 
-<a class="button" href="red.html">Перейти к тренажёру</a>
+  <div style="text-align:center; margin: 30px;">
+    <a href="red.html" class="btn">▶️ Перейти к тренажёру</a>
+  </div>
 
-<!-- Скрипт расставляет цифры на всех часах -->
-<script>
-  function placeNumbers(clock) {
-    for (let i = 1; i <= 12; i++) {
-      const number = document.createElement("div");
-      number.className = "number";
-      const angle = (i - 3) * 30 * Math.PI / 180;
-      const radius = 90;
-      const x = 100 + radius * Math.cos(angle) - 14;
-      const y = 100 + radius * Math.sin(angle) - 14;
-      number.style.left = x + "px";
-      number.style.top = y + "px";
-      number.textContent = i;
-      clock.appendChild(number);
+  <script>
+    // Расставляем цифры по кругу
+    function placeNumbers(clock) {
+      const cx = 100, cy = 100, r = 90;
+      for (let i = 1; i <= 12; i++) {
+        const ang = (i - 3) * (Math.PI / 6);
+        const x = cx + r * Math.cos(ang) - 12;
+        const y = cy + r * Math.sin(ang) - 12;
+        const num = document.createElement('div');
+        num.className = 'number';
+        num.style.left = x + 'px';
+        num.style.top = y + 'px';
+        num.textContent = i;
+        clock.appendChild(num);
+      }
     }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".clock").forEach(placeNumbers);
-  });
-</script>
+    document.addEventListener('DOMContentLoaded', () => {
+      placeNumbers(document.getElementById('mainClock'));
+    });
+  </script>
 
 </body>
 </html>
