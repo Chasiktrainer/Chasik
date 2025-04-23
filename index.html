@@ -66,17 +66,17 @@
     }
 
     .clock-draw {
-      width: 150px;
-      height: 150px;
+      width: 200px;
+      height: 200px;
       border: 4px solid #4a90e2;
       border-radius: 50%;
       margin: 20px auto;
       position: relative;
+      background-color: #fff;
     }
 
     .hand-hour, .hand-minute {
       position: absolute;
-      background-color: #4a90e2;
       transform-origin: bottom center;
       left: 50%;
       bottom: 50%;
@@ -84,14 +84,24 @@
 
     .hand-hour {
       width: 6px;
-      height: 40px;
-      transform: rotate(60deg); /* пример на 2:00 */
+      height: 50px;
+      background-color: #e74c3c; /* красная часовая */
+      transform: rotate(60deg); /* 2 часа */
     }
 
     .hand-minute {
       width: 4px;
-      height: 60px;
-      transform: rotate(0deg); /* на 12 */
+      height: 70px;
+      background-color: #4a90e2; /* синяя минутная */
+      transform: rotate(0deg); /* 00 минут */
+    }
+
+    .clock-number {
+      position: absolute;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      transform: translate(-50%, -50%);
     }
 
     .clock-label {
@@ -113,8 +123,23 @@
   </ul>
 
   <div class="clock-draw">
+    <!-- Стрелки -->
     <div class="hand-hour"></div>
     <div class="hand-minute"></div>
+
+    <!-- Цифры -->
+    <div class="clock-number" style="top: 10%; left: 50%;">12</div>
+    <div class="clock-number" style="top: 18%; left: 85%;">1</div>
+    <div class="clock-number" style="top: 35%; left: 95%;">2</div>
+    <div class="clock-number" style="top: 55%; left: 95%;">3</div>
+    <div class="clock-number" style="top: 72%; left: 85%;">4</div>
+    <div class="clock-number" style="top: 83%; left: 65%;">5</div>
+    <div class="clock-number" style="top: 88%; left: 50%;">6</div>
+    <div class="clock-number" style="top: 83%; left: 35%;">7</div>
+    <div class="clock-number" style="top: 72%; left: 15%;">8</div>
+    <div class="clock-number" style="top: 55%; left: 5%;">9</div>
+    <div class="clock-number" style="top: 35%; left: 5%;">10</div>
+    <div class="clock-number" style="top: 18%; left: 15%;">11</div>
   </div>
   <div class="clock-label">2:00</div>
 
