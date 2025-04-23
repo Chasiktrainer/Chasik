@@ -3,261 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Основы времени - Часики</title>
+    <title>Chasik</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(to right, #e0ecff, #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #2979ff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        main {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #2c3e50;
-            line-height: 1.6;
+            padding: 40px;
         }
 
-        .theory-container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 800px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
-
-        .step {
-            margin: 25px 0;
-            padding: 20px;
-            position: relative;
-        }
-
-        .step-number {
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            background: #3498db;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .clock-diagram {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
-            background: #fff;
-            border: 3px solid #2c3e50;
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .theory-clock-number {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            transform-origin: center;
-            left: calc(50% - 15px);
-            top: calc(50% - 15px);
-        }
-
-        .theory-clock-number:nth-child(1) { transform: rotate(0deg) translate(0, -100px) rotate(0deg) }
-        .theory-clock-number:nth-child(2) { transform: rotate(30deg) translate(0, -100px) rotate(-30deg) }
-        .theory-clock-number:nth-child(3) { transform: rotate(60deg) translate(0, -100px) rotate(-60deg) }
-        .theory-clock-number:nth-child(4) { transform: rotate(90deg) translate(0, -100px) rotate(-90deg) }
-        .theory-clock-number:nth-child(5) { transform: rotate(120deg) translate(0, -100px) rotate(-120deg) }
-        .theory-clock-number:nth-child(6) { transform: rotate(150deg) translate(0, -100px) rotate(-150deg) }
-        .theory-clock-number:nth-child(7) { transform: rotate(180deg) translate(0, -100px) rotate(-180deg) }
-        .theory-clock-number:nth-child(8) { transform: rotate(210deg) translate(0, -100px) rotate(-210deg) }
-        .theory-clock-number:nth-child(9) { transform: rotate(240deg) translate(0, -100px) rotate(-240deg) }
-        .theory-clock-number:nth-child(10) { transform: rotate(270deg) translate(0, -100px) rotate(-270deg) }
-        .theory-clock-number:nth-child(11) { transform: rotate(300deg) translate(0, -100px) rotate(-300deg) }
-        .theory-clock-number:nth-child(12) { transform: rotate(330deg) translate(0, -100px) rotate(-330deg) }
-
-        .hour-hand-example {
-            position: absolute;
-            width: 6px;
-            height: 60px;
-            background: #e74c3c;
-            border-radius: 4px 4px 0 0;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: 50% 100%;
-            z-index: 2;
-        }
-
-        .minute-hand-example {
-            position: absolute;
-            width: 4px;
-            height: 80px;
-            background: #3498db;
-            border-radius: 3px 3px 0 0;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: 50% 100%;
-            z-index: 2;
-        }
-
-        .center-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: #2c3e50;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-        }
-
-        .start-button {
+        .button {
+            display: inline-block;
+            margin-top: 20px;
             padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            background: #2ecc71;
+            background-color: #2979ff;
             color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 30px;
-            width: 100%;
-            font-size: 1.1em;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
         }
 
-        .start-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        .button:hover {
+            background-color: #1a5fd4;
         }
 
-        /* Убраны стили для .tip и добавлены отступы */
-        .tip {
-            padding: 0;
-            margin: 15px 0;
-            color: #2c3e50;
+        footer {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <div class="theory-container">
-        <h1>⏰ Первые шаги в мире времени</h1>
-
-        <div class="step">
-            <div class="step-number">1</div>
-            <h2>Что такое циферблат?</h2>
-            <p>Это круг, разделённый на 12 равных частей-часов. Каждая цифра:</p>
-            <div class="clock-diagram">
-                <div class="theory-clock-number">12</div>
-                <div class="theory-clock-number">1</div>
-                <div class="theory-clock-number">2</div>
-                <div class="theory-clock-number">3</div>
-                <div class="theory-clock-number">4</div>
-                <div class="theory-clock-number">5</div>
-                <div class="theory-clock-number">6</div>
-                <div class="theory-clock-number">7</div>
-                <div class="theory-clock-number">8</div>
-                <div class="theory-clock-number">9</div>
-                <div class="theory-clock-number">10</div>
-                <div class="theory-clock-number">11</div>
-                <div class="hour-hand-example" style="transform: rotate(90deg)"></div>
-                <div class="minute-hand-example" style="transform: rotate(0deg)"></div>
-                <div class="center-dot"></div>
-            </div>
-            <p>🔴 <strong>Красная стрелка</strong> (короткая) показывает часы<br>
-            🔵 <strong>Синяя стрелка</strong> (длинная) показывает минуты</p>
-        </div>
-
-        <div class="step">
-            <div class="step-number">2</div>
-            <h2>Как читать часы?</h2>
-            <p>1. Сначала смотрите на красную стрелку:</p>
-            <p class="tip">Пример: Если она указывает на 3 → сейчас 3 часа</p>
-            
-            <div class="clock-diagram">
-                <div class="theory-clock-number">12</div>
-                <div class="theory-clock-number">1</div>
-                <div class="theory-clock-number">2</div>
-                <div class="theory-clock-number">3</div>
-                <div class="theory-clock-number">4</div>
-                <div class="theory-clock-number">5</div>
-                <div class="theory-clock-number">6</div>
-                <div class="theory-clock-number">7</div>
-                <div class="theory-clock-number">8</div>
-                <div class="theory-clock-number">9</div>
-                <div class="theory-clock-number">10</div>
-                <div class="theory-clock-number">11</div>
-                <div class="hour-hand-example" style="transform: rotate(120deg)"></div>
-                <div class="minute-hand-example" style="transform: rotate(180deg)"></div>
-                <div class="center-dot"></div>
-            </div>
-
-            <p>2. Затем на синюю стрелку:</p>
-            <p class="tip">Каждое деление = 5 минут (12 → 0, 1 → 5, 2 → 10 и т.д.)</p>
-            
-            <p>⏲️ Пример времени:<br>
-            Красная на 4 (4 часа)<br>
-            Синяя на 6 → 6×5 = 30 минут<br>
-            <strong>Итого: 4:30</strong></p>
-        </div>
-
-        <div class="step">
-            <div class="step-number">3</div>
-            <h2>Практические правила</h2>
-            <p class="tip">❗ Запомните:<br>
-            - Полный круг = 60 минут<br>
-            - Каждый час = 30° поворота стрелки<br>
-            - Каждая минута = 6° поворота</p>
-
-            <p>🎮 Тренируйтесь определять время в 3 этапа:<br>
-            1. Только целые часы (3:00, 7:00)<br>
-            2. Полчаса и четверти (3:15, 7:45)<br>
-            3. Любое время (3:23, 7:58)</p>
-        </div>
-
-        <div class="step">
-            <div class="step-number">4</div>
-            <h2>Живые примеры</h2>
-            <div class="clock-diagram">
-                <div class="theory-clock-number">12</div>
-                <div class="theory-clock-number">1</div>
-                <div class="theory-clock-number">2</div>
-                <div class="theory-clock-number">3</div>
-                <div class="theory-clock-number">4</div>
-                <div class="theory-clock-number">5</div>
-                <div class="theory-clock-number">6</div>
-                <div class="theory-clock-number">7</div>
-                <div class="theory-clock-number">8</div>
-                <div class="theory-clock-number">9</div>
-                <div class="theory-clock-number">10</div>
-                <div class="theory-clock-number">11</div>
-                <div class="hour-hand-example" style="transform: rotate(180deg)"></div>
-                <div class="minute-hand-example" style="transform: rotate(90deg)"></div>
-                <div class="center-dot"></div>
-            </div>
-            <p>🕛 6:00 - стрелки напротив друг друга<br>
-            🕒 3:15 - часовая между 3 и 4<br>
-            🕗 8:45 - минутная на 9 (45 минут)</p>
-        </div>
-
-        <button class="start-button" onclick="window.location.href = 'red.html';">
-            Перейти к интерактивному тренажёру →
-        </button>
-    </div>
+    <header>
+        Добро пожаловать в Chasik
+    </header>
+    <main>
+        <h1>Это главная страница проекта</h1>
+        <p>Нажмите на кнопку ниже, чтобы перейти на красный экран.</p>
+        <a class="button" href="red.html">Красный экран</a>
+    </main>
+    <footer>
+        &copy; 2025 Chasik. Все права защищены.
+    </footer>
 </body>
 </html>
