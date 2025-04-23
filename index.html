@@ -1,184 +1,149 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Тренажёр «Часики» — Теория</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Часики</title>
   <style>
-    /* Сброс */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f4f7fc;
-      color: #2c3e50;
-      line-height: 1.6;
+      font-family: sans-serif;
+      background: #f0f6fa;
+      color: #1e2a36;
       padding: 20px;
     }
+
     h1, h2 {
       text-align: center;
-      color: #34495e;
-      margin-bottom: 16px;
-    }
-    h1 { font-size: 2rem; margin-top: 10px; }
-    h2 { font-size: 1.5rem; margin-top: 30px; }
-
-    /* Карточки */
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      margin: 20px auto;
-      max-width: 800px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      border-left: 6px solid #3498db;
+      color: #1d2c4b;
     }
 
-    /* Кнопка */
-    .btn {
-      display: inline-block;
-      background: #3498db;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background .2s;
-      margin: 0 auto;
+    .info-block {
+      background: #ffffff;
+      border-left: 6px solid #2c8dd8;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
     }
-    .btn:hover { background: #2980b9; }
 
-    /* Циферблаты */
     .clock {
       position: relative;
-      width: 200px; height: 200px;
       margin: 20px auto;
-      border: 4px solid #3498db;
+      background: #f9fbfd;
+      border: 4px solid #2c8dd8;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #fff, #eceff4);
-    }
-    .clock.small {
-      width: 120px; height: 120px;
-      border-width: 3px;
     }
 
-    /* Стрелки */
+    .clock::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      background: black;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     .hand {
       position: absolute;
-      bottom: 50%; left: 50%;
+      left: 50%;
       transform-origin: bottom center;
-      border-radius: 50px;
-    }
-    /* Часовая стрелка: короче */
-    .hand.hour {
-      width: 6px;    /* чуть тоньше */
-      height: 40px;  /* уменьшили с 60px до 40px */
-      background: #ef4444;
-      transform: rotate(60deg);
-    }
-    /* Минутная стрелка: короче */
-    .hand.minute {
-      width: 4px;    /* чуть тоньше */
-      height: 70px;  /* уменьшили с 90px до 70px */
-      background: #3b82f6;
-      transform: rotate(0deg);
+      width: 3px;
+      border-radius: 2px;
     }
 
-    /* Малые стрелки */
-    .clock.small .hand.hour   { height: 25px; }
-    .clock.small .hand.minute { height: 45px; }
-
-    /* Цифры */
-    .number {
-      position: absolute;
-      width: 24px; height: 24px;
-      text-align: center; font-weight: bold;
-      color: #2c3e50; font-size: 1rem;
-    }
-    .clock.small .number {
-      font-size: 0.8rem; width: 16px; height: 16px;
+    .big {
+      width: 200px;
+      height: 200px;
     }
 
-    /* Эмодзи */
-    .emoji { margin-right: 6px; }
+    .big .hand.hour {
+      height: 60px;
+      background-color: red;
+      top: 30%;
+    }
+
+    .big .hand.minute {
+      height: 90px;
+      background-color: blue;
+      top: 10%;
+    }
+
+    .small {
+      width: 80px;
+      height: 80px;
+    }
+
+    .small .hand.hour {
+      height: 25px;
+      background-color: red;
+      top: 25%;
+    }
+
+    .small .hand.minute {
+      height: 35px;
+      background-color: blue;
+      top: 15%;
+    }
+
+    .clock-row {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .clock-labels {
+      display: flex;
+      justify-content: space-evenly;
+      font-weight: bold;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>🎓 Тренажёр «Часики» ⏰</h1>
+  <h1>⏰ Тренажёр «Часики»</h1>
 
-  <h2>🔧 Как устроены механические часы?</h2>
-  <div class="card">
+  <h2>🛠 Как устроены механические часы?</h2>
+  <div class="info-block">
     <p>Механические часы состоят из циферблата и двух стрелок:</p>
     <ul>
-      <li>🔴 <strong>Короткая стрелка</strong> показывает текущий час.</li>
-      <li>🔵 <strong>Длинная стрелка</strong> показывает минуты.</li>
+      <li>🔴 <strong>Короткая стрелка</strong> (часовая) показывает текущий час.</li>
+      <li>🔵 <strong>Длинная стрелка</strong> (минутная) показывает минуты.</li>
     </ul>
-    <div class="clock" id="mainClock">
-      <div class="hand hour"></div>
-      <div class="hand minute"></div>
+    <div class="clock big">
+      <div class="hand hour" style="transform: rotate(60deg);"></div> <!-- 2 -->
+      <div class="hand minute" style="transform: rotate(0deg);"></div> <!-- 00 -->
     </div>
   </div>
 
   <h2>📖 Как читать время?</h2>
-  <div class="card">
-    <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
-    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
-      <!-- Пример 1 -->
-      <div>
-        <div class="clock small" id="ex1">
-          <div class="hand hour" style="transform: rotate(210deg);"></div>
-          <div class="hand minute" style="transform: rotate(0deg);"></div>
-        </div>
-        <p style="text-align:center; margin-top:8px;"><strong>7:00</strong></p>
-      </div>
-      <!-- Пример 2 -->
-      <div>
-        <div class="clock small" id="ex2">
-          <div class="hand hour" style="transform: rotate(75deg);"></div>
-          <div class="hand minute" style="transform: rotate(180deg);"></div>
-        </div>
-        <p style="text-align:center; margin-top:8px;"><strong>2:30</strong></p>
-      </div>
+  <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
+
+  <div class="clock-row">
+    <div class="clock small">
+      <div class="hand hour" style="transform: rotate(210deg);"></div> <!-- 7:00 -->
+      <div class="hand minute" style="transform: rotate(0deg);"></div>
     </div>
+    <div class="clock small">
+      <div class="hand hour" style="transform: rotate(75deg);"></div> <!-- 2:30 -->
+      <div class="hand minute" style="transform: rotate(180deg);"></div>
+    </div>
+  </div>
+  <div class="clock-labels">
+    <span>7:00</span>
+    <span>2:30</span>
   </div>
 
   <h2>❓ Зачем уметь определять время?</h2>
-  <div class="card">
-    <p>Умение читать время помогает:</p>
-    <ul>
-      <li>🏫 приходить вовремя в школу;</li>
-      <li>🚌 успевать на автобус;</li>
-      <li>📅 планировать день и отдых;</li>
-      <li>🤝 встречаться с друзьями вовремя.</li>
-    </ul>
-  </div>
-
-  <div style="text-align:center; margin: 30px;">
-    <a href="red.html" class="btn">▶️ Перейти к тренажёру</a>
-  </div>
-
-  <script>
-    function placeNumbers(clock, offset) {
-      const size = clock.clientWidth;
-      const cx = size/2, cy = size/2, r = size/2 - offset;
-      for (let i = 1; i <= 12; i++) {
-        const ang = (i - 3) * (Math.PI / 6);
-        const num = document.createElement('div');
-        num.className = 'number';
-        const adj = clock.classList.contains('small') ? 8 : 12;
-        num.style.left = cx + r * Math.cos(ang) - adj + 'px';
-        num.style.top  = cy + r * Math.sin(ang) - adj + 'px';
-        num.textContent = i;
-        clock.appendChild(num);
-      }
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      placeNumbers(document.getElementById('mainClock'), 15);
-      placeNumbers(document.getElementById('ex1'), 12);
-      placeNumbers(document.getElementById('ex2'), 12);
-    });
-  </script>
+  <p>Умение читать время помогает:</p>
+  <ul>
+    <li>приходить вовремя,</li>
+    <li>планировать день,</li>
+    <li>ориентироваться в распорядке.</li>
+  </ul>
 
 </body>
 </html>
