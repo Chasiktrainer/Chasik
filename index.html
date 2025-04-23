@@ -10,15 +10,15 @@
       color: #333;
       margin: 0;
       padding: 0;
-      font-size: 60px;
+      font-size: 30px;
       line-height: 1.6;
     }
 
     .container {
       max-width: 1000px;
-      margin: 60px auto;
+      margin: 40px auto;
       background: white;
-      padding: 80px;
+      padding: 60px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       border-radius: 20px;
     }
@@ -26,42 +26,42 @@
     h1, h2 {
       color: #3b78c7;
       text-align: center;
-      font-size: 90px;
+      font-size: 45px;
     }
 
     p, li {
-      font-size: 60px;
+      font-size: 30px;
     }
 
     ul {
-      padding-left: 60px;
+      padding-left: 40px;
     }
 
     li {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     .example {
       background: #eef4fb;
-      border-left: 15px solid #3b78c7;
-      padding: 40px 60px;
-      margin: 60px 0;
+      border-left: 10px solid #3b78c7;
+      padding: 30px 40px;
+      margin: 40px 0;
       border-radius: 12px;
       font-weight: 600;
     }
 
     .button-wrapper {
       text-align: center;
-      margin-top: 100px;
+      margin-top: 60px;
     }
 
     .button-link {
       display: inline-block;
       background: #3b78c7;
       color: white;
-      padding: 30px 80px;
-      font-size: 60px;
-      border-radius: 20px;
+      padding: 20px 50px;
+      font-size: 32px;
+      border-radius: 15px;
       text-decoration: none;
       box-shadow: 0 6px 15px rgba(0,0,0,0.2);
       transition: background 0.3s ease;
@@ -72,14 +72,14 @@
     }
 
     .clock-draw {
-      width: 400px;
-      height: 400px;
-      margin: 80px auto 20px;
+      width: 300px;
+      height: 300px;
+      margin: 60px auto 20px;
       position: relative;
       background: radial-gradient(circle at center, #ffffff, #e1e7f0);
       border-radius: 50%;
-      border: 10px solid #3b78c7;
-      box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+      border: 8px solid #3b78c7;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
     }
 
     .hand-hour, .hand-minute {
@@ -91,22 +91,22 @@
     }
 
     .hand-hour {
-      width: 14px;
-      height: 100px;
-      background-color: #ff4c4c; /* красная */
+      width: 10px;
+      height: 75px;
+      background-color: #ff4c4c;
       transform: rotate(60deg);
     }
 
     .hand-minute {
-      width: 10px;
-      height: 160px;
-      background-color: #448aff; /* синяя */
+      width: 6px;
+      height: 130px;
+      background-color: #448aff;
       transform: rotate(0deg);
     }
 
     .clock-number {
       position: absolute;
-      font-size: 48px;
+      font-size: 24px;
       font-weight: bold;
       color: #333;
       left: 50%;
@@ -114,24 +114,24 @@
       transform: translate(-50%, -50%);
     }
 
-    /* Расположение цифр по кругу */
-    .clock-number:nth-child(3)  { transform: rotate(0deg)   translateY(-180px) translateX(-50%) rotate(-0deg);  content: "12"; }
-    .clock-number:nth-child(4)  { transform: rotate(30deg)  translateY(-180px) translateX(-50%) rotate(-30deg); }
-    .clock-number:nth-child(5)  { transform: rotate(60deg)  translateY(-180px) translateX(-50%) rotate(-60deg); }
-    .clock-number:nth-child(6)  { transform: rotate(90deg)  translateY(-180px) translateX(-50%) rotate(-90deg); }
-    .clock-number:nth-child(7)  { transform: rotate(120deg) translateY(-180px) translateX(-50%) rotate(-120deg);}
-    .clock-number:nth-child(8)  { transform: rotate(150deg) translateY(-180px) translateX(-50%) rotate(-150deg);}
-    .clock-number:nth-child(9)  { transform: rotate(180deg) translateY(-180px) translateX(-50%) rotate(-180deg);}
-    .clock-number:nth-child(10) { transform: rotate(210deg) translateY(-180px) translateX(-50%) rotate(-210deg);}
-    .clock-number:nth-child(11) { transform: rotate(240deg) translateY(-180px) translateX(-50%) rotate(-240deg);}
-    .clock-number:nth-child(12) { transform: rotate(270deg) translateY(-180px) translateX(-50%) rotate(-270deg);}
-    .clock-number:nth-child(13) { transform: rotate(300deg) translateY(-180px) translateX(-50%) rotate(-300deg);}
-    .clock-number:nth-child(14) { transform: rotate(330deg) translateY(-180px) translateX(-50%) rotate(-330deg);}
+    /* Расположение цифр */
+    .clock-number:nth-child(3)  { transform: rotate(0deg)   translateY(-135px) translateX(-50%) rotate(-0deg);  }
+    .clock-number:nth-child(4)  { transform: rotate(30deg)  translateY(-135px) translateX(-50%) rotate(-30deg); }
+    .clock-number:nth-child(5)  { transform: rotate(60deg)  translateY(-135px) translateX(-50%) rotate(-60deg); }
+    .clock-number:nth-child(6)  { transform: rotate(90deg)  translateY(-135px) translateX(-50%) rotate(-90deg); }
+    .clock-number:nth-child(7)  { transform: rotate(120deg) translateY(-135px) translateX(-50%) rotate(-120deg);}
+    .clock-number:nth-child(8)  { transform: rotate(150deg) translateY(-135px) translateX(-50%) rotate(-150deg);}
+    .clock-number:nth-child(9)  { transform: rotate(180deg) translateY(-135px) translateX(-50%) rotate(-180deg);}
+    .clock-number:nth-child(10) { transform: rotate(210deg) translateY(-135px) translateX(-50%) rotate(-210deg);}
+    .clock-number:nth-child(11) { transform: rotate(240deg) translateY(-135px) translateX(-50%) rotate(-240deg);}
+    .clock-number:nth-child(12) { transform: rotate(270deg) translateY(-135px) translateX(-50%) rotate(-270deg);}
+    .clock-number:nth-child(13) { transform: rotate(300deg) translateY(-135px) translateX(-50%) rotate(-300deg);}
+    .clock-number:nth-child(14) { transform: rotate(330deg) translateY(-135px) translateX(-50%) rotate(-330deg);}
 
     .clock-label {
       text-align: center;
       margin-top: 20px;
-      font-size: 64px;
+      font-size: 36px;
       font-weight: bold;
     }
   </style>
@@ -150,7 +150,6 @@
   <div class="clock-draw">
     <div class="hand-hour"></div>
     <div class="hand-minute"></div>
-    <!-- Цифры от 12 до 11 -->
     <div class="clock-number">12</div>
     <div class="clock-number">1</div>
     <div class="clock-number">2</div>
