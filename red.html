@@ -240,10 +240,18 @@
     }
 
     function updateInterface(level) {
-      const config = levels[level];
-      timeInput.style.display = config.allowInput ? "block" : "none";
-      taskText.innerHTML = config.showTarget ? "Установите время: <strong id='targetTime'>" + formatTime(currentTask.hour, currentTask.minute) + "</strong>" : "Установите время: <strong id='targetTime'>??</strong>";
-    }
+  const config = levels[level];
+  timeInput.style.display = config.allowInput ? "block" : "none";
+  const taskBox = document.getElementById("taskText");
+
+  if (level === 2) {
+    taskBox.innerHTML = ""; // скрываем надпись
+  } else {
+    taskBox.innerHTML = config.showTarget
+      ? "Установите время: <strong id='targetTime'>" + formatTime(currentTask.hour, currentTask.minute) + "</strong>"
+      : "Установите время: <strong id='targetTime'>??</strong>";
+  }
+}
 
     function formatTime(h, m) {
       return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0');
