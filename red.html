@@ -1,238 +1,298 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Тренажёр «Часики»</title>
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
-      background: #f4f7fc;
+      background: #f3f7fb;
+      color: #2c3e50;
       margin: 0;
-      padding: 0;
+      padding: 20px;
       text-align: center;
     }
+
     h1 {
       font-size: 2rem;
-      color: #2c3e50;
-      margin-top: 20px;
+      margin-bottom: 10px;
     }
-    .level-buttons {
-      margin: 20px auto;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
+
+    .levels {
+      margin: 20px 0;
     }
-    .level-buttons button {
+
+    .levels button {
       padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 8px;
       background-color: #3498db;
       color: white;
-      font-size: 1rem;
+      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
     }
-    .level-buttons button.active {
+
+    .levels button.active {
       background-color: #2c3e50;
     }
-    .progress-block {
-      margin: 10px auto;
+
+    .stats {
+      margin: 20px auto;
+      max-width: 400px;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
+
     .progress-bar {
       height: 10px;
-      background: #e0e0e0;
-      border-radius: 8px;
+      background: #ddd;
+      border-radius: 5px;
       overflow: hidden;
-      margin: 8px auto;
-      width: 80%;
+      margin: 10px 0;
     }
-    .progress-bar-inner {
+
+    .progress-bar-fill {
       height: 100%;
       background: #3498db;
       width: 0%;
       transition: width 0.3s;
     }
+
     .clock {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border: 5px solid #3498db;
+      margin: 30px auto;
+      width: 280px;
+      height: 280px;
+      border: 6px solid #3498db;
       border-radius: 50%;
-      margin: 20px auto;
-      background: #fff;
+      position: relative;
+      background: white;
     }
+
     .number {
       position: absolute;
-      width: 24px;
-      height: 24px;
-      text-align: center;
       font-weight: bold;
-      color: #2c3e50;
-      font-size: 1rem;
+      font-size: 1.2rem;
+      transform: translate(-50%, -50%);
     }
+
     .hand {
       position: absolute;
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      border-radius: 8px;
+      border-radius: 4px;
     }
+
     .hand.hour {
+      height: 70px;
       width: 6px;
-      height: 80px;
-      background: red;
+      background: #e74c3c;
     }
+
     .hand.minute {
+      height: 100px;
       width: 4px;
-      height: 110px;
-      background: blue;
+      background: #2980b9;
     }
-    .panel {
+
+    .interface {
       background: white;
+      max-width: 400px;
+      margin: 30px auto;
       padding: 20px;
-      max-width: 350px;
-      margin: auto;
       border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    input {
+
+    .interface input {
       padding: 10px;
+      width: 150px;
       font-size: 1rem;
-      margin: 10px 0;
-      width: 100%;
-      box-sizing: border-box;
+      margin: 10px auto;
+      display: block;
     }
-    button {
-      margin: 10px 5px;
+
+    .buttons button {
+      padding: 12px 20px;
+      margin: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
-    .btn-main {
+
+    .btn-primary {
       background-color: #3498db;
       color: white;
     }
+
     .btn-secondary {
       background-color: #bdc3c7;
       color: white;
+    }
+
+    .return-btn {
+      margin-top: 40px;
+      display: inline-block;
+      padding: 10px 16px;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-<h1>Тренажёр «Часики»</h1>
+  <h1>Тренажёр «Часики»</h1>
 
-<div class="level-buttons">
-  <button class="active" onclick="setLevel(1)">Уровень 1</button>
-  <button onclick="setLevel(2)">Уровень 2</button>
-  <button onclick="setLevel(3)">Уровень 3</button>
-</div>
+  <div class="levels">
+    <button id="level1" class="active">Уровень 1</button>
+    <button id="level2">Уровень 2</button>
+    <button id="level3">Уровень 3</button>
+  </div>
 
-<div class="progress-block">
-  <p>Правильно: <span id="correct">0</span> — Неправильно: <span id="incorrect">0</span></p>
-  <p>Прогресс: <span id="progressPercent">0%</span></p>
-  <div class="progress-bar"><div class="progress-bar-inner" id="progressBar"></div></div>
-</div>
+  <div class="stats">
+    <div>Правильно: <span id="correct">0</span> — Неправильно: <span id="wrong">0</span></div>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div>Прогресс: <span id="progressText">0%</span></div>
+  </div>
 
-<div class="clock" id="clock">
-  <div class="hand hour" id="hourHand"></div>
-  <div class="hand minute" id="minuteHand"></div>
-</div>
+  <div class="clock" id="clock">
+    <div class="hand hour" id="hourHand"></div>
+    <div class="hand minute" id="minuteHand"></div>
+    <!-- Цифры добавим через скрипт -->
+  </div>
 
-<div class="panel">
-  <h3 id="instruction">Установите время: <strong id="targetTime">--:--</strong></h3>
-  <input id="timeInput" placeholder="ЧЧ:ММ">
-  <br>
-  <button class="btn-main" onclick="checkAnswer()">Проверить</button>
-  <button class="btn-secondary" onclick="generateTime()">+ Новое задание</button>
-</div>
+  <div class="interface" id="interface">
+    <div id="taskText">Установите время: <strong id="targetTime">00:00</strong></div>
+    <input id="timeInput" placeholder="ЧЧ:ММ" style="display: none;" />
+    <div class="buttons">
+      <button class="btn-primary" id="checkBtn">Проверить</button>
+      <button class="btn-secondary" id="nextBtn">+ Новое задание</button>
+    </div>
+  </div>
 
-<script>
-  const hourHand = document.getElementById('hourHand');
-  const minuteHand = document.getElementById('minuteHand');
-  const timeDisplay = document.getElementById('targetTime');
-  const timeInput = document.getElementById('timeInput');
-  const progressBar = document.getElementById('progressBar');
-  const progressPercent = document.getElementById('progressPercent');
-  const correctEl = document.getElementById('correct');
-  const incorrectEl = document.getElementById('incorrect');
+  <a href="index.html" class="return-btn">← Вернуться к теории</a>
 
-  let correct = 0, incorrect = 0;
-  let currentLevel = 1;
-  let currentHour = 0;
-  let currentMinute = 0;
+  <script>
+    const clock = document.getElementById("clock");
+    const hourHand = document.getElementById("hourHand");
+    const minuteHand = document.getElementById("minuteHand");
+    const timeInput = document.getElementById("timeInput");
+    const targetTime = document.getElementById("targetTime");
+    const checkBtn = document.getElementById("checkBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressFill = document.getElementById("progressFill");
+    const progressText = document.getElementById("progressText");
 
-  function setLevel(level) {
-    currentLevel = level;
-    document.querySelectorAll('.level-buttons button').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.level-buttons button')[level - 1].classList.add('active');
-    generateTime();
-  }
+    const levels = {
+      1: { showTarget: true, allowInput: false, snap: 15 },
+      2: { showTarget: false, allowInput: true, snap: null },
+      3: { showTarget: true, allowInput: false, snap: 5 }
+    };
 
-  function generateTime() {
-    currentHour = Math.floor(Math.random() * 24);
-    currentMinute = currentLevel === 1 ? [0, 15, 30, 45][Math.floor(Math.random() * 4)] :
-                    currentLevel === 3 ? Math.floor(Math.random() * 12) * 5 :
-                    Math.floor(Math.random() * 60);
-    updateClock(currentHour, currentMinute);
-    timeDisplay.textContent = currentLevel === 2 ? '??' : formatTime(currentHour, currentMinute);
-    timeInput.value = '';
-  }
+    let currentLevel = 1;
+    let correct = 0;
+    let wrong = 0;
 
-  function updateClock(hour, minute) {
-    let hourDeg = ((hour % 12) + minute / 60) * 30;
-    let minuteDeg = minute * 6;
-    hourHand.style.transform = `rotate(${hourDeg}deg)`;
-    minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+    function placeNumbers() {
+      const size = 280;
+      const center = size / 2;
+      const radius = size / 2 - 20;
+      for (let i = 1; i <= 12; i++) {
+        const angle = (i - 3) * (Math.PI / 6);
+        const x = center + radius * Math.cos(angle);
+        const y = center + radius * Math.sin(angle);
+        const el = document.createElement("div");
+        el.className = "number";
+        el.innerText = i;
+        el.style.left = `${x}px`;
+        el.style.top = `${y}px`;
+        clock.appendChild(el);
+      }
+    }
+
+    function generateTime(level) {
+      const hour = Math.floor(Math.random() * 24);
+      let minute = 0;
+      if (levels[level].snap) {
+        const options = levels[level].snap === 15 ? [0, 15, 30, 45] : Array.from({ length: 12 }, (_, i) => i * 5);
+        minute = options[Math.floor(Math.random() * options.length)];
+      } else {
+        minute = Math.floor(Math.random() * 60);
+      }
+      return { hour, minute };
+    }
+
+    function setClock(h, m) {
+      const hDeg = (h % 12 + m / 60) * 30;
+      const mDeg = m * 6;
+      hourHand.style.transform = `rotate(${hDeg}deg)`;
+      minuteHand.style.transform = `rotate(${mDeg}deg)`;
+    }
+
+    function updateInterface(level) {
+      const config = levels[level];
+      timeInput.style.display = config.allowInput ? "block" : "none";
+      taskText.innerHTML = config.showTarget ? "Установите время: <strong id='targetTime'>" + formatTime(currentTask.hour, currentTask.minute) + "</strong>" : "Установите время: <strong id='targetTime'>??</strong>";
+    }
+
+    function formatTime(h, m) {
+      return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0');
+    }
+
+    function updateProgress() {
+      const total = correct + wrong;
+      const percent = total ? Math.round((correct / total) * 100) : 0;
+      progressFill.style.width = percent + "%";
+      progressText.textContent = percent + "%";
+    }
+
+    let currentTask = {};
+
+    function newTask() {
+      currentTask = generateTime(currentLevel);
+      setClock(currentTask.hour, currentTask.minute);
+      updateInterface(currentLevel);
+    }
+
+    function checkAnswer() {
+      let userTime = currentLevel === 2 ? timeInput.value.trim() : formatTime(currentTask.hour, currentTask.minute);
+      const correctTime = formatTime(currentTask.hour, currentTask.minute);
+      if (userTime === correctTime) {
+        correct++;
+      } else {
+        wrong++;
+      }
+      document.getElementById("correct").textContent = correct;
+      document.getElementById("wrong").textContent = wrong;
+      updateProgress();
+    }
+
+    document.getElementById("level1").onclick = () => { setLevel(1); };
+    document.getElementById("level2").onclick = () => { setLevel(2); };
+    document.getElementById("level3").onclick = () => { setLevel(3); };
+
+    function setLevel(lvl) {
+      currentLevel = lvl;
+      document.querySelectorAll(".levels button").forEach(b => b.classList.remove("active"));
+      document.getElementById("level" + lvl).classList.add("active");
+      newTask();
+    }
+
+    checkBtn.onclick = checkAnswer;
+    nextBtn.onclick = newTask;
+
     placeNumbers();
-  }
-
-  function placeNumbers() {
-    const clock = document.getElementById('clock');
-    clock.querySelectorAll('.number').forEach(n => n.remove());
-    const size = 300;
-    const cx = size / 2;
-    const cy = size / 2;
-    const r = cx - 25;
-    for (let i = 1; i <= 12; i++) {
-      const ang = (i - 3) * (Math.PI / 6);
-      const div = document.createElement('div');
-      div.className = 'number';
-      div.style.left = `${cx + r * Math.cos(ang) - 12}px`;
-      div.style.top = `${cy + r * Math.sin(ang) - 12}px`;
-      div.textContent = i;
-      clock.appendChild(div);
-    }
-  }
-
-  function checkAnswer() {
-    let val = timeInput.value.trim();
-    if (!/^\d{1,2}:\d{2}$/.test(val)) return alert("Формат: ЧЧ:ММ");
-    let [h, m] = val.split(":").map(x => parseInt(x));
-    if (h === currentHour && m === currentMinute) {
-      correct++;
-    } else {
-      incorrect++;
-      alert(`Неправильно. Правильное время: ${formatTime(currentHour, currentMinute)}`);
-    }
-    updateProgress();
-    generateTime();
-  }
-
-  function updateProgress() {
-    const total = correct + incorrect;
-    const percent = total ? Math.round((correct / total) * 100) : 0;
-    correctEl.textContent = correct;
-    incorrectEl.textContent = incorrect;
-    progressPercent.textContent = percent + "%";
-    progressBar.style.width = percent + "%";
-  }
-
-  function formatTime(h, m) {
-    return (h < 10 ? '0' + h : h) + ":" + (m < 10 ? '0' + m : m);
-  }
-
-  window.onload = () => {
-    setLevel(1);
-  };
-</script>
-
+    newTask();
+  </script>
 </body>
 </html>
