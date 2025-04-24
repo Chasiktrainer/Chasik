@@ -9,8 +9,8 @@
       font-family: "Segoe UI", sans-serif;
       background: #f3f7fb;
       color: #2c3e50;
-      margin: 0;
       padding: 20px;
+      margin: 0;
       text-align: center;
     }
 
@@ -145,162 +145,166 @@
       border-radius: 6px;
       font-weight: bold;
     }
+
+    .input-label {
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Тренажёр «Часики»</h1>
+<h1>Тренажёр «Часики»</h1>
 
-  <div class="levels">
-    <button id="level1" class="active">Уровень 1</button>
-    <button id="level2">Уровень 2</button>
-    <button id="level3">Уровень 3</button>
+<div class="levels">
+  <button id="level1" class="active">Уровень 1</button>
+  <button id="level2">Уровень 2</button>
+  <button id="level3">Уровень 3</button>
+</div>
+
+<div class="stats">
+  <div>Правильно: <span id="correct">0</span> — Неправильно: <span id="wrong">0</span></div>
+  <div class="progress-bar">
+    <div class="progress-bar-fill" id="progressFill"></div>
   </div>
+  <div>Прогресс: <span id="progressText">0%</span></div>
+</div>
 
-  <div class="stats">
-    <div>Правильно: <span id="correct">0</span> — Неправильно: <span id="wrong">0</span></div>
-    <div class="progress-bar">
-      <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
-    <div>Прогресс: <span id="progressText">0%</span></div>
+<div class="clock" id="clock">
+  <div class="hand hour" id="hourHand"></div>
+  <div class="hand minute" id="minuteHand"></div>
+</div>
+
+<div class="interface" id="interface">
+  <div id="taskText">Установите время: <strong id="targetTime">00:00</strong></div>
+  <div id="inputLabel" class="input-label" style="display:none;">Введите время, изображенное на часах:</div>
+  <input id="timeInput" placeholder="ЧЧ:ММ" style="display: none;" />
+  <div class="buttons">
+    <button class="btn-primary" id="checkBtn">Проверить</button>
+    <button class="btn-secondary" id="nextBtn">+ Новое задание</button>
   </div>
+</div>
 
-  <div class="clock" id="clock">
-    <div class="hand hour" id="hourHand"></div>
-    <div class="hand minute" id="minuteHand"></div>
-    <!-- Цифры добавим через скрипт -->
-  </div>
+<a href="index.html" class="return-btn">← Вернуться к теории</a>
 
-  <div class="interface" id="interface">
-    <div id="taskText">Установите время: <strong id="targetTime">00:00</strong></div>
-    <input id="timeInput" placeholder="ЧЧ:ММ" style="display: none;" />
-    <div class="buttons">
-      <button class="btn-primary" id="checkBtn">Проверить</button>
-      <button class="btn-secondary" id="nextBtn">+ Новое задание</button>
-    </div>
-  </div>
+<script>
+  const clock = document.getElementById("clock");
+  const hourHand = document.getElementById("hourHand");
+  const minuteHand = document.getElementById("minuteHand");
+  const timeInput = document.getElementById("timeInput");
+  const targetTime = document.getElementById("targetTime");
+  const checkBtn = document.getElementById("checkBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const progressFill = document.getElementById("progressFill");
+  const progressText = document.getElementById("progressText");
+  const inputLabel = document.getElementById("inputLabel");
 
-  <a href="index.html" class="return-btn">← Вернуться к теории</a>
+  const levels = {
+    1: { showTarget: true, allowInput: false, snap: 15 },
+    2: { showTarget: false, allowInput: true, snap: null },
+    3: { showTarget: true, allowInput: false, snap: 5 }
+  };
 
-  <script>
-    const clock = document.getElementById("clock");
-    const hourHand = document.getElementById("hourHand");
-    const minuteHand = document.getElementById("minuteHand");
-    const timeInput = document.getElementById("timeInput");
-    const targetTime = document.getElementById("targetTime");
-    const checkBtn = document.getElementById("checkBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const progressFill = document.getElementById("progressFill");
-    const progressText = document.getElementById("progressText");
+  let currentLevel = 1;
+  let correct = 0;
+  let wrong = 0;
+  let currentTask = {};
 
-    const levels = {
-      1: { showTarget: true, allowInput: false, snap: 15 },
-      2: { showTarget: false, allowInput: true, snap: null },
-      3: { showTarget: true, allowInput: false, snap: 5 }
-    };
-
-    let currentLevel = 1;
-    let correct = 0;
-    let wrong = 0;
-
-    function placeNumbers() {
-      const size = 280;
-      const center = size / 2;
-      const radius = size / 2 - 20;
-      for (let i = 1; i <= 12; i++) {
-        const angle = (i - 3) * (Math.PI / 6);
-        const x = center + radius * Math.cos(angle);
-        const y = center + radius * Math.sin(angle);
-        const el = document.createElement("div");
-        el.className = "number";
-        el.innerText = i;
-        el.style.left = `${x}px`;
-        el.style.top = `${y}px`;
-        clock.appendChild(el);
-      }
+  function placeNumbers() {
+    const size = 280;
+    const center = size / 2;
+    const radius = center - 20;
+    for (let i = 1; i <= 12; i++) {
+      const angle = (i - 3) * (Math.PI / 6);
+      const x = center + radius * Math.cos(angle);
+      const y = center + radius * Math.sin(angle);
+      const el = document.createElement("div");
+      el.className = "number";
+      el.innerText = i;
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      clock.appendChild(el);
     }
+  }
 
-    function generateTime(level) {
-      const hour = Math.floor(Math.random() * 24);
-      let minute = 0;
-      if (levels[level].snap) {
-        const options = levels[level].snap === 15 ? [0, 15, 30, 45] : Array.from({ length: 12 }, (_, i) => i * 5);
-        minute = options[Math.floor(Math.random() * options.length)];
-      } else {
-        minute = Math.floor(Math.random() * 60);
-      }
-      return { hour, minute };
+  function formatTime(h, m) {
+    return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0');
+  }
+
+  function generateTime(level) {
+    const hour = Math.floor(Math.random() * 24);
+    let minute = 0;
+    if (levels[level].snap) {
+      const options = levels[level].snap === 15 ? [0, 15, 30, 45] : Array.from({ length: 12 }, (_, i) => i * 5);
+      minute = options[Math.floor(Math.random() * options.length)];
+    } else {
+      minute = Math.floor(Math.random() * 60);
     }
+    return { hour, minute };
+  }
 
-    function setClock(h, m) {
-      const hDeg = (h % 12 + m / 60) * 30;
-      const mDeg = m * 6;
-      hourHand.style.transform = `rotate(${hDeg}deg)`;
-      minuteHand.style.transform = `rotate(${mDeg}deg)`;
-    }
+  function setClock(h, m) {
+    const hDeg = (h % 12 + m / 60) * 30;
+    const mDeg = m * 6;
+    hourHand.style.transform = `rotate(${hDeg}deg)`;
+    minuteHand.style.transform = `rotate(${mDeg}deg)`;
+  }
 
-    function updateInterface(level) {
-  const config = levels[level];
-  timeInput.style.display = config.allowInput ? "block" : "none";
-  const taskBox = document.getElementById("taskText");
-
-  if (level === 2) {
-    taskBox.innerHTML = ""; // скрываем надпись
-  } else {
+  function updateInterface(level) {
+    const config = levels[level];
+    timeInput.style.display = config.allowInput ? "block" : "none";
+    inputLabel.style.display = level === 2 ? "block" : "none";
+    const taskBox = document.getElementById("taskText");
     taskBox.innerHTML = config.showTarget
       ? "Установите время: <strong id='targetTime'>" + formatTime(currentTask.hour, currentTask.minute) + "</strong>"
-      : "Установите время: <strong id='targetTime'>??</strong>";
+      : "";
   }
-}
 
-    function formatTime(h, m) {
-      return String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0');
+  function updateProgress() {
+    const total = correct + wrong;
+    const percent = total ? Math.round((correct / total) * 100) : 0;
+    progressFill.style.width = percent + "%";
+    progressText.textContent = percent + "%";
+  }
+
+  function newTask() {
+    currentTask = generateTime(currentLevel);
+    setClock(currentTask.hour, currentTask.minute);
+    updateInterface(currentLevel);
+    timeInput.value = "";
+  }
+
+  function checkAnswer() {
+    let userTime = currentLevel === 2 ? timeInput.value.trim() : formatTime(currentTask.hour, currentTask.minute);
+    const correctTime = formatTime(currentTask.hour, currentTask.minute);
+    if (userTime === correctTime) {
+      correct++;
+    } else {
+      wrong++;
     }
+    document.getElementById("correct").textContent = correct;
+    document.getElementById("wrong").textContent = wrong;
+    updateProgress();
+  }
 
-    function updateProgress() {
-      const total = correct + wrong;
-      const percent = total ? Math.round((correct / total) * 100) : 0;
-      progressFill.style.width = percent + "%";
-      progressText.textContent = percent + "%";
-    }
+  document.getElementById("level1").onclick = () => setLevel(1);
+  document.getElementById("level2").onclick = () => setLevel(2);
+  document.getElementById("level3").onclick = () => setLevel(3);
 
-    let currentTask = {};
-
-    function newTask() {
-      currentTask = generateTime(currentLevel);
-      setClock(currentTask.hour, currentTask.minute);
-      updateInterface(currentLevel);
-    }
-
-    function checkAnswer() {
-      let userTime = currentLevel === 2 ? timeInput.value.trim() : formatTime(currentTask.hour, currentTask.minute);
-      const correctTime = formatTime(currentTask.hour, currentTask.minute);
-      if (userTime === correctTime) {
-        correct++;
-      } else {
-        wrong++;
-      }
-      document.getElementById("correct").textContent = correct;
-      document.getElementById("wrong").textContent = wrong;
-      updateProgress();
-    }
-
-    document.getElementById("level1").onclick = () => { setLevel(1); };
-    document.getElementById("level2").onclick = () => { setLevel(2); };
-    document.getElementById("level3").onclick = () => { setLevel(3); };
-
-    function setLevel(lvl) {
-      currentLevel = lvl;
-      document.querySelectorAll(".levels button").forEach(b => b.classList.remove("active"));
-      document.getElementById("level" + lvl).classList.add("active");
-      newTask();
-    }
-
-    checkBtn.onclick = checkAnswer;
-    nextBtn.onclick = newTask;
-
-    placeNumbers();
+  function setLevel(lvl) {
+    currentLevel = lvl;
+    document.querySelectorAll(".levels button").forEach(b => b.classList.remove("active"));
+    document.getElementById("level" + lvl).classList.add("active");
     newTask();
-  </script>
+  }
+
+  checkBtn.onclick = checkAnswer;
+  nextBtn.onclick = newTask;
+
+  placeNumbers();
+  newTask();
+</script>
+
 </body>
 </html>
