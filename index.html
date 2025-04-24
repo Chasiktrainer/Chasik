@@ -2,79 +2,44 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Тренажёр «Часики» — Теория</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Часики - Теория</title>
   <style>
-    * {
-      box-sizing: border-box;
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f4f7fc;
-      color: #2c3e50;
-      line-height: 1.6;
-      padding: 20px;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #34495e;
-      margin-bottom: 16px;
-    }
-
-    h1 { font-size: 2rem; margin-top: 10px; }
-    h2 { font-size: 1.5rem; margin-top: 30px; }
-
-    .card {
-      background: #fff;
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
       border-radius: 12px;
-      padding: 24px;
-      margin: 20px auto;
-      max-width: 800px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-      border-left: 6px solid #3498db;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    .btn {
-      display: inline-block;
-      background: #3498db;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background 0.2s;
-      margin: 0 auto;
-      cursor: pointer;
+    h2 {
+      text-align: center;
+      font-size: 1.8em;
+      color: #1f2937;
     }
 
-    .btn:hover {
-      background: #2980b9;
-    }
-
-    .btn.disabled {
-      background: #aaa;
-      pointer-events: none;
+    .section {
+      margin-bottom: 30px;
+      border-left: 4px solid #3b82f6;
+      padding-left: 15px;
     }
 
     .clock {
       position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 20px auto;
-      border: 4px solid #3498db;
+      width: 180px;
+      height: 180px;
+      border: 5px solid #3b82f6;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #fff, #eceff4);
-    }
-
-    .clock.small {
-      width: 120px;
-      height: 120px;
-      border-width: 3px;
+      margin: 20px auto;
     }
 
     .hand {
@@ -82,129 +47,153 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      border-radius: 50px;
+      border-radius: 4px;
     }
 
     .hand.hour {
-      width: 6px;
+      width: 5px;
       height: 40px;
       background: #ef4444;
     }
 
     .hand.minute {
       width: 4px;
-      height: 70px;
+      height: 56px; /* уменьшено на 1/5 */
       background: #3b82f6;
     }
 
+    .number {
+      position: absolute;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .example-clocks {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .example-clock-wrapper {
+      text-align: center;
+      margin: 10px;
+    }
+
+    .clock.small {
+      width: 120px;
+      height: 120px;
+      border-width: 4px;
+    }
+
     .clock.small .hand.hour {
-      width: 4px;
       height: 25px;
     }
 
     .clock.small .hand.minute {
       width: 3px;
-      height: 45px;
+      height: 36px; /* уменьшено на 1/5 */
     }
 
-    .number {
-      position: absolute;
-      width: 20px;
-      height: 20px;
+    .btn {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 14px;
       text-align: center;
-      font-weight: bold;
-      color: #2c3e50;
-      font-size: 0.9rem;
+      font-size: 18px;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: not-allowed;
     }
 
-    .clock.small .number {
-      font-size: 0.75rem;
-      width: 16px;
-      height: 16px;
+    .btn.enabled {
+      cursor: pointer;
+      background-color: #10b981;
     }
 
-    .emoji {
-      margin-right: 6px;
+    .disabled {
+      opacity: 0.6;
     }
 
-    .timer-box {
-      text-align: center;
-      margin-top: 30px;
-    }
-
-    #countdown {
-      font-size: 1.2rem;
-      margin-right: 10px;
-      display: inline-block;
-      color: #2c3e50;
-      vertical-align: middle;
+    ul {
+      padding-left: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>🎓 Тренажёр «Часики» ⏰</h1>
-
-  <h2>🔧 Как устроены механические часы?</h2>
-  <div class="card">
-    <p>Механические часы состоят из циферблата и двух стрелок:</p>
-    <ul>
-      <li>🔴 <strong>Короткая стрелка</strong> показывает текущий час.</li>
-      <li>🔵 <strong>Длинная стрелка</strong> показывает минуты.</li>
-    </ul>
-    <div class="clock" id="mainClock">
-      <div class="hand hour" style="transform: rotate(90deg);"></div>
-      <div class="hand minute" style="transform: rotate(180deg);"></div>
-    </div>
-  </div>
-
-  <h2>🕰️ Как определить время в 24-часовом формате?</h2>
-  <div class="card">
-    <ol>
-      <li>Сначала смотри на <strong>короткую стрелку</strong> — она показывает <strong>часы</strong>.</li>
-      <li>Затем на <strong>длинную стрелку</strong> — она указывает <strong>минуты</strong>.</li>
-      <li>Для перевода минут:
-        <ul>
-          <li>1 = 5 минут</li>
-          <li>2 = 10 минут</li>
-          <li>3 = 15 минут</li>
-          <li>...</li>
-          <li>12 = 0 минут</li>
-        </ul>
-      </li>
-    </ol>
-    <h3 style="margin-top: 15px;">3. Составляем время</h3>
-    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
-      <div>
-        <div class="clock small" id="ex1">
-          <div class="hand hour" style="transform: rotate(75deg);"></div>
-          <div class="hand minute" style="transform: rotate(180deg);"></div>
+  <div class="container">
+    <h2>📖 Как читать время?</h2>
+    <div class="section">
+      <p>Сначала смотри на часовую стрелку — она укажет <strong>час</strong>, затем на минутную — она покажет <strong>минуты</strong>.</p>
+      <div class="example-clocks">
+        <div class="example-clock-wrapper">
+          <div class="clock small" id="ex1">
+            <div class="hand hour" style="transform: rotate(210deg);"></div>
+            <div class="hand minute" style="transform: rotate(0deg);"></div>
+          </div>
+          <div>7:00</div>
         </div>
-        <p style="text-align:center; margin-top:8px;"><strong>02:30</strong></p>
-      </div>
-      <div>
-        <div class="clock small" id="ex2">
-          <div class="hand hour" style="transform: rotate(195deg);"></div>
-          <div class="hand minute" style="transform: rotate(90deg);"></div>
+        <div class="example-clock-wrapper">
+          <div class="clock small" id="ex2">
+            <div class="hand hour" style="transform: rotate(75deg);"></div>
+            <div class="hand minute" style="transform: rotate(180deg);"></div>
+          </div>
+          <div>2:30</div>
         </div>
-        <p style="text-align:center; margin-top:8px;"><strong>06:15</strong></p>
       </div>
     </div>
-  </div>
 
-  <h2>❓ Зачем уметь определять время?</h2>
-  <div class="card">
-    <p>Умение читать время помогает:</p>
-    <ul>
-      <li>🏫 приходить вовремя в школу;</li>
-      <li>🚌 успевать на автобус;</li>
-      <li>📅 планировать день и отдых;</li>
-      <li>🤝 встречаться с друзьями вовремя.</li>
-    </ul>
-  </div>
+    <h2>🕰️ Как определить время в 24-часовом формате?</h2>
+    <div class="section">
+      <ol>
+        <li>Сначала смотри на <strong>короткую стрелку</strong> — она показывает <strong>часы</strong>.</li>
+        <li>Затем на <strong>длинную стрелку</strong> — она указывает <strong>минуты</strong>.</li>
+        <li>Для перевода минут:
+          <ul>
+            <li>1 = 5 минут</li>
+            <li>2 = 10 минут</li>
+            <li>3 = 15 минут</li>
+            <li>...</li>
+            <li>12 = 0 минут</li>
+          </ul>
+        </li>
+      </ol>
+      <h3>3. Составляем время</h3>
+      <div class="example-clocks">
+        <div class="example-clock-wrapper">
+          <div class="clock small" id="ex3">
+            <div class="hand hour" style="transform: rotate(75deg);"></div>
+            <div class="hand minute" style="transform: rotate(180deg);"></div>
+          </div>
+          <div>02:30</div>
+        </div>
+        <div class="example-clock-wrapper">
+          <div class="clock small" id="ex4">
+            <div class="hand hour" style="transform: rotate(195deg);"></div>
+            <div class="hand minute" style="transform: rotate(90deg);"></div>
+          </div>
+          <div>06:15</div>
+        </div>
+      </div>
+    </div>
 
-  <div class="timer-box">
-    <span id="countdown">30</span>
-    <a href="trainer.html" id="startBtn" class="btn disabled">Перейти к тренажёру</a>
+    <h2>❓ Зачем уметь определять время?</h2>
+    <div class="section">
+      <p>Умение читать время помогает:</p>
+      <ul>
+        <li>🏫 приходить вовремя в школу;</li>
+        <li>🚌 успевать на автобус;</li>
+        <li>📅 планировать день и отдых;</li>
+        <li>🤝 встречаться с друзьями вовремя.</li>
+      </ul>
+    </div>
+
+    <a id="startBtn" class="btn disabled">Перейти к тренажёру (<span id="countdown">30</span>)</a>
   </div>
 
   <script>
@@ -224,21 +213,26 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      placeNumbers(document.getElementById('mainClock'), 15);
-      placeNumbers(document.getElementById('ex1'), 12);
-      placeNumbers(document.getElementById('ex2'), 12);
+      ['ex1', 'ex2', 'ex3', 'ex4'].forEach(id => {
+        placeNumbers(document.getElementById(id), 12);
+      });
 
       let counter = 30;
       const countdown = document.getElementById('countdown');
-      const startBtn = document.getElementById('startBtn');
+      const btn = document.getElementById('startBtn');
 
       const interval = setInterval(() => {
         counter--;
         countdown.textContent = counter;
         if (counter <= 0) {
           clearInterval(interval);
-          countdown.style.display = 'none';
-          startBtn.classList.remove('disabled');
+          btn.classList.add('enabled');
+          btn.classList.remove('disabled');
+          btn.textContent = 'Перейти к тренажёру';
+          btn.style.cursor = 'pointer';
+          btn.onclick = () => {
+            window.location.href = "trainer.html";
+          };
         }
       }, 1000);
     });
