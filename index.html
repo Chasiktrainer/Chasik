@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Тренажёр «Часики» — Теория</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,33 +31,23 @@
       border-left: 6px solid #3498db;
     }
 
-    .btn-container {
-      text-align: center;
-      margin: 30px;
-    }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      background: #3498db;
+      display: inline-block;
+      background: #ccc;
       color: #fff;
       padding: 12px 24px;
       border-radius: 8px;
+      text-decoration: none;
       font-weight: 600;
       font-size: 1rem;
-      border: none;
       transition: background .2s;
-      opacity: 0.6;
-      cursor: not-allowed;
+      margin: 0 auto;
+      pointer-events: none;
     }
+
     .btn.active {
-      cursor: pointer;
-      opacity: 1;
-    }
-    .btn:hover:enabled { background: #2980b9; }
-    .timer {
-      font-weight: bold;
-      margin-right: 10px;
-      font-size: 1.1rem;
+      background: #3498db;
+      pointer-events: auto;
     }
 
     .clock {
@@ -68,6 +58,7 @@
       border-radius: 50%;
       background: radial-gradient(circle at center, #fff, #eceff4);
     }
+
     .clock.small {
       width: 120px; height: 120px;
       border-width: 3px;
@@ -79,12 +70,14 @@
       transform-origin: bottom center;
       border-radius: 50px;
     }
+
     .hand.hour {
       width: 6px;
       height: 40px;
       background: #ef4444;
       transform: rotate(60deg);
     }
+
     .hand.minute {
       width: 4px;
       height: 70px;
@@ -92,8 +85,15 @@
       transform: rotate(0deg);
     }
 
-    .clock.small .hand.hour   { height: 20px; }
-    .clock.small .hand.minute { height: 36px; }
+    /* Маленькие стрелки — изменено */
+    .clock.small .hand.hour {
+      height: 20px;
+      width: 3px;
+    }
+    .clock.small .hand.minute {
+      height: 36px;
+      width: 2px;
+    }
 
     .number {
       position: absolute;
@@ -101,10 +101,23 @@
       text-align: center; font-weight: bold;
       color: #2c3e50; font-size: 1rem;
     }
+
     .clock.small .number {
       font-size: 0.8rem; width: 16px; height: 16px;
     }
+
     .emoji { margin-right: 6px; }
+
+    .timer-btn-wrapper {
+      text-align: center;
+      margin: 30px;
+    }
+
+    #timer {
+      margin-right: 10px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
   </style>
 </head>
 <body>
@@ -128,7 +141,6 @@
   <div class="card">
     <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
     <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
-      <!-- Пример 1 -->
       <div>
         <div class="clock small" id="ex1">
           <div class="hand hour" style="transform: rotate(210deg);"></div>
@@ -136,7 +148,6 @@
         </div>
         <p style="text-align:center; margin-top:8px;"><strong>7:00</strong></p>
       </div>
-      <!-- Пример 2 -->
       <div>
         <div class="clock small" id="ex2">
           <div class="hand hour" style="transform: rotate(75deg);"></div>
@@ -158,17 +169,15 @@
     </ul>
   </div>
 
-  <div class="btn-container">
-    <button id="startBtn" class="btn">
-      <span id="timer" class="timer">30</span>
-      Перейти к тренажёру
-    </button>
+  <div class="timer-btn-wrapper">
+    <span id="timer">30</span>
+    <a id="nextBtn" href="red.html" class="btn">Перейти к тренажёру</a>
   </div>
 
   <script>
     function placeNumbers(clock, offset) {
       const size = clock.clientWidth;
-      const cx = size / 2, cy = size / 2, r = size / 2 - offset;
+      const cx = size/2, cy = size/2, r = size/2 - offset;
       for (let i = 1; i <= 12; i++) {
         const ang = (i - 3) * (Math.PI / 6);
         const num = document.createElement('div');
@@ -186,24 +195,17 @@
       placeNumbers(document.getElementById('ex1'), 12);
       placeNumbers(document.getElementById('ex2'), 12);
 
-      const btn = document.getElementById("startBtn");
-      const timer = document.getElementById("timer");
-      let countdown = 30;
-
-      btn.style.pointerEvents = "none";
-      btn.style.opacity = "0.6";
+      let timer = 30;
+      const timerEl = document.getElementById("timer");
+      const btn = document.getElementById("nextBtn");
 
       const interval = setInterval(() => {
-        countdown--;
-        timer.textContent = countdown;
-
-        if (countdown <= 0) {
+        timer--;
+        timerEl.textContent = timer;
+        if (timer <= 0) {
           clearInterval(interval);
-          timer.remove();
+          timerEl.style.display = "none";
           btn.classList.add("active");
-          btn.style.pointerEvents = "auto";
-          btn.style.opacity = "1";
-          btn.onclick = () => window.location.href = "red.html";
         }
       }, 1000);
     });
