@@ -311,6 +311,27 @@
       placeNumbers(document.getElementById('clock'));
       newTask();
     };
+    let currentLevel = 1;
+
+function selectLevel(level) {
+  currentLevel = level;
+  resetStats();
+  if (level === 1) startLevel1();
+  else if (level === 2) startLevel2();
+  else if (level === 3) startLevel3();
+}
+function startLevel1() {
+  console.log("Старт уровня 1");
+  // запускаем нужную логику уровня 1
+}
+function startLevel2() {
+  console.log("Старт уровня 2");
+  // запускаем нужную логику уровня 2
+}
+function startLevel3() {
+  console.log("Старт уровня 3");
+  // запускаем нужную логику уровня 3
+}
   </script>
 </body>
 </html>
