@@ -1,208 +1,223 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Тренажёр «Часики» — Теория</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: "Segoe UI", sans-serif;
       background: #f4f7fc;
       color: #2c3e50;
-      line-height: 1.6;
       padding: 20px;
+      margin: 0;
+      line-height: 1.6;
     }
+
     h1, h2 {
       text-align: center;
       color: #34495e;
-      margin-bottom: 16px;
     }
-    h1 { font-size: 2rem; margin-top: 10px; }
-    h2 { font-size: 1.5rem; margin-top: 30px; }
 
     .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px;
-      margin: 20px auto;
+      background: white;
       max-width: 800px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-      border-left: 6px solid #3498db;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      background: #ccc;
-      color: #fff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background .2s;
-      margin: 0 auto;
-      pointer-events: none;
-    }
-
-    .btn.active {
-      background: #3498db;
-      pointer-events: auto;
-    }
-
-    .btn span.timer {
-      display: inline-block;
-      margin-right: 10px;
-      font-weight: bold;
+      margin: 20px auto;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .clock {
-      position: relative;
-      width: 200px; height: 200px;
-      margin: 20px auto;
-      border: 4px solid #3498db;
+      width: 200px;
+      height: 200px;
+      border: 5px solid #3498db;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #fff, #eceff4);
-    }
-    .clock.small {
-      width: 120px; height: 120px;
-      border-width: 3px;
+      position: relative;
+      margin: 20px auto;
+      background: radial-gradient(circle, #fff, #ecf0f1);
     }
 
     .hand {
       position: absolute;
-      bottom: 50%; left: 50%;
+      bottom: 50%;
+      left: 50%;
       transform-origin: bottom center;
       border-radius: 50px;
     }
 
     .hand.hour {
       width: 6px;
-      height: 40px;
-      background: #ef4444;
-      transform: rotate(60deg);
+      height: 60px;
+      background: red;
     }
 
     .hand.minute {
       width: 4px;
-      height: 70px;
-      background: #3b82f6;
-      transform: rotate(0deg);
-    }
-
-    .clock.small .hand.hour {
-      width: 4px;
-      height: 25px;
-    }
-
-    .clock.small .hand.minute {
-      width: 3px;
-      height: 36px;
+      height: 90px;
+      background: blue;
     }
 
     .number {
       position: absolute;
-      width: 24px; height: 24px;
-      text-align: center; font-weight: bold;
-      color: #2c3e50; font-size: 1rem;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #2c3e50;
     }
-    .clock.small .number {
-      font-size: 0.8rem; width: 16px; height: 16px;
+
+    .examples {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 30px auto 0;
+      display: block;
+      max-width: fit-content;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 10px auto;
+    }
+
+    table, td, th {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    .emoji {
+      margin-right: 6px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎓 Тренажёр «Часики» ⏰</h1>
+  <h1>🎓 Тренажёр «Часики» — Теория</h1>
 
-  <h2>🔧 Как устроены механические часы?</h2>
   <div class="card">
-    <p>Механические часы состоят из циферблата и двух стрелок:</p>
+    <h2>🔧 Как устроены механические часы?</h2>
+    <p>Механические часы состоят из круглого циферблата и двух стрелок:</p>
     <ul>
-      <li>🔴 <strong>Короткая стрелка</strong> показывает текущий час.</li>
-      <li>🔵 <strong>Длинная стрелка</strong> показывает минуты.</li>
+      <li>🔴 <strong>Короткая стрелка</strong> показывает <strong>часы</strong>.</li>
+      <li>🔵 <strong>Длинная стрелка</strong> показывает <strong>минуты</strong>.</li>
     </ul>
+
     <div class="clock" id="mainClock">
       <div class="hand hour"></div>
       <div class="hand minute"></div>
     </div>
   </div>
 
-  <h2>📖 Как читать время?</h2>
   <div class="card">
-    <p>Сначала смотри на часовую стрелку — она укажет час, затем на минутную — она покажет минуты.</p>
-    <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:20px;">
+    <h2>⏱ Как определить время в 24-часовом формате?</h2>
+
+    <p>На механических часах — только 12 чисел. Но в сутках — 24 часа! Поэтому мы должны понять, день сейчас или ночь.</p>
+
+    <h3>1. Смотрим на <span class="emoji">🔴</span> короткую стрелку (часы)</h3>
+    <p>Если стрелка на 3 — это может быть:</p>
+    <ul>
+      <li><strong>03:00</strong> — если утро</li>
+      <li><strong>15:00</strong> — если день</li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr><th>На циферблате</th><th>Утро / Ночь</th><th>День / Вечер</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>01:00</td><td>13:00</td></tr>
+        <tr><td>2</td><td>02:00</td><td>14:00</td></tr>
+        <tr><td>3</td><td>03:00</td><td>15:00</td></tr>
+        <tr><td>...</td><td>...</td><td>...</td></tr>
+        <tr><td>12</td><td>00:00</td><td>12:00</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2. Смотрим на <span class="emoji">🔵</span> длинную стрелку (минуты)</h3>
+    <p>Каждое число — шаг на 5 минут:</p>
+    <ul>
+      <li>1 = 5 минут</li>
+      <li>2 = 10 минут</li>
+      <li>3 = 15 минут</li>
+      <li>...</li>
+      <li>12 = 0 минут</li>
+    </ul>
+
+    <h3>3. Составляем время</h3>
+
+    <div class="examples">
       <div>
-        <div class="clock small" id="ex1">
-          <div class="hand hour" style="transform: rotate(210deg);"></div>
-          <div class="hand minute" style="transform: rotate(0deg);"></div>
-        </div>
-        <p style="text-align:center; margin-top:8px;"><strong>7:00</strong></p>
-      </div>
-      <div>
-        <div class="clock small" id="ex2">
-          <div class="hand hour" style="transform: rotate(75deg);"></div>
+        <div class="clock" id="ex1">
+          <div class="hand hour" style="transform: rotate(60deg);"></div>
           <div class="hand minute" style="transform: rotate(180deg);"></div>
         </div>
-        <p style="text-align:center; margin-top:8px;"><strong>2:30</strong></p>
+        <p><strong>02:30</strong></p>
+      </div>
+      <div>
+        <div class="clock" id="ex2">
+          <div class="hand hour" style="transform: rotate(195deg);"></div>
+          <div class="hand minute" style="transform: rotate(90deg);"></div>
+        </div>
+        <p><strong>06:15</strong></p>
       </div>
     </div>
   </div>
 
-  <h2>❓ Зачем уметь определять время?</h2>
   <div class="card">
-    <p>Умение читать время помогает:</p>
+    <h2>❓ Зачем уметь определять время?</h2>
     <ul>
-      <li>🏫 приходить вовремя в школу;</li>
-      <li>🚌 успевать на автобус;</li>
-      <li>📅 планировать день и отдых;</li>
-      <li>🤝 встречаться с друзьями вовремя.</li>
+      <li>⏰ Не опаздывать на уроки</li>
+      <li>🚌 Успевать на транспорт</li>
+      <li>🧠 Учиться планировать свой день</li>
+      <li>🤝 Быть пунктуальным</li>
     </ul>
   </div>
 
-  <div style="text-align:center; margin: 30px;">
-    <a id="nextBtn" class="btn" href="#">
-      <span class="timer" id="countdown">30</span>Перейти к тренажёру
-    </a>
-  </div>
+  <a href="red.html" class="btn">▶ Перейти к тренажёру</a>
 
   <script>
-    function placeNumbers(clock, offset) {
-      const size = clock.clientWidth;
-      const cx = size / 2, cy = size / 2, r = size / 2 - offset;
+    function placeNumbers(clockElem, offset = 20) {
+      const size = clockElem.offsetWidth;
+      const cx = size / 2;
+      const cy = size / 2;
+      const r = size / 2 - offset;
       for (let i = 1; i <= 12; i++) {
-        const ang = (i - 3) * (Math.PI / 6);
+        const angle = (i - 3) * (Math.PI / 6);
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
         const num = document.createElement('div');
         num.className = 'number';
-        const adj = clock.classList.contains('small') ? 8 : 12;
-        num.style.left = cx + r * Math.cos(ang) - adj + 'px';
-        num.style.top = cy + r * Math.sin(ang) - adj + 'px';
         num.textContent = i;
-        clock.appendChild(num);
+        num.style.left = x + 'px';
+        num.style.top = y + 'px';
+        clockElem.appendChild(num);
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      placeNumbers(document.getElementById('mainClock'), 15);
-      placeNumbers(document.getElementById('ex1'), 12);
-      placeNumbers(document.getElementById('ex2'), 12);
-
-      let countdown = 30;
-      const timer = document.getElementById('countdown');
-      const btn = document.getElementById('nextBtn');
-
-      const interval = setInterval(() => {
-        countdown--;
-        timer.textContent = countdown;
-        if (countdown <= 0) {
-          clearInterval(interval);
-          timer.remove();
-          btn.classList.add('active');
-          btn.setAttribute('href', 'red.html');
-        }
-      }, 1000);
-    });
+    window.onload = () => {
+      placeNumbers(document.getElementById("mainClock"));
+      placeNumbers(document.getElementById("ex1"));
+      placeNumbers(document.getElementById("ex2"));
+    };
   </script>
 </body>
 </html>
