@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Тренажёр «Часики»</title>
   <style>
     body {
@@ -154,6 +154,29 @@
       font-size: 1.1rem;
       margin-bottom: 10px;
     }
+
+    #stats {
+      margin: 10px 0;
+      font-weight: bold;
+      font-size: 1rem;
+      color: #1e3a8a;
+    }
+
+    #progress-container {
+      width: 100%;
+      height: 16px;
+      background: #e5e7eb;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background-color: #10b981;
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
   </style>
 </head>
 <body>
@@ -174,9 +197,21 @@
 
 <div class="interface">
   <div id="taskText"></div>
+
+  <div id="stats">
+    Правильных: <span id="correctCount">0</span><br>
+    Всего попыток: <span id="totalCount">0</span><br>
+    Неправильных: <span id="incorrectCount">0</span>
+
+    <div id="progress-container">
+      <div id="progressBar"></div>
+    </div>
+  </div>
+
   <div id="level2Input" class="hidden">
     <input type="text" id="timeInput" placeholder="ЧЧ:ММ">
   </div>
+
   <button class="btn btn-primary" id="checkBtn">Проверить</button>
   <button class="btn btn-secondary" id="nextBtn">Новое задание</button>
 </div>
@@ -189,6 +224,15 @@
   const timeInput = document.getElementById('timeInput');
   const levelInput = document.getElementById('level2Input');
   const taskText = document.getElementById('taskText');
+
+  const correctCountElem = document.getElementById('correctCount');
+  const totalCountElem = document.getElementById('totalCount');
+  const incorrectCountElem = document.getElementById('incorrectCount');
+  const progressBar = document.getElementById('progressBar');
+
+  let correctCount = 0;
+  let totalCount = 0;
+  let incorrectCount = 0;
 
   let currentLevel = 1;
   let currentHour = 0;
@@ -322,12 +366,29 @@
     activeHand = null;
   }
 
+  function updateStats(isCorrect) {
+    totalCount++;
+    if (isCorrect) {
+      correctCount++;
+    } else {
+      incorrectCount++;
+    }
+
+    correctCountElem.textContent = correctCount;
+    totalCountElem.textContent = totalCount;
+    incorrectCountElem.textContent = incorrectCount;
+
+    const percent = totalCount === 0 ? 0 : Math.round((correctCount / totalCount) * 100);
+    progressBar.style.width = percent + "%";
+  }
+
   function checkAnswer() {
     const { hour, minute } = currentLevel === 2
       ? parseUserInput(timeInput.value)
       : getTimeFromRotation();
 
     const isCorrect = hour === currentHour && minute === currentMinute;
+    updateStats(isCorrect);
     alert(isCorrect ? "✅ Верно!" : `❌ Неверно. Правильный ответ: ${formatTime(currentHour, currentMinute)}`);
   }
 
