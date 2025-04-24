@@ -151,6 +151,17 @@
       font-size: 1rem;
       margin-top: 10px;
     }
+    .center-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: black;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
   </style>
 </head>
 <body>
@@ -174,6 +185,7 @@
 <div class="clock" id="clock">
   <div class="hand hour" id="hourHand"></div>
   <div class="hand minute" id="minuteHand"></div>
+  <div class="center-dot"></div>
 </div>
 
 <div class="interface" id="interface">
