@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Тренажёр «Часики»</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Уровень 1 — Часики</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -12,114 +12,69 @@
       margin: 0;
       padding: 0;
       color: #2c3e50;
-    }
-    header {
-      background: #ecf3fb;
-      padding: 16px 20px;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      position: sticky;
+    }
+    .wrapper {
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .clock-box {
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 24px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .clock-box::before {
+      content: "";
+      position: absolute;
       top: 0;
-      z-index: 100;
-    }
-    .header-title {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-    .header-title span {
-      font-size: 2rem;
-    }
-    .btn-back {
-      display: inline-block;
-      background: #3498db;
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .levels {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 10px 0 20px;
-    }
-    .levels button {
-      background: #3498db;
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .levels button:hover {
-      background: #2980b9;
-    }
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 0 auto 20px;
-      max-width: 500px;
-      flex-wrap: wrap;
-    }
-    .stat-box {
-      flex: 1 1 120px;
-      background: #f8fcff;
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-    }
-    .stat-box p {
-      font-size: 1rem;
-      margin: 4px 0;
+      left: 0;
+      height: 8px;
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      background: linear-gradient(to right, #e74c3c, #3498db);
     }
     .clock {
       position: relative;
-      width: 90vmin;
-      height: 90vmin;
-      max-width: 300px;
-      max-height: 300px;
-      margin: 30px auto;
-      border: 6px solid #3498db;
+      width: 250px;
+      height: 250px;
+      margin: 20px auto;
+      border: 4px solid #3498db;
       border-radius: 50%;
-      background: radial-gradient(circle, #fff, #dfeeff);
-    }
-    .center-dot {
-      width: 12px;
-      height: 12px;
-      background: #000;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
+      background: white;
     }
     .hand {
       position: absolute;
       bottom: 50%;
       left: 50%;
       transform-origin: bottom center;
-      border-radius: 5px;
-      cursor: grab;
-      touch-action: none;
+      border-radius: 4px;
     }
     .hand.hour {
       width: 6px;
-      height: 26%;
+      height: 65px;
       background: red;
-      z-index: 6;
+      z-index: 2;
     }
     .hand.minute {
       width: 4px;
-      height: 38%;
+      height: 90px;
       background: blue;
-      z-index: 5;
+      z-index: 1;
+    }
+    .center-dot {
+      width: 12px;
+      height: 12px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
     }
     .number {
       position: absolute;
@@ -127,90 +82,100 @@
       font-size: 1rem;
       transform: translate(-50%, -50%);
     }
-    .info {
-      text-align: center;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
+
+    .panel {
+      background: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
-    #result {
+    .panel h2 {
       font-size: 1.2rem;
-      text-align: center;
-      margin-top: 15px;
+      margin-bottom: 8px;
+    }
+    .panel p {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .check {
+      background: #3498db;
+      color: #fff;
+    }
+    .check:hover {
+      background: #2980b9;
+    }
+    .new {
+      background: #bdc3c7;
+      color: #fff;
+      cursor: not-allowed;
+    }
+    .success {
+      background: #2ecc71;
+      color: white;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .error {
+      background: #e74c3c;
+      color: white;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
     }
   </style>
 </head>
 <body>
+  <div class="wrapper">
+    <div class="clock-box">
+      <div class="clock" id="clock">
+        <div class="hand hour" id="hourHand"></div>
+        <div class="hand minute" id="minuteHand"></div>
+        <div class="center-dot"></div>
+      </div>
+    </div>
 
-  <header>
-    <a class="btn-back" href="index.html">← Вернуться к теории</a>
-    <div class="header-title">🕒 Тренажёр <span>«Часики»</span></div>
-    <div class="levels">
-      <button disabled>Уровень 1</button>
-      <button disabled>Уровень 2</button>
-      <button disabled>Уровень 3</button>
-    </div>
-  </header>
+    <div class="panel">
+      <h2>🕒 Установите время</h2>
+      <p>Задано время: <strong id="targetTime">--:--</strong></p>
 
-  <div class="stats">
-    <div class="stat-box">
-      <p><strong>Правильно</strong></p>
-      <p id="correct">0</p>
-    </div>
-    <div class="stat-box">
-      <p><strong>Неправильно</strong></p>
-      <p id="wrong">0</p>
-    </div>
-    <div class="stat-box">
-      <p><strong>Прогресс</strong></p>
-      <p id="progress">0%</p>
+      <div class="btns">
+        <button class="btn check" id="checkBtn">✔ Проверить</button>
+        <button class="btn new" id="newBtn" disabled>↻ Новое время</button>
+      </div>
+
+      <div id="feedback"></div>
     </div>
   </div>
-  <div class="info">Установи на циферблате: <strong id="targetTime">--:--</strong></div>
-
-  <div class="clock" id="clock">
-    <div class="hand hour" id="hourHand"></div>
-    <div class="hand minute" id="minuteHand"></div>
-    <div class="center-dot"></div>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const positions = [
-          [1, 215, 37],[2, 263, 85],[3, 280, 150],[4, 263, 215],
-          [5, 215, 263],[6, 150, 280],[7, 85, 263],[8, 37, 215],
-          [9, 20, 150],[10, 37, 85],[11, 85, 37],[12, 150, 20]
-        ];
-        const clock = document.getElementById("clock");
-        positions.forEach(([num, x, y]) => {
-          const el = document.createElement("div");
-          el.className = "number";
-          el.style.left = `${x / 300 * 100}%`;
-          el.style.top = `${y / 300 * 100}%`;
-          el.textContent = num;
-          clock.appendChild(el);
-        });
-      });
-    </script>
-  </div>
-
-  <div id="result"></div>
-<script>
+  <script>
   const hourHand = document.getElementById("hourHand");
   const minuteHand = document.getElementById("minuteHand");
-  const targetTimeDisplay = document.getElementById("targetTime");
-  const result = document.getElementById("result");
-
-  const correctEl = document.getElementById("correct");
-  const wrongEl = document.getElementById("wrong");
-  const progressEl = document.getElementById("progress");
+  const checkBtn = document.getElementById("checkBtn");
+  const newBtn = document.getElementById("newBtn");
+  const feedback = document.getElementById("feedback");
+  const targetDisplay = document.getElementById("targetTime");
 
   let dragging = null;
-  let targetHour = 0;
-  let targetMinute = 0;
-
   let currentHourAngle = 270;
   let currentMinuteAngle = 90;
-
-  let correctCount = 0;
-  let wrongCount = 0;
+  let targetHour = 0;
+  let targetMinute = 0;
 
   const setRotation = (el, angle) => {
     el.style.transform = `rotate(${angle}deg)`;
@@ -225,25 +190,21 @@
 
   const roundToHour = (angle) => Math.round(angle / 30) * 30;
 
-  function generateTime() {
+  function updateTargetTime() {
     const hours = Math.floor(Math.random() * 24);
     const minutes = [0, 15, 30, 45][Math.floor(Math.random() * 4)];
     targetHour = hours;
     targetMinute = minutes;
-    targetTimeDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-    result.textContent = '';
+    targetDisplay.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+
     currentHourAngle = 270;
     currentMinuteAngle = 90;
     setRotation(hourHand, currentHourAngle);
     setRotation(minuteHand, currentMinuteAngle);
-  }
 
-  function updateStats() {
-    correctEl.textContent = correctCount;
-    wrongEl.textContent = wrongCount;
-    const total = correctCount + wrongCount;
-    const percent = total === 0 ? 0 : Math.round((correctCount / total) * 100);
-    progressEl.textContent = `${percent}%`;
+    feedback.innerHTML = "";
+    newBtn.disabled = true;
+    newBtn.classList.add("new");
   }
 
   function checkAnswer() {
@@ -253,26 +214,21 @@
     const guessedMinute = Math.round(minute / 15) * 15 % 60;
 
     if (guessedHour === targetHour && guessedMinute === targetMinute) {
-      result.textContent = "✅ Правильно!";
-      result.style.color = "#27ae60";
-      correctCount++;
-      updateStats();
-      setTimeout(generateTime, 1000);
+      feedback.innerHTML = `<div class="success">✅ Верно! Отличная работа!</div>`;
+      newBtn.disabled = false;
+      newBtn.classList.remove("new");
     } else {
-      result.textContent = `❌ Неправильно. Было: ${targetHour}:${targetMinute.toString().padStart(2, '0')}`;
-      result.style.color = "#e74c3c";
-      wrongCount++;
-      updateStats();
+      feedback.innerHTML = `<div class="error">❌ Неправильно. Попробуй ещё!</div>`;
     }
   }
 
   function setupDragging(hand, isHour) {
-    const moveDrag = (clientX, clientY) => {
+    const moveDrag = (x, y) => {
       const rect = document.getElementById("clock").getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = clientX - cx;
-      const dy = clientY - cy;
+      const dx = x - cx;
+      const dy = y - cy;
       let angle = Math.atan2(dx, -dy) * 180 / Math.PI;
       if (angle < 0) angle += 360;
 
@@ -298,20 +254,19 @@
         } else {
           if (isHour) currentHourAngle = toAngle;
           else currentMinuteAngle = toAngle;
-          checkAnswer();
         }
       };
       requestAnimationFrame(animate);
     };
 
-    const snapOnRelease = () => {
+    const releaseSnap = () => {
       if (dragging) {
         if (dragging.isHour) {
-          const snapped = roundToHour(currentHourAngle);
-          animateTo(hourHand, currentHourAngle, snapped, true);
+          const snap = roundToHour(currentHourAngle);
+          animateTo(hourHand, currentHourAngle, snap, true);
         } else if (dragging.isMinute) {
-          const snapped = roundToQuarter(currentMinuteAngle);
-          animateTo(minuteHand, currentMinuteAngle, snapped, false);
+          const snap = roundToQuarter(currentMinuteAngle);
+          animateTo(minuteHand, currentMinuteAngle, snap, false);
         }
         dragging = null;
       }
@@ -321,6 +276,7 @@
       e.preventDefault();
       dragging = isHour ? { isHour: true } : { isMinute: true };
     });
+
     hand.addEventListener("touchstart", e => {
       dragging = isHour ? { isHour: true } : { isMinute: true };
     });
@@ -328,21 +284,21 @@
     document.addEventListener("mousemove", e => {
       if (dragging) moveDrag(e.clientX, e.clientY);
     });
-
     document.addEventListener("touchmove", e => {
-      if (dragging) {
-        const t = e.touches[0];
-        moveDrag(t.clientX, t.clientY);
-      }
+      if (dragging) moveDrag(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive: false });
 
-    document.addEventListener("mouseup", snapOnRelease);
-    document.addEventListener("touchend", snapOnRelease);
+    document.addEventListener("mouseup", releaseSnap);
+    document.addEventListener("touchend", releaseSnap);
   }
 
   setupDragging(hourHand, true);
   setupDragging(minuteHand, false);
-  generateTime();
+
+  checkBtn.addEventListener("click", checkAnswer);
+  newBtn.addEventListener("click", updateTargetTime);
+
+  updateTargetTime();
 </script>
 </body>
 </html>
