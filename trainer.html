@@ -148,6 +148,12 @@
       touch-action: none;
       user-select: none;
     }
+
+    #taskText {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -167,9 +173,9 @@
 </div>
 
 <div class="interface">
+  <div id="taskText"></div>
   <div id="level2Input" class="hidden">
-    <label for="timeInput">Введите время: ЧЧ:ММ</label>
-    <input type="text" id="timeInput" placeholder="00:00">
+    <input type="text" id="timeInput" placeholder="ЧЧ:ММ">
   </div>
   <button class="btn btn-primary" id="checkBtn">Проверить</button>
   <button class="btn btn-secondary" id="nextBtn">Новое задание</button>
@@ -182,15 +188,16 @@
   const minuteHand = document.getElementById('minuteHand');
   const timeInput = document.getElementById('timeInput');
   const levelInput = document.getElementById('level2Input');
+  const taskText = document.getElementById('taskText');
 
   let currentLevel = 1;
   let currentHour = 0;
   let currentMinute = 0;
 
   const levels = {
-    1: { snap: 90 },    // 0, 90, 180, 270 (15, 30, 45, 0 мин)
+    1: { snap: 90 },
     2: { snap: null },
-    3: { snap: 30 }     // каждые 5 минут (30° шаг)
+    3: { snap: 30 }
   };
 
   let isDragging = false;
@@ -223,11 +230,9 @@
     let minute = 0;
 
     if (snap === 90) {
-      // четверти
       const options = [0, 15, 30, 45];
       minute = options[Math.floor(Math.random() * options.length)];
     } else if (snap === 30) {
-      // каждые 5 минут
       const options = Array.from({ length: 12 }, (_, i) => i * 5);
       minute = options[Math.floor(Math.random() * options.length)];
     } else {
@@ -244,6 +249,16 @@
 
     hourHand.style.transform = `rotate(${hDeg}deg)`;
     minuteHand.style.transform = `rotate(${mDeg}deg)`;
+
+    updateTaskText();
+  }
+
+  function updateTaskText() {
+    if (currentLevel === 2) {
+      taskText.textContent = 'Введите время, изображенное на часах:';
+    } else {
+      taskText.textContent = 'Установите время: ' + formatTime(currentHour, currentMinute);
+    }
   }
 
   function getTimeFromRotation() {
@@ -308,9 +323,17 @@
   }
 
   function checkAnswer() {
-    const { hour, minute } = getTimeFromRotation();
-    const correct = (hour === currentHour && minute === currentMinute);
-    alert(correct ? "✅ Верно!" : `❌ Неверно. Правильный ответ: ${formatTime(currentHour, currentMinute)}`);
+    const { hour, minute } = currentLevel === 2
+      ? parseUserInput(timeInput.value)
+      : getTimeFromRotation();
+
+    const isCorrect = hour === currentHour && minute === currentMinute;
+    alert(isCorrect ? "✅ Верно!" : `❌ Неверно. Правильный ответ: ${formatTime(currentHour, currentMinute)}`);
+  }
+
+  function parseUserInput(input) {
+    const [h, m] = input.trim().split(":").map(Number);
+    return { hour: h % 24, minute: m % 60 };
   }
 
   function updateUI() {
@@ -320,30 +343,16 @@
   document.getElementById('checkBtn').onclick = checkAnswer;
   document.getElementById('nextBtn').onclick = () => generateTime(currentLevel);
 
-  document.getElementById('level1').onclick = () => {
-    currentLevel = 1;
-    generateTime(currentLevel);
-    updateUI();
-    setActiveLevel();
-  };
+  document.getElementById('level1').onclick = () => setLevel(1);
+  document.getElementById('level2').onclick = () => setLevel(2);
+  document.getElementById('level3').onclick = () => setLevel(3);
 
-  document.getElementById('level2').onclick = () => {
-    currentLevel = 2;
-    generateTime(currentLevel);
-    updateUI();
-    setActiveLevel();
-  };
-
-  document.getElementById('level3').onclick = () => {
-    currentLevel = 3;
-    generateTime(currentLevel);
-    updateUI();
-    setActiveLevel();
-  };
-
-  function setActiveLevel() {
+  function setLevel(level) {
+    currentLevel = level;
     document.querySelectorAll('.levels button').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('level' + currentLevel).classList.add('active');
+    document.getElementById('level' + level).classList.add('active');
+    generateTime(level);
+    updateUI();
   }
 
   hourHand.addEventListener('mousedown', startDrag);
