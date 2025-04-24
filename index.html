@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
+      background: #eef2f7;
       margin: 0;
       padding: 0;
     }
@@ -24,7 +24,7 @@
     h2 {
       text-align: center;
       font-size: 1.8em;
-      color: #1f2937;
+      color: #111827;
     }
 
     .section {
@@ -40,6 +40,7 @@
       border: 5px solid #3b82f6;
       border-radius: 50%;
       margin: 20px auto;
+      background: white;
     }
 
     .hand {
@@ -51,15 +52,27 @@
     }
 
     .hand.hour {
-      width: 5px;
+      width: 4px;
       height: 40px;
-      background: #ef4444;
+      background: red;
     }
 
     .hand.minute {
-      width: 4px;
-      height: 56px; /* уменьшено на 1/5 */
-      background: #3b82f6;
+      width: 3px;
+      height: 56px;
+      background: blue;
+    }
+
+    .center-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: black;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
     }
 
     .number {
@@ -91,8 +104,7 @@
     }
 
     .clock.small .hand.minute {
-      width: 3px;
-      height: 36px; /* уменьшено на 1/5 */
+      height: 36px;
     }
 
     .btn {
@@ -113,7 +125,7 @@
 
     .btn.enabled {
       cursor: pointer;
-      background-color: #10b981;
+      background-color: #2563eb;
     }
 
     .disabled {
@@ -135,6 +147,7 @@
           <div class="clock small" id="ex1">
             <div class="hand hour" style="transform: rotate(210deg);"></div>
             <div class="hand minute" style="transform: rotate(0deg);"></div>
+            <div class="center-dot"></div>
           </div>
           <div>7:00</div>
         </div>
@@ -142,6 +155,7 @@
           <div class="clock small" id="ex2">
             <div class="hand hour" style="transform: rotate(75deg);"></div>
             <div class="hand minute" style="transform: rotate(180deg);"></div>
+            <div class="center-dot"></div>
           </div>
           <div>2:30</div>
         </div>
@@ -169,6 +183,7 @@
           <div class="clock small" id="ex3">
             <div class="hand hour" style="transform: rotate(75deg);"></div>
             <div class="hand minute" style="transform: rotate(180deg);"></div>
+            <div class="center-dot"></div>
           </div>
           <div>02:30</div>
         </div>
@@ -176,6 +191,7 @@
           <div class="clock small" id="ex4">
             <div class="hand hour" style="transform: rotate(195deg);"></div>
             <div class="hand minute" style="transform: rotate(90deg);"></div>
+            <div class="center-dot"></div>
           </div>
           <div>06:15</div>
         </div>
