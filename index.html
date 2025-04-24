@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Тренажёр «Часики» — Теория</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,7 +32,8 @@
     }
 
     .btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       background: #ccc;
       color: #fff;
       padding: 12px 24px;
@@ -50,6 +51,12 @@
       pointer-events: auto;
     }
 
+    .btn span.timer {
+      display: inline-block;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
     .clock {
       position: relative;
       width: 200px; height: 200px;
@@ -58,7 +65,6 @@
       border-radius: 50%;
       background: radial-gradient(circle at center, #fff, #eceff4);
     }
-
     .clock.small {
       width: 120px; height: 120px;
       border-width: 3px;
@@ -85,14 +91,14 @@
       transform: rotate(0deg);
     }
 
-    /* Маленькие стрелки — изменено */
     .clock.small .hand.hour {
-      height: 20px;
-      width: 3px;
+      width: 4px;
+      height: 25px;
     }
+
     .clock.small .hand.minute {
+      width: 3px;
       height: 36px;
-      width: 2px;
     }
 
     .number {
@@ -101,22 +107,8 @@
       text-align: center; font-weight: bold;
       color: #2c3e50; font-size: 1rem;
     }
-
     .clock.small .number {
       font-size: 0.8rem; width: 16px; height: 16px;
-    }
-
-    .emoji { margin-right: 6px; }
-
-    .timer-btn-wrapper {
-      text-align: center;
-      margin: 30px;
-    }
-
-    #timer {
-      margin-right: 10px;
-      font-weight: bold;
-      color: #2c3e50;
     }
   </style>
 </head>
@@ -169,22 +161,23 @@
     </ul>
   </div>
 
-  <div class="timer-btn-wrapper">
-    <span id="timer">30</span>
-    <a id="nextBtn" href="red.html" class="btn">Перейти к тренажёру</a>
+  <div style="text-align:center; margin: 30px;">
+    <a id="nextBtn" class="btn" href="#">
+      <span class="timer" id="countdown">30</span>Перейти к тренажёру
+    </a>
   </div>
 
   <script>
     function placeNumbers(clock, offset) {
       const size = clock.clientWidth;
-      const cx = size/2, cy = size/2, r = size/2 - offset;
+      const cx = size / 2, cy = size / 2, r = size / 2 - offset;
       for (let i = 1; i <= 12; i++) {
         const ang = (i - 3) * (Math.PI / 6);
         const num = document.createElement('div');
         num.className = 'number';
         const adj = clock.classList.contains('small') ? 8 : 12;
         num.style.left = cx + r * Math.cos(ang) - adj + 'px';
-        num.style.top  = cy + r * Math.sin(ang) - adj + 'px';
+        num.style.top = cy + r * Math.sin(ang) - adj + 'px';
         num.textContent = i;
         clock.appendChild(num);
       }
@@ -195,21 +188,21 @@
       placeNumbers(document.getElementById('ex1'), 12);
       placeNumbers(document.getElementById('ex2'), 12);
 
-      let timer = 30;
-      const timerEl = document.getElementById("timer");
-      const btn = document.getElementById("nextBtn");
+      let countdown = 30;
+      const timer = document.getElementById('countdown');
+      const btn = document.getElementById('nextBtn');
 
       const interval = setInterval(() => {
-        timer--;
-        timerEl.textContent = timer;
-        if (timer <= 0) {
+        countdown--;
+        timer.textContent = countdown;
+        if (countdown <= 0) {
           clearInterval(interval);
-          timerEl.style.display = "none";
-          btn.classList.add("active");
+          timer.remove();
+          btn.classList.add('active');
+          btn.setAttribute('href', 'red.html');
         }
       }, 1000);
     });
   </script>
-
 </body>
 </html>
