@@ -58,27 +58,28 @@
     }
 
     .hand {
-      position: absolute;
-      width: 4px;
-      height: 100px;
-      background: #000;
-      top: 50%;
-      left: 50%;
-      transform-origin: bottom;
-      transform: rotate(0deg);
-      transition: transform 0.3s ease-out;
-      border-radius: 4px;
-    }
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+  border-radius: 6px;
+  transition: transform 0.3s ease-out;
+}
 
-    .hand.hour {
-      background: #e74c3c;
-      height: 70px;
-    }
+.hand.hour {
+  height: 80px;
+  background: #e74c3c;
+  width: 6px;
+  margin-left: -3px;
+}
 
-    .hand.minute {
-      background: #3498db;
-      height: 100px;
-    }
+.hand.minute {
+  height: 110px;
+  background: #3498db;
+  width: 4px;
+  margin-left: -2px;
+}
 
     .center-dot {
       width: 14px;
