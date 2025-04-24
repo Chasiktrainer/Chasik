@@ -13,6 +13,7 @@
       padding: 0;
       color: #2c3e50;
       text-align: center;
+      overscroll-behavior: none;
     }
     a {
       display: inline-block;
@@ -239,6 +240,7 @@
   const progressEl = document.getElementById("progress");
 
   let dragging = null;
+  let isDragging = false;
   let currentHourAngle = 270;
   let currentMinuteAngle = 90;
   let targetHour = 0;
@@ -330,21 +332,27 @@
           setRotation(minuteHand, snap);
         }
         dragging = null;
+        isDragging = false;
       }
     };
 
-    hand.addEventListener("mousedown", e => {
+    hand.addEventListener("mousedown", () => {
       dragging = isHour ? { isHour: true } : { isMinute: true };
     });
+
     hand.addEventListener("touchstart", e => {
       dragging = isHour ? { isHour: true } : { isMinute: true };
-    });
+      isDragging = true;
+    }, { passive: false });
 
     document.addEventListener("mousemove", e => {
       if (dragging) moveDrag(e.clientX, e.clientY);
     });
     document.addEventListener("touchmove", e => {
-      if (dragging) moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+      if (dragging) {
+        moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+        e.preventDefault(); // блокируем скролл
+      }
     }, { passive: false });
 
     document.addEventListener("mouseup", releaseSnap);
@@ -354,16 +362,13 @@
   checkBtn.addEventListener("click", checkAnswer);
   newBtn.addEventListener("click", generateTime);
 
-  setupDragging(hourHand, true);
-  setupDragging(minuteHand, false);
-
   function startLevel(num) {
     document.getElementById("gameArea").style.display = "block";
     generateTime();
   }
 
-  // Числа на циферблате
   document.addEventListener("DOMContentLoaded", () => {
+    // Цифры на циферблат
     const clock = document.getElementById("clock");
     const radius = 125;
     const centerX = 125, centerY = 125;
@@ -378,6 +383,12 @@
       num.style.top = `${y}px`;
       clock.appendChild(num);
     }
+
+    setupDragging(hourHand, true);
+    setupDragging(minuteHand, false);
+
+    // автозапуск уровня
+    startLevel(1);
   });
 </script>
 </body>
