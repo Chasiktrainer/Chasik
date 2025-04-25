@@ -1,956 +1,433 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Часики - Полный тренажёр</title>
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent1: #e74c3c;
-            --accent2: #3498db;
-            --background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --success: #2ecc71;
-            --error: #e74c3c;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --text-light: #ecf0f1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренажёр времени (24ч)</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --accent1: #e74c3c;
+      --accent2: #3498db;
+      --success: #2ecc71;
+      --error: #e74c3c;
+      --background: #f5f7fa;
+    }
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--background);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: var(--primary);
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            position: relative;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-        .header {
-            text-align: center;
-            margin: 20px 0 30px;
-        }
+    .trainer-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 30px;
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
 
-        .header h1 {
-            font-size: 2.8em;
-            margin: 0;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    h1 {
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
 
-        .level-buttons {
-            display: flex;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    .time-display {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 20px 0;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
 
-        .level-buttons button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            background: var(--accent2);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-            font-size: 1.1em;
-        }
+    .clock-container {
+      margin: 30px auto;
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
 
-        .level-buttons button:hover {
-            background: var(--accent1);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(231, 76, 60, 0.3);
-        }
+    .clock {
+      width: 100%;
+      height: 100%;
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      position: relative;
+      background: white;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
 
-        .level-buttons button.active {
-            background: var(--accent1);
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
+    .number {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      font-weight: bold;
+      text-align: center;
+      transform-origin: center;
+    }
 
-        .progress-container {
-            width: 100%;
-            max-width: 800px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
+    .hand {
+      position: absolute;
+      left: 50%;
+      bottom: 50%;
+      transform-origin: 50% 100%;
+      transition: transform 0.3s ease-out;
+    }
 
-        .progress-bar {
-            height: 15px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
+    .hour-hand {
+      width: 5px;
+      height: 50px;
+      background: var(--primary);
+      margin-left: -2.5px;
+      border-radius: 4px;
+    }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent1), var(--accent2));
-            width: 45%;
-            transition: width 0.5s ease;
-        }
+    .minute-hand {
+      width: 3px;
+      height: 70px;
+      background: var(--accent2);
+      margin-left: -1.5px;
+      border-radius: 3px;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 25px;
-        }
+    .center-dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: var(--accent1);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
 
-        .stat-card {
-            background: rgba(255,255,255,0.7);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
+    .controls {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
+    button {
+      background: var(--accent2);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s;
+      min-width: 120px;
+    }
 
-        .stat-card h3 {
-            margin: 0 0 10px;
-            font-size: 1.1em;
-            color: var(--primary);
-        }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
 
-        .stat-card p {
-            margin: 0;
-            font-size: 1.5em;
-            font-weight: 700;
-            color: var(--accent2);
-        }
+    .btn-check {
+      background: var(--success);
+    }
 
-        .clock-section {
-            background: var(--card-bg);
-            border-radius: 25px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.3);
-            max-width: 800px;
-            width: 100%;
-        }
+    .btn-new {
+      background: var(--accent1);
+    }
 
-        .clock-section.hidden {
-            opacity: 0;
-            transform: translateY(30px);
-            pointer-events: none;
-            height: 0;
-            padding: 0;
-            margin: 0;
-            border: none;
-        }
+    .btn-back {
+      background: #95a5a6;
+      margin-top: 20px;
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        .clock-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: linear-gradient(90deg, var(--accent1) 0%, var(--accent2) 100%);
-        }
+    .feedback {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: none;
+    }
 
-        .clock-wrapper {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 0 auto;
-            transition: all 0.3s;
-        }
+    .correct {
+      background: #d5f5e3;
+      color: #27ae60;
+    }
 
-        .clock-face {
-            width: 100%;
-            height: 100%;
-            border: 4px solid var(--primary);
-            border-radius: 50%;
-            position: relative;
-            background: #fff;
-            background-image: 
-                radial-gradient(circle at 50% 50%, transparent 85%, var(--primary) 85.5%),
-                repeating-conic-gradient(from 0deg, transparent 0deg 5deg, #f0f0f0 5deg 6deg);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+    .incorrect {
+      background: #fadbd8;
+      color: #e74c3c;
+    }
 
-        .clock-number {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--primary);
-            transform-origin: center;
-            left: calc(50% - 15px);
-            top: calc(50% - 15px);
-            user-select: none;
-            z-index: 1;
-        }
+    .time-format-hint {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-top: 10px;
+    }
 
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: 50% 100%;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.2));
-            z-index: 2;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+    .adjust-controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
 
-        .hour-hand {
-            width: 8px;
-            height: 70px;
-            background: var(--accent1);
-            border-radius: 5px 5px 0 0;
-            transform: rotate(90deg);
-        }
+    .adjust-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .minute-hand {
-            width: 5px;
-            height: 90px;
-            background: var(--accent2);
-            border-radius: 4px 4px 0 0;
-            transform: rotate(0deg);
-        }
-
-        .center-dot {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background: var(--primary);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        .task-card {
-            background: rgba(255,255,255,0.8);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 25px 0 15px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-        }
-
-        .task-header {
-            font-size: 1.6em;
-            margin-bottom: 20px;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-        }
-
-        .task-header svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        .task-time {
-            font-size: 1.4em;
-            margin: 20px 0;
-            font-weight: 600;
-            color: var(--primary);
-            text-align: center;
-            padding: 10px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 10px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        button {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 50px;
-            background: var(--accent2);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 1.1em;
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        button.secondary {
-            background: #95a5a6;
-            box-shadow: 0 4px 8px rgba(149, 165, 166, 0.3);
-        }
-
-        button.secondary:hover {
-            box-shadow: 0 8px 15px rgba(149, 165, 166, 0.4);
-        }
-
-        input {
-            padding: 14px;
-            border: 2px solid #dfe6e9;
-            border-radius: 10px;
-            width: 100%;
-            font-size: 1.1em;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.7);
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent2);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .result-feedback {
-            padding: 18px;
-            border-radius: 12px;
-            margin-top: 20px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 1.1em;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .success {
-            background: var(--success);
-            color: white;
-            opacity: 1;
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
-        }
-
-        .error {
-            background: var(--error);
-            color: white;
-            opacity: 1;
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
-        }
-
-        .theory-button {
-            margin: 30px auto;
-            padding: 14px 35px;
-            background: var(--accent2);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
-        }
-
-        .theory-button:hover {
-            background: var(--accent1);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(231, 76, 60, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .clock-wrapper {
-                width: 220px;
-                height: 220px;
-            }
-
-            .hour-hand {
-                height: 60px;
-                width: 7px;
-            }
-
-            .minute-hand {
-                height: 80px;
-                width: 4px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .controls {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-        }
-
-        /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-    </style>
+    .adjust-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      padding: 0;
+      min-width: auto;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            Тренажёр "Часики"
-        </h1>
+  <div class="trainer-container">
+    <h1>Установите время (24-часовой формат)</h1>
+    
+    <div class="time-display" id="targetTime">Задано время: 15:00</div>
+    
+    <div class="clock-container">
+      <div class="clock" id="clock">
+        <!-- Часы будут сгенерированы скриптом -->
+      </div>
     </div>
 
-    <div class="level-buttons">
-        <button onclick="switchLevel('level1')" class="active">Уровень 1</button>
-        <button onclick="switchLevel('level2')">Уровень 2</button>
-        <button onclick="switchLevel('level3')">Уровень 3</button>
+    <div class="adjust-controls">
+      <div class="adjust-group">
+        <span>Часы:</span>
+        <button class="adjust-btn hour-minus">-</button>
+        <button class="adjust-btn hour-plus">+</button>
+      </div>
+      <div class="adjust-group">
+        <span>Минуты:</span>
+        <button class="adjust-btn minute-minus">-</button>
+        <button class="adjust-btn minute-plus">+</button>
+      </div>
     </div>
-
-    <div class="progress-container">
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Правильно</h3>
-                <p class="stat-value">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>Неправильно</h3>
-                <p class="stat-value">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>Прогресс</h3>
-                <p class="stat-value">0%</p>
-            </div>
-        </div>
+    
+    <div class="controls">
+      <button class="btn-check" id="checkBtn">✅ Проверить</button>
+      <button class="btn-new" id="newBtn">✅ Новое время</button>
     </div>
-
-    <!-- Уровень 1 -->
-    <div class="clock-section fade-in" id="level1">
-        <div class="clock-wrapper">
-            <div class="clock-face">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand" class="hand hour-hand"></div>
-                <div id="minute-hand" class="hand minute-hand" style="cursor: default;"></div>
-            </div>
-        </div>
-
-        <div class="task-card">
-            <div class="task-header">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Установите время</span>
-            </div>
-            <p class="task-time" id="target-time"></p>
-            <div class="controls">
-                <button onclick="checkTime()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <path d="M22 4L12 14.01l-3-3"/>
-                    </svg>
-                    Проверить
-                </button>
-                <button onclick="generateNewTask()" class="secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 4v6h-6M1 20v-6h6"/>
-                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                    </svg>
-                    Новое время
-                </button>
-            </div>
-            <div id="task1-result" class="result-feedback"></div>
-        </div>
+    
+    <div id="feedback" class="feedback"></div>
+    
+    <button class="btn-back" id="backBtn">← Вернуться к теории</button>
+    
+    <div class="time-format-hint">
+      ⓘ Используйте 24-часовой формат (00:00 - 23:59)
     </div>
+  </div>
 
-    <!-- Уровень 2 -->
-    <div class="clock-section hidden" id="level2">
-        <div class="clock-wrapper">
-            <div class="clock-face" id="clock2">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand-2" class="hand hour-hand"></div>
-                <div id="minute-hand-2" class="hand minute-hand"></div>
-            </div>
-        </div>
+  <script>
+    // Глобальные переменные
+    let currentTargetTime = { hours: 15, minutes: 0 };
+    let userSetTime = { hours: 0, minutes: 0 };
+    let isDragging = false;
+    let activeHand = null;
 
-        <div class="task-card">
-            <div class="task-header">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
-                <span>Определите время</span>
-            </div>
-            <input type="text" id="time-input" placeholder="Введите время в формате ЧЧ:ММ">
-            <div class="controls" style="margin-top: 15px;">
-                <button onclick="checkInput()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 6L9 17l-5-5"/>
-                    </svg>
-                    Проверить ответ
-                </button>
-                <button onclick="generateNewClock2Time()" class="secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <path d="M14 2v6h6M12 18h.01M16 18h.01M8 21h.01M12 21h.01M16 21h.01"/>
-                    </svg>
-                    Новое время
-                </button>
-            </div>
-            <div id="task2-result" class="result-feedback"></div>
-        </div>
-    </div>
-
-    <!-- Уровень 3 -->
-    <div class="clock-section hidden" id="level3">
-        <div class="clock-wrapper">
-            <div class="clock-face" id="clock3">
-                <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
-                <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
-                <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
-                <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
-                <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
-                <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
-                <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
-                <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
-                <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
-                <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
-                <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
-                <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
-                
-                <div class="center-dot"></div>
-                <div id="hour-hand-3" class="hand hour-hand"></div>
-                <div id="minute-hand-3" class="hand minute-hand"></div>
-            </div>
-        </div>
-
-        <div class="task-card">
-            <div class="task-header">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Установите время (точное)</span>
-            </div>
-            <p class="task-time" id="target-time-3"></p>
-            <div class="controls">
-                <button onclick="checkTime3()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <path d="M22 4L12 14.01l-3-3"/>
-                    </svg>
-                    Проверить
-                </button>
-                <button onclick="generateNewTask3()" class="secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 4v6h-6M1 20v-6h6"/>
-                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
-                    </svg>
-                    Новое время
-                </button>
-            </div>
-            <div id="task3-result" class="result-feedback"></div>
-        </div>
-    </div>
-
-    <a href="index.html" class="theory-button">← Вернуться к теории</a>
-
-    <script>
-        let stats = {
-            correct: 0,
-            wrong: 0,
-            total: 0
-        };
-
-        let targetHours = 3;
-        let targetMinutes = 0;
-        let currentClock2Time = {h: 9, m: 0};
-        let currentClock3Time = {h: 9, m: 0};
-        let currentRotation = { hour: 90, minute: 0 };
-        let currentRotation3 = { hour: 90, minute: 0 };
-        let isDragging = false;
-        let activeHand = null;
-        let isFirstAttemptLevel1 = true;
-
-        const hourHand = document.getElementById('hour-hand');
-        const minuteHand = document.getElementById('minute-hand');
-        const hourHand2 = document.getElementById('hour-hand-2');
-        const minuteHand2 = document.getElementById('minute-hand-2');
-        const hourHand3 = document.getElementById('hour-hand-3');
-        const minuteHand3 = document.getElementById('minute-hand-3');
-
-        setupClock();
-        generateNewTask();
-        updateClock2();
-        generateNewTask3();
-        updateStats();
-
-        function updateStats() {
-            document.querySelectorAll('.stat-value')[0].textContent = stats.correct;
-            document.querySelectorAll('.stat-value')[1].textContent = stats.wrong;
-            const progress = Math.round((stats.correct / (stats.correct + stats.wrong || 1)) * 100);
-            document.querySelectorAll('.stat-value')[2].textContent = progress + '%';
-            document.querySelector('.progress-fill').style.width = progress + '%';
-        }
-
-        function setupClock() {
-            minuteHand.style.transform = `rotate(0deg)`;
-            hourHand.addEventListener('mousedown', startDrag);
-            hourHand.addEventListener('touchstart', touchStart, { passive: false });
-            
-            hourHand3.addEventListener('mousedown', startDrag3);
-            minuteHand3.addEventListener('mousedown', startDrag3);
-            hourHand3.addEventListener('touchstart', touchStart3, { passive: false });
-            minuteHand3.addEventListener('touchstart', touchStart3, { passive: false });
-
-            document.addEventListener('mouseup', endDrag);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('touchend', endDrag);
-            document.addEventListener('touchmove', touchDrag, { passive: false });
-        }
-
-        function startDrag(e) {
-            isDragging = true;
-            activeHand = e.target.closest('.hand');
-            if (activeHand === minuteHand) return;
-            activeHand.style.transition = 'none';
-            document.body.classList.add('no-scroll');
-            e.preventDefault();
-        }
-
-        function startDrag3(e) {
-            isDragging = true;
-            activeHand = e.target.closest('.hand');
-            activeHand.style.transition = 'none';
-            document.body.classList.add('no-scroll');
-            e.preventDefault();
-        }
-
-        function touchStart(e) {
-            startDrag(e.touches[0]);
-            e.preventDefault();
-        }
-
-        function touchStart3(e) {
-            startDrag3(e.touches[0]);
-            e.preventDefault();
-        }
-
-        function endDrag() {
-            isDragging = false;
-            if (activeHand) {
-                activeHand.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                if (activeHand === hourHand) snapToNearest();
-                if (activeHand === hourHand3 || activeHand === minuteHand3) snapToNearest3();
-                activeHand = null;
-            }
-            document.body.classList.remove('no-scroll');
-        }
-
-        function drag(e) {
-            if (!isDragging || !activeHand || activeHand === minuteHand) return;
-            handleMove(e.clientX, e.clientY);
-        }
-
-        function touchDrag(e) {
-            if (!isDragging || !activeHand || activeHand === minuteHand) return;
-            handleMove(e.touches[0].clientX, e.touches[0].clientY);
-            e.preventDefault();
-        }
-
-        function handleMove(x, y) {
-            const rect = activeHand.getBoundingClientRect();
-            const centerX = rect.left + rect.width/2;
-            const centerY = rect.top + rect.height/2;
-            const angle = Math.atan2(y - centerY, x - centerX);
-            let degrees = (angle * (180/Math.PI) + 90) % 360;
-            if (degrees < 0) degrees += 360;
-
-            if (activeHand === hourHand) {
-                currentRotation.hour = degrees;
-                hourHand.style.transform = `rotate(${degrees}deg)`;
-            } else if (activeHand === hourHand3) {
-                currentRotation3.hour = degrees;
-                hourHand3.style.transform = `rotate(${degrees}deg)`;
-            } else if (activeHand === minuteHand3) {
-                currentRotation3.minute = degrees;
-                minuteHand3.style.transform = `rotate(${degrees}deg)`;
-            }
-        }
-
-        function snapToNearest() {
-            const snapDegrees = Math.round(currentRotation.hour / 30) * 30;
-            currentRotation.hour = snapDegrees;
-            hourHand.style.transform = `rotate(${snapDegrees}deg)`;
-        }
-
-        function snapToNearest3() {
-            if (activeHand === hourHand3) {
-                const snapDegrees = Math.round(currentRotation3.hour / 30) * 30;
-                currentRotation3.hour = snapDegrees;
-                hourHand3.style.transform = `rotate(${snapDegrees}deg)`;
-            } else if (activeHand === minuteHand3) {
-                // Доводчик до каждых 5 минут (каждые 30 градусов)
-                const snapDegrees = Math.round(currentRotation3.minute / 30) * 30;
-                currentRotation3.minute = snapDegrees;
-                minuteHand3.style.transform = `rotate(${snapDegrees}deg)`;
-            }
-        }
-
-        function generateNewTask() {
-            targetHours = Math.floor(Math.random() * 24);
-            document.getElementById('target-time').textContent = 
-                `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
-            isFirstAttemptLevel1 = true;
-            currentRotation.hour = 90;
-            hourHand.style.transform = `rotate(90deg)`;
-        }
-
-        function generateNewTask3() {
-            targetHours = Math.floor(Math.random() * 24);
-            targetMinutes = Math.floor(Math.random() * 12) * 5;
-            document.getElementById('target-time-3').textContent = 
-                `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
-            
-            // Сбрасываем стрелки на 12:00
-            currentRotation3.hour = 90;
-            currentRotation3.minute = 0;
-            hourHand3.style.transform = `rotate(90deg)`;
-            minuteHand3.style.transform = `rotate(0deg)`;
-        }
-
-        function checkTime() {
-            const hourDegrees = currentRotation.hour;
-            const currentHour12 = Math.round(hourDegrees / 30) % 12;
-            const targetHour12 = targetHours % 12;
-            const result = document.getElementById('task1-result');
-
-            if (isFirstAttemptLevel1) {
-                if (currentHour12 === targetHour12) {
-                    result.textContent = "✓ Верно! Отличная работа!";
-                    result.className = "result-feedback success";
-                    stats.correct++;
-                    setTimeout(generateNewTask, 1500);
-                } else {
-                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
-                        `${targetHours.toString().padStart(2, '0')}:00`;
-                    result.className = "result-feedback error";
-                    stats.wrong++;
-                }
-                isFirstAttemptLevel1 = false;
-            } else {
-                if (currentHour12 === targetHour12) {
-                    result.textContent = "✓ Верно! Отличная работа!";
-                    result.className = "result-feedback success";
-                    stats.correct++;
-                    setTimeout(generateNewTask, 1500);
-                } else {
-                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
-                        `${targetHours.toString().padStart(2, '0')}:00`;
-                    result.className = "result-feedback error";
-                    stats.wrong++;
-                }
-            }
-            stats.total++;
-            
-            setTimeout(() => {
-                result.className = "result-feedback";
-                updateStats();
-            }, 2000);
-        }
-
-        function checkTime3() {
-            const hourDegrees = currentRotation3.hour;
-            const minuteDegrees = currentRotation3.minute;
-            
-            // Рассчитываем часы (12-часовой формат)
-            let currentHours = Math.round(hourDegrees / 30) % 12;
-            if (currentHours < 0) currentHours += 12;
-            
-            // Рассчитываем минуты с шагом 5 минут
-            let currentMinutes = Math.round(minuteDegrees / 30) * 5;
-            if (currentMinutes < 0) currentMinutes += 60;
-            currentMinutes = currentMinutes % 60;
-
-            // Для 24-часового формата учитываем полные обороты
-            const fullTurns = Math.floor(hourDegrees / 360);
-            currentHours += fullTurns * 12;
-            
-            const result = document.getElementById('task3-result');
-            
-            // Нормализуем targetHours для сравнения (0-23)
-            const normalizedTargetHours = targetHours % 24;
-            
-            if (currentHours === normalizedTargetHours && currentMinutes === targetMinutes) {
-                result.textContent = "✓ Верно! Отличная работа!";
-                result.className = "result-feedback success";
-                stats.correct++;
-                setTimeout(generateNewTask3, 1500);
-            } else {
-                result.textContent = `✗ Неверно. Вы установили ${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}, а нужно ${normalizedTargetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
-                result.className = "result-feedback error";
-                stats.wrong++;
-            }
-            stats.total++;
-            
-            setTimeout(() => {
-                result.className = "result-feedback";
-                updateStats();
-            }, 2000);
-        }
-
-        function generateNewClock2Time() {
-            currentClock2Time = {
-                h: Math.floor(Math.random() * 24),
-                m: Math.floor(Math.random() * 12) * 5
-            };
-            updateClock2();
-        }
-
-        function updateClock2() {
-            hourHand2.style.transform = `rotate(${currentClock2Time.h * 30 + (currentClock2Time.m / 60) * 30}deg)`;
-            minuteHand2.style.transform = `rotate(${currentClock2Time.m * 6}deg)`;
-        }
-
-        function checkInput() {
-            const input = document.getElementById('time-input');
-            const result = document.getElementById('task2-result');
-            const timeStr = input.value.trim();
-            
-            const timeRegex = /^(\d{1,2}):(\d{2})$/;
-            if (!timeRegex.test(timeStr)) {
-                result.textContent = "✗ Неверный формат. Введите время в формате ЧЧ:ММ";
-                result.className = "result-feedback error";
-                return;
-            }
-            
-            const [hoursStr, minutesStr] = timeStr.split(':');
-            let hours = parseInt(hoursStr, 10);
-            const minutes = parseInt(minutesStr, 10);
-            
-            if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
-                result.textContent = "✗ Неверное время. Часы должны быть от 0 до 23, минуты от 0 до 59";
-                result.className = "result-feedback error";
-                return;
-            }
-            
-            // Проверяем оба формата (12-часовой и 24-часовой)
-            const isCorrect = 
-                (hours === currentClock2Time.h && minutes === currentClock2Time.m) || // 24-часовой формат
-                (hours % 12 === currentClock2Time.h % 12 && minutes === currentClock2Time.m); // 12-часовой формат
-            
-            if (isCorrect) {
-                result.textContent = "✓ Правильно!";
-                result.className = "result-feedback success";
-                input.value = '';
-                stats.correct++;
-                setTimeout(generateNewClock2Time, 1500);
-            } else {
-                result.textContent = "✗ Неверно. Правильное время: " + 
-                    `${currentClock2Time.h}:${currentClock2Time.m.toString().padStart(2, '0')}`;
-                result.className = "result-feedback error";
-                stats.wrong++;
-            }
-            stats.total++;
-            
-            setTimeout(() => {
-                result.className = "result-feedback";
-                updateStats();
-            }, 3000);
-        }
-
-        function switchLevel(level) {
-            document.querySelectorAll('.level-buttons button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            document.querySelectorAll('.clock-section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            const targetSection = document.getElementById(level);
-            targetSection.classList.remove('hidden');
-            targetSection.classList.add('fade-in');
-        }
-
-        document.getElementById('level1').classList.remove('hidden');
-    </script>
+    // Инициализация часов
+    function initClock() {
+      const clock = document.getElementById('clock');
+      
+      // Создаем цифры на циферблате
+      for (let i = 1; i <= 12; i++) {
+        const angle = (i - 3) * 30 * Math.PI / 180;
+        const x = 100 + 80 * Math.cos(angle);
+        const y = 100 + 80 * Math.sin(angle);
+        
+        const number = document.createElement('div');
+        number.className = 'number';
+        number.textContent = i;
+        number.style.left = `${x - 10}px`;
+        number.style.top = `${y - 10}px`;
+        clock.appendChild(number);
+      }
+      
+      // Создаем стрелки
+      clock.innerHTML += `
+        <div class="hand hour-hand" id="hourHand"></div>
+        <div class="hand minute-hand" id="minuteHand"></div>
+        <div class="center-dot"></div>
+      `;
+      
+      // Установка начального времени
+      updateClockDisplay(0, 0);
+      
+      // Добавляем обработчики для стрелок
+      const hourHand = document.getElementById('hourHand');
+      const minuteHand = document.getElementById('minuteHand');
+      
+      hourHand.addEventListener('mousedown', startDrag);
+      hourHand.addEventListener('touchstart', startDrag);
+      minuteHand.addEventListener('mousedown', startDrag);
+      minuteHand.addEventListener('touchstart', startDrag);
+    }
+    
+    // Начало перетаскивания стрелки
+    function startDrag(e) {
+      e.preventDefault();
+      isDragging = true;
+      activeHand = e.target.id;
+      document.addEventListener('mousemove', rotateHand);
+      document.addEventListener('touchmove', rotateHand);
+      document.addEventListener('mouseup', stopDrag);
+      document.addEventListener('touchend', stopDrag);
+    }
+    
+    // Вращение стрелки
+    function rotateHand(e) {
+      if (!isDragging) return;
+      
+      const clock = document.getElementById('clock');
+      const rect = clock.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      let clientX, clientY;
+      if (e.type.includes('touch')) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      
+      const deltaX = clientX - centerX;
+      const deltaY = clientY - centerY;
+      const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI + 90;
+      
+      if (activeHand === 'hourHand') {
+        const hours = Math.floor((angle / 30) % 12);
+        const adjustedHours = userSetTime.hours >= 12 ? hours + 12 : hours;
+        userSetTime.hours = adjustedHours < 0 ? adjustedHours + 24 : adjustedHours;
+      } else {
+        const minutes = Math.floor((angle / 6) % 60);
+        userSetTime.minutes = minutes < 0 ? minutes + 60 : minutes;
+      }
+      
+      updateClockDisplay(userSetTime.hours, userSetTime.minutes);
+    }
+    
+    // Окончание перетаскивания
+    function stopDrag() {
+      isDragging = false;
+      activeHand = null;
+      document.removeEventListener('mousemove', rotateHand);
+      document.removeEventListener('touchmove', rotateHand);
+      document.removeEventListener('mouseup', stopDrag);
+      document.removeEventListener('touchend', stopDrag);
+    }
+    
+    // Обновление отображения часов
+    function updateClockDisplay(hours, minutes) {
+      const hourHand = document.getElementById('hourHand');
+      const minuteHand = document.getElementById('minuteHand');
+      
+      // Сохраняем пользовательское время
+      userSetTime = { hours, minutes };
+      
+      // Преобразуем 24-часовой формат в 12-часовой для отображения
+      const displayHours = hours % 12;
+      
+      hourHand.style.transform = `rotate(${displayHours * 30 + minutes * 0.5}deg)`;
+      minuteHand.style.transform = `rotate(${minutes * 6}deg)`;
+    }
+    
+    // Генерация нового случайного времени
+    function generateNewTime() {
+      currentTargetTime = {
+        hours: Math.floor(Math.random() * 24),
+        minutes: Math.floor(Math.random() * 12) * 5 // Кратно 5 минутам
+      };
+      
+      document.getElementById('targetTime').textContent = 
+        `Задано время: ${String(currentTargetTime.hours).padStart(2, '0')}:${String(currentTargetTime.minutes).padStart(2, '0')}`;
+      
+      // Сброс пользовательского времени
+      userSetTime = { hours: 0, minutes: 0 };
+      updateClockDisplay(0, 0);
+      
+      // Скрываем feedback
+      document.getElementById('feedback').style.display = 'none';
+    }
+    
+    // Проверка времени
+    function checkTime() {
+      const feedback = document.getElementById('feedback');
+      
+      if (userSetTime.hours === currentTargetTime.hours && 
+          userSetTime.minutes === currentTargetTime.minutes) {
+        feedback.textContent = '✓ Верно!';
+        feedback.className = 'feedback correct';
+      } else {
+        feedback.textContent = `✕ Неверно. Вы установили ${String(userSetTime.hours).padStart(2, '0')}:${String(userSetTime.minutes).padStart(2, '0')}, а нужно ${String(currentTargetTime.hours).padStart(2, '0')}:${String(currentTargetTime.minutes).padStart(2, '0')}`;
+        feedback.className = 'feedback incorrect';
+      }
+      
+      feedback.style.display = 'block';
+    }
+    
+    // Обработчики кнопок
+    function setupButtonControls() {
+      // Проверка и генерация
+      document.getElementById('checkBtn').addEventListener('click', checkTime);
+      document.getElementById('newBtn').addEventListener('click', generateNewTime);
+      document.getElementById('backBtn').addEventListener('click', () => {
+        window.location.href = 'theory.html';
+      });
+      
+      // Кнопки регулировки
+      document.querySelector('.hour-plus').addEventListener('click', () => {
+        userSetTime.hours = (userSetTime.hours + 1) % 24;
+        updateClockDisplay(userSetTime.hours, userSetTime.minutes);
+      });
+      
+      document.querySelector('.hour-minus').addEventListener('click', () => {
+        userSetTime.hours = (userSetTime.hours - 1 + 24) % 24;
+        updateClockDisplay(userSetTime.hours, userSetTime.minutes);
+      });
+      
+      document.querySelector('.minute-plus').addEventListener('click', () => {
+        userSetTime.minutes = (userSetTime.minutes + 5) % 60;
+        updateClockDisplay(userSetTime.hours, userSetTime.minutes);
+      });
+      
+      document.querySelector('.minute-minus').addEventListener('click', () => {
+        userSetTime.minutes = (userSetTime.minutes - 5 + 60) % 60;
+        updateClockDisplay(userSetTime.hours, userSetTime.minutes);
+      });
+    }
+    
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', () => {
+      initClock();
+      generateNewTime();
+      setupButtonControls();
+    });
+  </script>
 </body>
 </html>
