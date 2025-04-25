@@ -82,18 +82,42 @@
       box-shadow: 0 12px 25px rgba(0,0,0,0.1);
     }
 
-    .clock {
+    /* Новый стиль часов из тренажера */
+    .clock-wrapper {
       position: relative;
       width: 220px;
       height: 220px;
+      margin: 30px auto;
+    }
+
+    .clock-face {
+      width: 100%;
+      height: 100%;
       border: 6px solid var(--primary);
       border-radius: 50%;
-      margin: 30px auto;
+      position: relative;
       background: white;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
       background-image: 
         radial-gradient(circle at 50% 50%, transparent 85%, var(--primary) 85.5%),
         repeating-conic-gradient(from 0deg, transparent 0deg 5deg, #f5f7fa 5deg 6deg);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .clock-number {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      transform-origin: center;
+      left: calc(50% - 15px);
+      top: calc(50% - 15px);
+      user-select: none;
+      z-index: 1;
     }
 
     .hand {
@@ -106,16 +130,16 @@
       z-index: 2;
     }
 
-    .hand.hour {
-      width: 6px;
-      height: 50px;
+    .hour-hand {
+      width: 8px;
+      height: 70px;
       background: var(--accent1);
-      border-radius: 6px 6px 0 0;
+      border-radius: 5px 5px 0 0;
     }
 
-    .hand.minute {
-      width: 4px;
-      height: 70px;
+    .minute-hand {
+      width: 5px;
+      height: 90px;
       background: var(--accent2);
       border-radius: 4px 4px 0 0;
     }
@@ -130,7 +154,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 4;
-      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     .example-clocks {
@@ -164,26 +188,6 @@
       margin-top: 15px;
       font-size: 1.4em;
       color: var(--primary);
-    }
-
-    .clock.small {
-      width: 180px;
-      height: 180px;
-    }
-
-    .clock.small .hand.hour {
-      height: 40px;
-      width: 5px;
-    }
-
-    .clock.small .hand.minute {
-      height: 60px;
-      width: 3px;
-    }
-
-    .clock.small .center-dot {
-      width: 12px;
-      height: 12px;
     }
 
     .btn {
@@ -299,46 +303,6 @@
       font-weight: 500;
     }
 
-    .clock-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-    }
-
-    .number {
-      position: absolute;
-      font-size: 16px;
-      font-weight: bold;
-      color: var(--primary);
-      z-index: 1;
-      width: 20px;
-      height: 20px;
-      text-align: center;
-      line-height: 20px;
-    }
-
-    .clock.small .number {
-      font-size: 14px;
-      width: 18px;
-      height: 18px;
-      line-height: 18px;
-    }
-
-    /* Точное позиционирование цифр */
-    .number-12 { top: 10px; left: 50%; margin-left: -10px; }
-    .number-1 { top: 12%; right: 22%; }
-    .number-2 { top: 25%; right: 8%; }
-    .number-3 { top: 50%; right: 5px; margin-top: -10px; }
-    .number-4 { bottom: 25%; right: 8%; }
-    .number-5 { bottom: 12%; right: 22%; }
-    .number-6 { bottom: 5px; left: 50%; margin-left: -10px; }
-    .number-7 { bottom: 12%; left: 22%; }
-    .number-8 { bottom: 25%; left: 8%; }
-    .number-9 { top: 50%; left: 5px; margin-top: -10px; }
-    .number-10 { top: 25%; left: 8%; }
-    .number-11 { top: 12%; left: 22%; } /* Особое внимание цифре 11 */
-
     @media (max-width: 768px) {
       .container {
         padding: 25px;
@@ -349,14 +313,19 @@
         gap: 20px;
       }
       
-      .clock {
+      .clock-wrapper {
         width: 200px;
         height: 200px;
       }
       
-      .clock.small {
-        width: 160px;
-        height: 160px;
+      .hour-hand {
+        height: 60px;
+        width: 7px;
+      }
+
+      .minute-hand {
+        height: 80px;
+        width: 4px;
       }
 
       h2 {
@@ -405,72 +374,75 @@
 
       <div class="example-clocks">
         <div class="example-clock-wrapper float" style="animation-delay: 0.2s">
-          <div class="clock small" id="ex1">
-            <div class="hand hour" style="transform: rotate(210deg);"></div>
-            <div class="hand minute" style="transform: rotate(0deg);"></div>
-            <div class="center-dot"></div>
-            <div class="clock-face"></div>
-            <!-- Numbers 1-12 -->
-            <div class="number number-12">12</div>
-            <div class="number number-1">1</div>
-            <div class="number number-2">2</div>
-            <div class="number number-3">3</div>
-            <div class="number number-4">4</div>
-            <div class="number number-5">5</div>
-            <div class="number number-6">6</div>
-            <div class="number number-7">7</div>
-            <div class="number number-8">8</div>
-            <div class="number number-9">9</div>
-            <div class="number number-10">10</div>
-            <div class="number number-11">11</div>
+          <div class="clock-wrapper">
+            <div class="clock-face">
+              <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
+              <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
+              <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
+              <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
+              <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
+              <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
+              <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
+              <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
+              <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
+              <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
+              <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
+              <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
+              
+              <div class="center-dot"></div>
+              <div class="hand hour-hand" style="transform: rotate(210deg);"></div>
+              <div class="hand minute-hand" style="transform: rotate(0deg);"></div>
+            </div>
           </div>
           <div>7:00 <span class="emoji">🕖</span></div>
           <p>Часовая на 7, минутная на 12</p>
         </div>
         
         <div class="example-clock-wrapper float" style="animation-delay: 0.4s">
-          <div class="clock small" id="ex2">
-            <div class="hand hour" style="transform: rotate(75deg);"></div>
-            <div class="hand minute" style="transform: rotate(180deg);"></div>
-            <div class="center-dot"></div>
-            <div class="clock-face"></div>
-            <!-- Numbers 1-12 -->
-            <div class="number number-12">12</div>
-            <div class="number number-1">1</div>
-            <div class="number number-2">2</div>
-            <div class="number number-3">3</div>
-            <div class="number number-4">4</div>
-            <div class="number number-5">5</div>
-            <div class="number number-6">6</div>
-            <div class="number number-7">7</div>
-            <div class="number number-8">8</div>
-            <div class="number number-9">9</div>
-            <div class="number number-10">10</div>
-            <div class="number number-11">11</div>
+          <div class="clock-wrapper">
+            <div class="clock-face">
+              <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
+              <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
+              <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
+              <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
+              <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
+              <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
+              <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
+              <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
+              <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
+              <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
+              <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
+              <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
+              
+              <div class="center-dot"></div>
+              <div class="hand hour-hand" style="transform: rotate(75deg);"></div>
+              <div class="hand minute-hand" style="transform: rotate(180deg);"></div>
+            </div>
           </div>
           <div>2:30 <span class="emoji">🕝</span></div>
           <p>Часовая между 2 и 3, минутная на 6</p>
         </div>
         
         <div class="example-clock-wrapper float" style="animation-delay: 0.6s">
-          <div class="clock small" id="ex5">
-            <div class="hand hour" style="transform: rotate(300deg);"></div>
-            <div class="hand minute" style="transform: rotate(90deg);"></div>
-            <div class="center-dot"></div>
-            <div class="clock-face"></div>
-            <!-- Numbers 1-12 -->
-            <div class="number number-12">12</div>
-            <div class="number number-1">1</div>
-            <div class="number number-2">2</div>
-            <div class="number number-3">3</div>
-            <div class="number number-4">4</div>
-            <div class="number number-5">5</div>
-            <div class="number number-6">6</div>
-            <div class="number number-7">7</div>
-            <div class="number number-8">8</div>
-            <div class="number number-9">9</div>
-            <div class="number number-10">10</div>
-            <div class="number number-11">11</div>
+          <div class="clock-wrapper">
+            <div class="clock-face">
+              <div class="clock-number" style="transform: rotate(0deg) translate(0, -80px) rotate(0deg)">12</div>
+              <div class="clock-number" style="transform: rotate(30deg) translate(0, -80px) rotate(-30deg)">1</div>
+              <div class="clock-number" style="transform: rotate(60deg) translate(0, -80px) rotate(-60deg)">2</div>
+              <div class="clock-number" style="transform: rotate(90deg) translate(0, -80px) rotate(-90deg)">3</div>
+              <div class="clock-number" style="transform: rotate(120deg) translate(0, -80px) rotate(-120deg)">4</div>
+              <div class="clock-number" style="transform: rotate(150deg) translate(0, -80px) rotate(-150deg)">5</div>
+              <div class="clock-number" style="transform: rotate(180deg) translate(0, -80px) rotate(-180deg)">6</div>
+              <div class="clock-number" style="transform: rotate(210deg) translate(0, -80px) rotate(-210deg)">7</div>
+              <div class="clock-number" style="transform: rotate(240deg) translate(0, -80px) rotate(-240deg)">8</div>
+              <div class="clock-number" style="transform: rotate(270deg) translate(0, -80px) rotate(-270deg)">9</div>
+              <div class="clock-number" style="transform: rotate(300deg) translate(0, -80px) rotate(-300deg)">10</div>
+              <div class="clock-number" style="transform: rotate(330deg) translate(0, -80px) rotate(-330deg)">11</div>
+              
+              <div class="center-dot"></div>
+              <div class="hand hour-hand" style="transform: rotate(300deg);"></div>
+              <div class="hand minute-hand" style="transform: rotate(90deg);"></div>
+            </div>
           </div>
           <div>10:15 <span class="emoji">🕙</span></div>
           <p>Часовая на 10, минутная на 3</p>
