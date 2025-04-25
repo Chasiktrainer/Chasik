@@ -647,7 +647,6 @@
         let currentRotation3 = { hour: 90, minute: 0 };
         let isDragging = false;
         let activeHand = null;
-        let isFirstAttemptLevel1 = true;
 
         const hourHand = document.getElementById('hour-hand');
         const minuteHand = document.getElementById('minute-hand');
@@ -767,7 +766,6 @@
                 currentRotation3.hour = snapDegrees;
                 hourHand3.style.transform = `rotate(${snapDegrees}deg)`;
             } else if (activeHand === minuteHand3) {
-                // Доводчик до каждых 5 минут (каждые 30 градусов)
                 const snapDegrees = Math.round(currentRotation3.minute / 30) * 30;
                 currentRotation3.minute = snapDegrees;
                 minuteHand3.style.transform = `rotate(${snapDegrees}deg)`;
@@ -778,7 +776,6 @@
             targetHours = Math.floor(Math.random() * 24);
             document.getElementById('target-time').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
-            isFirstAttemptLevel1 = true;
             currentRotation.hour = 90;
             hourHand.style.transform = `rotate(90deg)`;
         }
@@ -835,18 +832,18 @@
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
             
-            // Рассчитываем часы (12-часовой формат)
-            let currentHours = Math.round(hourDegrees / 30) % 12;
+            // Рассчитываем часы в 24-часовом формате
+            let currentHours = Math.round(hourDegrees / 30);
             if (currentHours < 0) currentHours += 12;
+            
+            // Для 24-часового формата учитываем полные обороты
+            const fullTurns = Math.floor(hourDegrees / 360);
+            currentHours += fullTurns * 12;
             
             // Рассчитываем минуты с шагом 5 минут
             let currentMinutes = Math.round(minuteDegrees / 30) * 5;
             if (currentMinutes < 0) currentMinutes += 60;
             currentMinutes = currentMinutes % 60;
-
-            // Для 24-часового формата учитываем полные обороты
-            const fullTurns = Math.floor(hourDegrees / 360);
-            currentHours += fullTurns * 12;
             
             const result = document.getElementById('task3-result');
             
