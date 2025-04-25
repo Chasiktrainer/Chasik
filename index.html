@@ -8,9 +8,9 @@
     :root {
       --primary: #3a4a6d;
       --accent1: #ff6b6b;
-      --accent2: #3498db; /* Изменен на синий */
+      --accent2: #3498db;
       --background: linear-gradient(135deg, #f6f9fc 0%, #e6f0f9 100%);
-      --success: #48a9d5; /* Изменен на синий */
+      --success: #48a9d5;
       --error: #ff6b6b;
       --card-bg: rgba(255, 255, 255, 0.95);
       --text-light: #f8f9fa;
@@ -131,20 +131,6 @@
       transform: translate(-50%, -50%);
       z-index: 4;
       box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
-
-    .number {
-      position: absolute;
-      font-weight: 700;
-      font-size: 18px;
-      width: 26px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--primary);
-      z-index: 1;
     }
 
     .example-clocks {
@@ -313,6 +299,24 @@
       font-weight: 500;
     }
 
+    /* Clock numbers styles */
+    .clock-number {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--primary);
+      z-index: 1;
+    }
+
+    .clock.small .clock-number {
+      font-size: 14px;
+      width: 18px;
+      height: 18px;
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 25px;
@@ -383,6 +387,11 @@
             <div class="hand hour" style="transform: rotate(210deg);"></div>
             <div class="hand minute" style="transform: rotate(0deg);"></div>
             <div class="center-dot"></div>
+            <!-- Clock numbers -->
+            <div class="clock-number" style="top: 10px; left: 50%; transform: translateX(-50%);">12</div>
+            <div class="clock-number" style="top: 50%; right: 10px; transform: translateY(-50%);">3</div>
+            <div class="clock-number" style="bottom: 10px; left: 50%; transform: translateX(-50%);">6</div>
+            <div class="clock-number" style="top: 50%; left: 10px; transform: translateY(-50%);">9</div>
           </div>
           <div>7:00 <span class="emoji">🕖</span></div>
           <p>Часовая на 7, минутная на 12</p>
@@ -393,6 +402,11 @@
             <div class="hand hour" style="transform: rotate(75deg);"></div>
             <div class="hand minute" style="transform: rotate(180deg);"></div>
             <div class="center-dot"></div>
+            <!-- Clock numbers -->
+            <div class="clock-number" style="top: 10px; left: 50%; transform: translateX(-50%);">12</div>
+            <div class="clock-number" style="top: 50%; right: 10px; transform: translateY(-50%);">3</div>
+            <div class="clock-number" style="bottom: 10px; left: 50%; transform: translateX(-50%);">6</div>
+            <div class="clock-number" style="top: 50%; left: 10px; transform: translateY(-50%);">9</div>
           </div>
           <div>2:30 <span class="emoji">🕝</span></div>
           <p>Часовая между 2 и 3, минутная на 6</p>
@@ -403,6 +417,11 @@
             <div class="hand hour" style="transform: rotate(300deg);"></div>
             <div class="hand minute" style="transform: rotate(90deg);"></div>
             <div class="center-dot"></div>
+            <!-- Clock numbers -->
+            <div class="clock-number" style="top: 10px; left: 50%; transform: translateX(-50%);">12</div>
+            <div class="clock-number" style="top: 50%; right: 10px; transform: translateY(-50%);">3</div>
+            <div class="clock-number" style="bottom: 10px; left: 50%; transform: translateX(-50%);">6</div>
+            <div class="clock-number" style="top: 50%; left: 10px; transform: translateY(-50%);">9</div>
           </div>
           <div>10:15 <span class="emoji">🕙</span></div>
           <p>Часовая на 10, минутная на 3</p>
@@ -438,34 +457,7 @@
   </div>
 
   <script>
-    function placeNumbers(clock, offset) {
-      const size = clock.clientWidth;
-      const cx = size / 2, cy = size / 2, r = size / 2 - offset;
-      
-      // Удаляем старые цифры, если они есть
-      const oldNumbers = clock.querySelectorAll('.number');
-      oldNumbers.forEach(num => num.remove());
-      
-      for (let i = 1; i <= 12; i++) {
-        const ang = (i - 3) * (Math.PI / 6); // -3 потому что начинаем с 12 часов (верх циферблата)
-        const num = document.createElement('div');
-        num.className = 'number';
-        
-        // Расчет позиции для всех цифр
-        const numSize = 26;
-        num.style.left = cx + r * Math.cos(ang) - numSize/2 + 'px';
-        num.style.top = cy + r * Math.sin(ang) - numSize/2 + 'px';
-        num.textContent = i;
-        
-        clock.appendChild(num);
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      ['ex1', 'ex2', 'ex5'].forEach(id => {
-        placeNumbers(document.getElementById(id), 25); // Оптимальный offset
-      });
-
       let counter = 30;
       const countdown = document.getElementById('countdown');
       const btn = document.getElementById('startBtn');
