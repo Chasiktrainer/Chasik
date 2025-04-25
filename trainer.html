@@ -430,7 +430,6 @@
             }
         }
 
-        /* Анимации */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -642,7 +641,6 @@
         let targetHours = 3;
         let targetMinutes = 0;
         let currentClock2Time = {h: 9, m: 0};
-        let currentClock3Time = {h: 9, m: 0};
         let currentRotation = { hour: 90, minute: 0 };
         let currentRotation3 = { hour: 90, minute: 0 };
         let isDragging = false;
@@ -773,7 +771,7 @@
         }
 
         function generateNewTask() {
-            targetHours = Math.floor(Math.random() * 24);
+            targetHours = Math.floor(Math.random() * 12) + 1;
             document.getElementById('target-time').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:00`;
             currentRotation.hour = 90;
@@ -781,12 +779,11 @@
         }
 
         function generateNewTask3() {
-            targetHours = Math.floor(Math.random() * 24);
+            targetHours = Math.floor(Math.random() * 12) + 1;
             targetMinutes = Math.floor(Math.random() * 12) * 5;
             document.getElementById('target-time-3').textContent = 
                 `Задано время: ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
             
-            // Сбрасываем стрелки на 12:00
             currentRotation3.hour = 90;
             currentRotation3.minute = 0;
             hourHand3.style.transform = `rotate(90deg)`;
@@ -795,28 +792,19 @@
 
         function checkTime() {
             const hourDegrees = currentRotation.hour;
-            
-            // Рассчитываем часы в 24-часовом формате
-            let currentHours = Math.round(hourDegrees / 30);
-            if (currentHours < 0) currentHours += 12;
-            
-            // Для 24-часового формата учитываем полные обороты
-            const fullTurns = Math.floor(hourDegrees / 360);
-            currentHours += fullTurns * 12;
+            let currentHours = Math.round(hourDegrees / 30) % 12;
+            if (currentHours === 0) currentHours = 12;
             
             const result = document.getElementById('task1-result');
             
-            // Нормализуем targetHours для сравнения (0-23)
-            const normalizedTargetHours = targetHours % 24;
-            
-            if (currentHours === normalizedTargetHours) {
+            if (currentHours === targetHours) {
                 result.textContent = "✓ Верно! Отличная работа!";
                 result.className = "result-feedback success";
                 stats.correct++;
                 setTimeout(generateNewTask, 1500);
             } else {
                 result.textContent = "✗ Неверно. Правильное время: " + 
-                    `${normalizedTargetHours.toString().padStart(2, '0')}:00`;
+                    `${targetHours.toString().padStart(2, '0')}:00`;
                 result.className = "result-feedback error";
                 stats.wrong++;
             }
@@ -832,31 +820,22 @@
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
             
-            // Рассчитываем часы в 24-часовом формате
-            let currentHours = Math.round(hourDegrees / 30);
-            if (currentHours < 0) currentHours += 12;
+            let currentHours = Math.round(hourDegrees / 30) % 12;
+            if (currentHours === 0) currentHours = 12;
             
-            // Для 24-часового формата учитываем полные обороты
-            const fullTurns = Math.floor(hourDegrees / 360);
-            currentHours += fullTurns * 12;
-            
-            // Рассчитываем минуты с шагом 5 минут
             let currentMinutes = Math.round(minuteDegrees / 30) * 5;
             if (currentMinutes < 0) currentMinutes += 60;
             currentMinutes = currentMinutes % 60;
             
             const result = document.getElementById('task3-result');
             
-            // Нормализуем targetHours для сравнения (0-23)
-            const normalizedTargetHours = targetHours % 24;
-            
-            if (currentHours === normalizedTargetHours && currentMinutes === targetMinutes) {
+            if (currentHours === targetHours && currentMinutes === targetMinutes) {
                 result.textContent = "✓ Верно! Отличная работа!";
                 result.className = "result-feedback success";
                 stats.correct++;
                 setTimeout(generateNewTask3, 1500);
             } else {
-                result.textContent = `✗ Неверно. Вы установили ${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}, а нужно ${normalizedTargetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
+                result.textContent = `✗ Неверно. Вы установили ${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}, а нужно ${targetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
                 result.className = "result-feedback error";
                 stats.wrong++;
             }
@@ -903,10 +882,9 @@
                 return;
             }
             
-            // Проверяем оба формата (12-часовой и 24-часовой)
             const isCorrect = 
-                (hours === currentClock2Time.h && minutes === currentClock2Time.m) || // 24-часовой формат
-                (hours % 12 === currentClock2Time.h % 12 && minutes === currentClock2Time.m); // 12-часовой формат
+                (hours === currentClock2Time.h && minutes === currentClock2Time.m) ||
+                (hours % 12 === currentClock2Time.h % 12 && minutes === currentClock2Time.m);
             
             if (isCorrect) {
                 result.textContent = "✓ Правильно!";
