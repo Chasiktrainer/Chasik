@@ -121,7 +121,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 4;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1));
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
 
     .number {
@@ -134,6 +134,7 @@
       align-items: center;
       justify-content: center;
       transform-origin: center;
+      text-align: center;
     }
 
     .example-clocks {
@@ -359,13 +360,20 @@
     function placeNumbers(clock, offset) {
       const size = clock.clientWidth;
       const cx = size / 2, cy = size / 2, r = size / 2 - offset;
+      
+      // Удаляем старые цифры, если они есть
+      const oldNumbers = clock.querySelectorAll('.number');
+      oldNumbers.forEach(num => num.remove());
+      
       for (let i = 1; i <= 12; i++) {
-        const ang = (i - 3) * (Math.PI / 6);
+        const ang = (i - 3) * (Math.PI / 6); // -3 потому что начинаем с 12 часов (верх циферблата)
         const num = document.createElement('div');
         num.className = 'number';
-        const adj = clock.classList.contains('small') ? 6 : 8;
-        num.style.left = cx + r * Math.cos(ang) - adj + 'px';
-        num.style.top = cy + r * Math.sin(ang) - adj + 'px';
+        
+        // Более точный расчет позиции с учетом размера элемента
+        const numSize = 20; // Размер элемента с цифрой
+        num.style.left = cx + r * Math.cos(ang) - numSize/2 + 'px';
+        num.style.top = cy + r * Math.sin(ang) - numSize/2 + 'px';
         num.textContent = i;
         clock.appendChild(num);
       }
@@ -373,7 +381,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       ['ex1', 'ex2', 'ex5'].forEach(id => {
-        placeNumbers(document.getElementById(id), 12);
+        placeNumbers(document.getElementById(id), 15);
       });
 
       let counter = 30;
