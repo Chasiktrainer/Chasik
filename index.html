@@ -133,7 +133,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transform-origin: center;
       text-align: center;
     }
 
@@ -374,17 +373,11 @@
         const num = document.createElement('div');
         num.className = 'number';
         
-        // Более точный расчет позиции с учетом размера элемента
-        const numSize = 20; // Размер элемента с цифрой
+        // Расчет позиции для всех цифр, включая 12
+        const numSize = 20;
         num.style.left = cx + r * Math.cos(ang) - numSize/2 + 'px';
         num.style.top = cy + r * Math.sin(ang) - numSize/2 + 'px';
         num.textContent = i;
-        
-        // Особое выравнивание для цифры 12
-        if (i === 12) {
-          num.style.left = cx - numSize/2 + 'px';
-          num.style.top = cy - r - numSize/2 + 5 + 'px';
-        }
         
         clock.appendChild(num);
       }
@@ -392,7 +385,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       ['ex1', 'ex2', 'ex5'].forEach(id => {
-        placeNumbers(document.getElementById(id), 18); // Увеличиваем offset для лучшего размещения
+        placeNumbers(document.getElementById(id), 20); // Оптимальный offset
       });
 
       let counter = 30;
