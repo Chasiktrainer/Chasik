@@ -98,30 +98,30 @@
     }
 
     .hand.hour {
-      width: 6px;
-      height: 50px;
+      width: 4px;
+      height: 30px;
       background: var(--accent1);
       border-radius: 4px 4px 0 0;
     }
 
     .hand.minute {
-      width: 4px;
-      height: 70px;
+      width: 3px;
+      height: 40px;
       background: var(--accent2);
       border-radius: 3px 3px 0 0;
     }
 
     .center-dot {
       position: absolute;
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       background: var(--primary);
       border-radius: 50%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 4;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
     }
 
     .number {
@@ -175,13 +175,18 @@
     }
 
     .clock.small .hand.hour {
-      height: 35px;
-      width: 5px;
+      height: 25px;
+      width: 3px;
     }
 
     .clock.small .hand.minute {
-      height: 50px;
-      width: 3px;
+      height: 35px;
+      width: 2px;
+    }
+
+    .clock.small .center-dot {
+      width: 8px;
+      height: 8px;
     }
 
     .btn {
@@ -272,7 +277,6 @@
       }
     }
 
-    /* Анимации */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -375,13 +379,20 @@
         num.style.left = cx + r * Math.cos(ang) - numSize/2 + 'px';
         num.style.top = cy + r * Math.sin(ang) - numSize/2 + 'px';
         num.textContent = i;
+        
+        // Особое выравнивание для цифры 12
+        if (i === 12) {
+          num.style.left = cx - numSize/2 + 'px';
+          num.style.top = cy - r - numSize/2 + 5 + 'px';
+        }
+        
         clock.appendChild(num);
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       ['ex1', 'ex2', 'ex5'].forEach(id => {
-        placeNumbers(document.getElementById(id), 15);
+        placeNumbers(document.getElementById(id), 18); // Увеличиваем offset для лучшего размещения
       });
 
       let counter = 30;
