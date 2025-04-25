@@ -653,11 +653,13 @@
         const hourHand3 = document.getElementById('hour-hand-3');
         const minuteHand3 = document.getElementById('minute-hand-3');
 
-        setupClock();
-        generateNewTask();
-        updateClock2();
-        generateNewTask3();
-        updateStats();
+        function init() {
+            setupClock();
+            generateNewTask();
+            generateNewClock2Time();
+            generateNewTask3();
+            updateStats();
+        }
 
         function updateStats() {
             document.querySelectorAll('.stat-value')[0].textContent = stats.correct;
@@ -778,6 +780,14 @@
             hourHand.style.transform = `rotate(90deg)`;
         }
 
+        function generateNewClock2Time() {
+            currentClock2Time = {
+                h: Math.floor(Math.random() * 24),
+                m: Math.floor(Math.random() * 12) * 5
+            };
+            updateClock2();
+        }
+
         function generateNewTask3() {
             targetHours = Math.floor(Math.random() * 12) + 1;
             targetMinutes = Math.floor(Math.random() * 12) * 5;
@@ -847,14 +857,6 @@
             }, 2000);
         }
 
-        function generateNewClock2Time() {
-            currentClock2Time = {
-                h: Math.floor(Math.random() * 24),
-                m: Math.floor(Math.random() * 12) * 5
-            };
-            updateClock2();
-        }
-
         function updateClock2() {
             hourHand2.style.transform = `rotate(${currentClock2Time.h * 30 + (currentClock2Time.m / 60) * 30}deg)`;
             minuteHand2.style.transform = `rotate(${currentClock2Time.m * 6}deg)`;
@@ -918,9 +920,21 @@
             const targetSection = document.getElementById(level);
             targetSection.classList.remove('hidden');
             targetSection.classList.add('fade-in');
+
+            switch(level) {
+                case 'level1':
+                    generateNewTask();
+                    break;
+                case 'level2':
+                    generateNewClock2Time();
+                    break;
+                case 'level3':
+                    generateNewTask3();
+                    break;
+            }
         }
 
-        document.getElementById('level1').classList.remove('hidden');
+        init();
     </script>
 </body>
 </html>
