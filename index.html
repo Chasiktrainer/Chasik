@@ -299,7 +299,6 @@
       font-weight: 500;
     }
 
-    /* Clock numbers styles */
     .clock-face {
       position: absolute;
       width: 100%;
@@ -309,20 +308,22 @@
     
     .clock-number {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      text-align: center;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
       font-size: 16px;
       color: var(--primary);
-      z-index: 1;
       transform: translate(-50%, -50%);
+      z-index: 1;
     }
 
     .clock.small .clock-number {
       font-size: 14px;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
     }
 
     @media (max-width: 768px) {
@@ -454,37 +455,43 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Функция для создания цифр на циферблате
       function createClockNumbers() {
         const clocks = document.querySelectorAll('.clock');
         
         clocks.forEach(clock => {
           const clockSize = clock.offsetWidth;
-          const radius = clockSize / 2 - 20; // Отступ от края
+          const radius = clockSize / 2 - (clock.classList.contains('small') ? 18 : 22);
           const center = clockSize / 2;
           const clockFace = clock.querySelector('.clock-face');
-          const isSmall = clock.classList.contains('small');
           
+          clockFace.innerHTML = '';
+
           for (let i = 1; i <= 12; i++) {
-            const angle = (i * 30 - 90) * (Math.PI / 180); // 30 градусов на цифру, -90 чтобы начать с 12
+            const angle = (i * 30 - 90) * (Math.PI / 180);
             const x = center + radius * Math.cos(angle);
             const y = center + radius * Math.sin(angle);
             
             const number = document.createElement('div');
-            number.className = 'clock-number' + (isSmall ? ' small' : '');
+            number.className = 'clock-number' + (clock.classList.contains('small') ? ' small' : '');
             number.textContent = i;
             number.style.left = `${x}px`;
             number.style.top = `${y}px`;
+            
+            // Точная подгонка основных цифр
+            switch(i) {
+              case 12: number.style.top = `${y - 2}px`; break;
+              case 3: number.style.left = `${x + 2}px`; break;
+              case 6: number.style.top = `${y + 2}px`; break;
+              case 9: number.style.left = `${x - 2}px`; break;
+            }
             
             clockFace.appendChild(number);
           }
         });
       }
 
-      // Создаем цифры после загрузки страницы
       createClockNumbers();
 
-      // Таймер для кнопки
       let counter = 30;
       const countdown = document.getElementById('countdown');
       const btn = document.getElementById('startBtn');
