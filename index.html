@@ -461,14 +461,14 @@
         
         clocks.forEach(clock => {
           const clockSize = clock.offsetWidth;
-          const radius = clockSize / 2 - 15;
+          const radius = clockSize / 2 - 20;
           const center = clockSize / 2;
           const clockFace = clock.querySelector('.clock-face');
           
           clockFace.innerHTML = '';
 
           for (let i = 1; i <= 12; i++) {
-            const angle = (i * 30) * Math.PI / 180;
+            const angle = ((i * 30) - 90) * Math.PI / 180;
             const x = center + radius * Math.cos(angle);
             const y = center + radius * Math.sin(angle);
 
@@ -477,6 +477,7 @@
             number.textContent = i;
             number.style.left = `${x}px`;
             number.style.top = `${y}px`;
+            number.style.transform = 'translate(-50%, -50%)';
 
             clockFace.appendChild(number);
           }
