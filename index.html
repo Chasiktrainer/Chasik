@@ -317,7 +317,7 @@
       font-size: 16px;
       color: var(--primary);
       transform: translate(-50%, -50%);
-      z-index: 5;
+      z-index: 1;
       pointer-events: none;
     }
 
@@ -460,15 +460,12 @@
         const clocks = document.querySelectorAll('.clock');
         
         clocks.forEach(clock => {
-          const isSmall = clock.classList.contains('small');
           const clockSize = clock.offsetWidth;
-          const radius = clockSize / 2 - (isSmall ? 22 : 27);
+          const radius = clockSize / 2 - 25;
           const center = clockSize / 2;
           const clockFace = clock.querySelector('.clock-face');
           
-          while (clockFace.firstChild) {
-            clockFace.removeChild(clockFace.firstChild);
-          }
+          clockFace.innerHTML = '';
 
           for (let i = 1; i <= 12; i++) {
             const angle = (i * 30 - 90) * Math.PI / 180;
@@ -476,24 +473,18 @@
             const y = center + radius * Math.sin(angle);
 
             const number = document.createElement('div');
-            number.className = `clock-number${isSmall ? ' small' : ''}`;
+            number.className = 'clock-number' + (clock.classList.contains('small') ? ' small' : '');
             number.textContent = i;
             number.style.left = `${x}px`;
             number.style.top = `${y}px`;
+
             clockFace.appendChild(number);
           }
         });
       }
 
-      function handleResize() {
-        setTimeout(() => {
-          createClockNumbers();
-          document.body.offsetHeight;
-        }, 150);
-      }
-
       createClockNumbers();
-      window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', createClockNumbers);
 
       let counter = 30;
       const countdown = document.getElementById('countdown');
