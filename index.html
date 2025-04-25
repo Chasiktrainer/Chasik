@@ -308,18 +308,36 @@
 
     .number {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      text-align: center;
       font-size: 16px;
       font-weight: bold;
       color: var(--primary);
       z-index: 1;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
     }
 
     .clock.small .number {
       font-size: 14px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
     }
+
+    /* Позиционирование цифр */
+    .number-12 { top: 10px; left: 50%; transform: translateX(-50%); }
+    .number-1 { top: 15%; right: 25%; }
+    .number-2 { top: 30%; right: 10%; }
+    .number-3 { top: 50%; right: 5%; transform: translateY(-50%); }
+    .number-4 { bottom: 30%; right: 10%; }
+    .number-5 { bottom: 15%; right: 25%; }
+    .number-6 { bottom: 5px; left: 50%; transform: translateX(-50%); }
+    .number-7 { bottom: 15%; left: 25%; }
+    .number-8 { bottom: 30%; left: 10%; }
+    .number-9 { top: 50%; left: 5%; transform: translateY(-50%); }
+    .number-10 { top: 30%; left: 10%; }
+    .number-11 { top: 15%; left: 25%; }
 
     @media (max-width: 768px) {
       .container {
@@ -393,18 +411,18 @@
             <div class="center-dot"></div>
             <div class="clock-face"></div>
             <!-- Numbers 1-12 -->
-            <div class="number" style="transform: rotate(0deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">12</div>
-            <div class="number" style="transform: rotate(30deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">1</div>
-            <div class="number" style="transform: rotate(60deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">2</div>
-            <div class="number" style="transform: rotate(90deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">3</div>
-            <div class="number" style="transform: rotate(120deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">4</div>
-            <div class="number" style="transform: rotate(150deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">5</div>
-            <div class="number" style="transform: rotate(180deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">6</div>
-            <div class="number" style="transform: rotate(210deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">7</div>
-            <div class="number" style="transform: rotate(240deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">8</div>
-            <div class="number" style="transform: rotate(270deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">9</div>
-            <div class="number" style="transform: rotate(300deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">10</div>
-            <div class="number" style="transform: rotate(330deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">11</div>
+            <div class="number number-12">12</div>
+            <div class="number number-1">1</div>
+            <div class="number number-2">2</div>
+            <div class="number number-3">3</div>
+            <div class="number number-4">4</div>
+            <div class="number number-5">5</div>
+            <div class="number number-6">6</div>
+            <div class="number number-7">7</div>
+            <div class="number number-8">8</div>
+            <div class="number number-9">9</div>
+            <div class="number number-10">10</div>
+            <div class="number number-11">11</div>
           </div>
           <div>7:00 <span class="emoji">🕖</span></div>
           <p>Часовая на 7, минутная на 12</p>
@@ -417,18 +435,18 @@
             <div class="center-dot"></div>
             <div class="clock-face"></div>
             <!-- Numbers 1-12 -->
-            <div class="number" style="transform: rotate(0deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">12</div>
-            <div class="number" style="transform: rotate(30deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">1</div>
-            <div class="number" style="transform: rotate(60deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">2</div>
-            <div class="number" style="transform: rotate(90deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">3</div>
-            <div class="number" style="transform: rotate(120deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">4</div>
-            <div class="number" style="transform: rotate(150deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">5</div>
-            <div class="number" style="transform: rotate(180deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">6</div>
-            <div class="number" style="transform: rotate(210deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">7</div>
-            <div class="number" style="transform: rotate(240deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">8</div>
-            <div class="number" style="transform: rotate(270deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">9</div>
-            <div class="number" style="transform: rotate(300deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">10</div>
-            <div class="number" style="transform: rotate(330deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">11</div>
+            <div class="number number-12">12</div>
+            <div class="number number-1">1</div>
+            <div class="number number-2">2</div>
+            <div class="number number-3">3</div>
+            <div class="number number-4">4</div>
+            <div class="number number-5">5</div>
+            <div class="number number-6">6</div>
+            <div class="number number-7">7</div>
+            <div class="number number-8">8</div>
+            <div class="number number-9">9</div>
+            <div class="number number-10">10</div>
+            <div class="number number-11">11</div>
           </div>
           <div>2:30 <span class="emoji">🕝</span></div>
           <p>Часовая между 2 и 3, минутная на 6</p>
@@ -441,18 +459,18 @@
             <div class="center-dot"></div>
             <div class="clock-face"></div>
             <!-- Numbers 1-12 -->
-            <div class="number" style="transform: rotate(0deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">12</div>
-            <div class="number" style="transform: rotate(30deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">1</div>
-            <div class="number" style="transform: rotate(60deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">2</div>
-            <div class="number" style="transform: rotate(90deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">3</div>
-            <div class="number" style="transform: rotate(120deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">4</div>
-            <div class="number" style="transform: rotate(150deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">5</div>
-            <div class="number" style="transform: rotate(180deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">6</div>
-            <div class="number" style="transform: rotate(210deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">7</div>
-            <div class="number" style="transform: rotate(240deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">8</div>
-            <div class="number" style="transform: rotate(270deg) translateY(-70px); top: 50%; left: 50%; margin-left: -4px; margin-top: -70px;">9</div>
-            <div class="number" style="transform: rotate(300deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">10</div>
-            <div class="number" style="transform: rotate(330deg) translateY(-70px); top: 50%; left: 50%; margin-left: -8px; margin-top: -70px;">11</div>
+            <div class="number number-12">12</div>
+            <div class="number number-1">1</div>
+            <div class="number number-2">2</div>
+            <div class="number number-3">3</div>
+            <div class="number number-4">4</div>
+            <div class="number number-5">5</div>
+            <div class="number number-6">6</div>
+            <div class="number number-7">7</div>
+            <div class="number number-8">8</div>
+            <div class="number number-9">9</div>
+            <div class="number number-10">10</div>
+            <div class="number number-11">11</div>
           </div>
           <div>10:15 <span class="emoji">🕙</span></div>
           <p>Часовая на 10, минутная на 3</p>
