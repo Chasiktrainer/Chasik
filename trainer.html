@@ -25,6 +25,14 @@
       margin: 5px;
       padding: 10px 20px;
       font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #e5e5e5;
+    }
+
+    .level-buttons button.active {
+      background-color: #3399ff;
+      color: white;
     }
 
     .stats {
@@ -66,7 +74,7 @@
       height: 14px;
       background-color: black;
       border-radius: 50%;
-      top: 390px;
+      top: 375px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 5;
@@ -89,6 +97,9 @@
       font-size: 18px;
       padding: 10px 20px;
       margin: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #e5e5e5;
     }
 
     #resultMessage {
@@ -96,7 +107,6 @@
       font-size: 18px;
       margin-top: 10px;
     }
-
   </style>
 </head>
 <body>
@@ -112,7 +122,7 @@
   </div>
 
   <div class="level-buttons">
-    <button onclick="setLevel(1)" id="level1Btn">Уровень 1</button>
+    <button onclick="setLevel(1)" id="level1Btn" class="active">Уровень 1</button>
     <button onclick="setLevel(2)" id="level2Btn">Уровень 2</button>
     <button onclick="setLevel(3)" id="level3Btn">Уровень 3</button>
   </div>
@@ -123,7 +133,7 @@
   <div id="timeTask" style="font-size: 18px; margin-top: 10px;"></div>
 
   <div id="level2InputBlock" style="display: none;">
-    <label for="timeInput">Введите время, изображенное на часах:</label>
+    <label for="timeInput" style="font-size: 16px;">Введите время, изображенное на часах:</label>
     <input type="text" id="timeInput" placeholder="ЧЧ:ММ">
   </div>
 
@@ -149,6 +159,10 @@
 
     function setLevel(level) {
       currentLevel = level;
+      document.getElementById("level1Btn").classList.remove("active");
+      document.getElementById("level2Btn").classList.remove("active");
+      document.getElementById("level3Btn").classList.remove("active");
+      document.getElementById("level" + level + "Btn").classList.add("active");
       document.getElementById("level2InputBlock").style.display = level === 2 ? "block" : "none";
       generateTime();
     }
@@ -172,7 +186,6 @@
       let hourAngle = (h % 12 + m / 60) * Math.PI / 6;
       let minuteAngle = (m) * Math.PI / 30;
 
-      // часовая стрелка
       ctx.beginPath();
       ctx.strokeStyle = "red";
       ctx.lineWidth = 5;
@@ -180,12 +193,11 @@
       ctx.lineTo(radius * 0.5 * Math.sin(hourAngle), -radius * 0.5 * Math.cos(hourAngle));
       ctx.stroke();
 
-      // минутная стрелка
       ctx.beginPath();
       ctx.strokeStyle = "blue";
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.moveTo(0, 0);
-      ctx.lineTo(radius * 0.8 * Math.sin(minuteAngle), -radius * 0.8 * Math.cos(minuteAngle));
+      ctx.lineTo(radius * 0.7 * Math.sin(minuteAngle), -radius * 0.7 * Math.cos(minuteAngle));
       ctx.stroke();
     }
 
@@ -218,8 +230,7 @@
         const validH = (h === hour || h === (hour + 12) % 24) && m === minute;
         updateStats(validH);
       } else {
-        // в реальном проекте сравниваем состояние стрелок
-        alert("Проверка только во 2 уровне (в демо)");
+        alert("В этом уровне проверка не требуется — просто установи стрелки.");
       }
     }
 
@@ -241,7 +252,6 @@
       document.getElementById("progressFill").style.width = `${progress}%`;
     }
 
-    // Инициализация
     setLevel(1);
   </script>
 </body>
