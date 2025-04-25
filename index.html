@@ -8,9 +8,9 @@
     :root {
       --primary: #3a4a6d;
       --accent1: #ff6b6b;
-      --accent2: #4ecdc4;
+      --accent2: #3498db; /* Изменен на синий */
       --background: linear-gradient(135deg, #f6f9fc 0%, #e6f0f9 100%);
-      --success: #48d597;
+      --success: #48a9d5; /* Изменен на синий */
       --error: #ff6b6b;
       --card-bg: rgba(255, 255, 255, 0.95);
       --text-light: #f8f9fa;
@@ -147,11 +147,6 @@
       z-index: 1;
     }
 
-    .number:nth-child(12) {
-      font-size: 22px;
-      font-weight: 800;
-    }
-
     .example-clocks {
       display: flex;
       justify-content: space-around;
@@ -195,14 +190,6 @@
       width: 5px;
     }
 
-    .clock.small .number {
-      font-size: 16px;
-    }
-
-    .clock.small .number:nth-child(12) {
-      font-size: 20px;
-    }
-
     .clock.small .hand.minute {
       height: 60px;
       width: 3px;
@@ -228,7 +215,7 @@
       border-radius: 50px;
       text-decoration: none;
       cursor: not-allowed;
-      box-shadow: 0 6px 12px rgba(78, 205, 196, 0.3);
+      box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
@@ -247,7 +234,7 @@
 
     .btn:hover {
       transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(78, 205, 196, 0.4);
+      box-shadow: 0 12px 20px rgba(52, 152, 219, 0.4);
     }
 
     .btn:hover::before {
@@ -296,7 +283,7 @@
     }
 
     .tip-box {
-      background: rgba(78, 205, 196, 0.1);
+      background: rgba(52, 152, 219, 0.1);
       border-left: 5px solid var(--accent2);
       padding: 20px;
       border-radius: 12px;
@@ -464,19 +451,11 @@
         const num = document.createElement('div');
         num.className = 'number';
         
-        // Расчет позиции для всех цифр, включая 12
+        // Расчет позиции для всех цифр
         const numSize = 26;
         num.style.left = cx + r * Math.cos(ang) - numSize/2 + 'px';
         num.style.top = cy + r * Math.sin(ang) - numSize/2 + 'px';
         num.textContent = i;
-        
-        // Особые стили для цифры 12
-        if (i === 12) {
-          num.style.fontSize = '22px';
-          num.style.fontWeight = '800';
-          num.style.width = '30px';
-          num.style.height = '30px';
-        }
         
         clock.appendChild(num);
       }
