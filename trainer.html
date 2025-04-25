@@ -798,35 +798,30 @@
 
         function checkTime() {
             const hourDegrees = currentRotation.hour;
-            const currentHour12 = Math.round(hourDegrees / 30) % 12;
-            const targetHour12 = targetHours % 12;
+            
+            // Рассчитываем часы в 24-часовом формате
+            let currentHours = Math.round(hourDegrees / 30);
+            if (currentHours < 0) currentHours += 12;
+            
+            // Для 24-часового формата учитываем полные обороты
+            const fullTurns = Math.floor(hourDegrees / 360);
+            currentHours += fullTurns * 12;
+            
             const result = document.getElementById('task1-result');
-
-            if (isFirstAttemptLevel1) {
-                if (currentHour12 === targetHour12) {
-                    result.textContent = "✓ Верно! Отличная работа!";
-                    result.className = "result-feedback success";
-                    stats.correct++;
-                    setTimeout(generateNewTask, 1500);
-                } else {
-                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
-                        `${targetHours.toString().padStart(2, '0')}:00`;
-                    result.className = "result-feedback error";
-                    stats.wrong++;
-                }
-                isFirstAttemptLevel1 = false;
+            
+            // Нормализуем targetHours для сравнения (0-23)
+            const normalizedTargetHours = targetHours % 24;
+            
+            if (currentHours === normalizedTargetHours) {
+                result.textContent = "✓ Верно! Отличная работа!";
+                result.className = "result-feedback success";
+                stats.correct++;
+                setTimeout(generateNewTask, 1500);
             } else {
-                if (currentHour12 === targetHour12) {
-                    result.textContent = "✓ Верно! Отличная работа!";
-                    result.className = "result-feedback success";
-                    stats.correct++;
-                    setTimeout(generateNewTask, 1500);
-                } else {
-                    result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
-                        `${targetHours.toString().padStart(2, '0')}:00`;
-                    result.className = "result-feedback error";
-                    stats.wrong++;
-                }
+                result.textContent = "✗ Неверно. Правильное время: " + 
+                    `${normalizedTargetHours.toString().padStart(2, '0')}:00`;
+                result.className = "result-feedback error";
+                stats.wrong++;
             }
             stats.total++;
             
