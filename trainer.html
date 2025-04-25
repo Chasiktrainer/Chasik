@@ -767,7 +767,8 @@
                 currentRotation3.hour = snapDegrees;
                 hourHand3.style.transform = `rotate(${snapDegrees}deg)`;
             } else if (activeHand === minuteHand3) {
-                const snapDegrees = Math.round(currentRotation3.minute / 6) * 6;
+                // Доводчик до каждых 5 минут (каждые 30 градусов)
+                const snapDegrees = Math.round(currentRotation3.minute / 30) * 30;
                 currentRotation3.minute = snapDegrees;
                 minuteHand3.style.transform = `rotate(${snapDegrees}deg)`;
             }
@@ -806,7 +807,7 @@
                     result.textContent = "✓ Верно! Отличная работа!";
                     result.className = "result-feedback success";
                     stats.correct++;
-                    setTimeout(generateNewTask, 1500); // Автоматически генерируем новое задание
+                    setTimeout(generateNewTask, 1500);
                 } else {
                     result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
                         `${targetHours.toString().padStart(2, '0')}:00`;
@@ -819,7 +820,7 @@
                     result.textContent = "✓ Верно! Отличная работа!";
                     result.className = "result-feedback success";
                     stats.correct++;
-                    setTimeout(generateNewTask, 1500); // Автоматически генерируем новое задание
+                    setTimeout(generateNewTask, 1500);
                 } else {
                     result.textContent = "✗ Попробуйте ещё раз. Правильное время: " + 
                         `${targetHours.toString().padStart(2, '0')}:00`;
@@ -839,19 +840,19 @@
             const hourDegrees = currentRotation3.hour;
             const minuteDegrees = currentRotation3.minute;
             
-            // Корректно рассчитываем часы и минуты
-            let currentHours = Math.floor((hourDegrees % 360) / 30);
+            // Рассчитываем часы (12-часовой формат)
+            let currentHours = Math.round(hourDegrees / 30) % 12;
             if (currentHours < 0) currentHours += 12;
-            currentHours = currentHours % 12;
             
+            // Рассчитываем минуты с шагом 5 минут
+            let currentMinutes = Math.round(minuteDegrees / 30) * 5;
+            if (currentMinutes < 0) currentMinutes += 60;
+            currentMinutes = currentMinutes % 60;
+
             // Для 24-часового формата учитываем полные обороты
             const fullTurns = Math.floor(hourDegrees / 360);
             currentHours += fullTurns * 12;
             
-            let currentMinutes = Math.round((minuteDegrees % 360) / 6);
-            if (currentMinutes < 0) currentMinutes += 60;
-            currentMinutes = currentMinutes % 60;
-
             const result = document.getElementById('task3-result');
             
             // Нормализуем targetHours для сравнения (0-23)
@@ -861,7 +862,7 @@
                 result.textContent = "✓ Верно! Отличная работа!";
                 result.className = "result-feedback success";
                 stats.correct++;
-                setTimeout(generateNewTask3, 1500); // Автоматически генерируем новое задание
+                setTimeout(generateNewTask3, 1500);
             } else {
                 result.textContent = `✗ Неверно. Вы установили ${currentHours.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}, а нужно ${normalizedTargetHours.toString().padStart(2, '0')}:${targetMinutes.toString().padStart(2, '0')}`;
                 result.className = "result-feedback error";
