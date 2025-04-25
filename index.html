@@ -325,19 +325,19 @@
       line-height: 18px;
     }
 
-    /* Позиционирование цифр */
-    .number-12 { top: 10px; left: 50%; transform: translateX(-50%); }
-    .number-1 { top: 15%; right: 25%; }
-    .number-2 { top: 30%; right: 10%; }
-    .number-3 { top: 50%; right: 5%; transform: translateY(-50%); }
-    .number-4 { bottom: 30%; right: 10%; }
-    .number-5 { bottom: 15%; right: 25%; }
-    .number-6 { bottom: 5px; left: 50%; transform: translateX(-50%); }
-    .number-7 { bottom: 15%; left: 25%; }
-    .number-8 { bottom: 30%; left: 10%; }
-    .number-9 { top: 50%; left: 5%; transform: translateY(-50%); }
-    .number-10 { top: 30%; left: 10%; }
-    .number-11 { top: 15%; left: 25%; }
+    /* Точное позиционирование цифр */
+    .number-12 { top: 10px; left: 50%; margin-left: -10px; }
+    .number-1 { top: 15%; right: 25%; margin-top: -10px; }
+    .number-2 { top: 30%; right: 10%; margin-top: -10px; }
+    .number-3 { top: 50%; right: 10px; margin-top: -10px; }
+    .number-4 { bottom: 30%; right: 10%; margin-bottom: -10px; }
+    .number-5 { bottom: 15%; right: 25%; margin-bottom: -10px; }
+    .number-6 { bottom: 10px; left: 50%; margin-left: -10px; }
+    .number-7 { bottom: 15%; left: 25%; margin-bottom: -10px; }
+    .number-8 { bottom: 30%; left: 10%; margin-bottom: -10px; }
+    .number-9 { top: 50%; left: 10px; margin-top: -10px; }
+    .number-10 { top: 30%; left: 10%; margin-top: -10px; }
+    .number-11 { top: 15%; left: 25%; margin-top: -10px; }
 
     @media (max-width: 768px) {
       .container {
