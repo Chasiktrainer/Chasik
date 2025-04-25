@@ -1,220 +1,509 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обучение времени - Часики</title>
-    <style>
-        :root {
-            --primary: #3a4a6d;
-            --accent1: #ff6b6b;
-            --accent2: #3498db;
-            --background: #f6f9fc;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Часики - Теория</title>
+  <style>
+    :root {
+      --primary: #3a4a6d;
+      --accent1: #ff6b6b;
+      --accent2: #3498db;
+      --background: linear-gradient(135deg, #f6f9fc 0%, #e6f0f9 100%);
+      --success: #48a9d5;
+      --error: #ff6b6b;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-light: #f8f9fa;
+      --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: var(--background);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
+    body {
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+      background: var(--background);
+      margin: 0;
+      padding: 20px;
+      color: var(--primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.4);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
 
-        .clock-section {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
+    .container:hover {
+      transform: translateY(-5px);
+    }
 
-        .clock-wrapper {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
-        }
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: linear-gradient(90deg, var(--accent1) 0%, var(--accent2) 100%);
+    }
 
-        .clock-face {
-            width: 100%;
-            height: 100%;
-            border: 6px solid var(--primary);
-            border-radius: 50%;
-            position: relative;
-            background: white;
-        }
+    h2 {
+      text-align: center;
+      font-size: 2em;
+      color: var(--primary);
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
 
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: 50% 100%;
-            transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.6, 1);
-        }
+    .section {
+      margin-bottom: 40px;
+      padding: 25px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
 
-        .hour-hand {
-            width: 4px;
-            height: 50px;
-            background: var(--accent1);
-        }
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    }
 
-        .minute-hand {
-            width: 3px;
-            height: 70px;
-            background: var(--accent2);
-        }
+    .clock {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border: 6px solid var(--primary);
+      border-radius: 50%;
+      margin: 30px auto;
+      background: white;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      background-image: 
+        radial-gradient(circle at 50% 50%, transparent 85%, var(--primary) 85.5%),
+        repeating-conic-gradient(from 0deg, transparent 0deg 5deg, #f5f7fa 5deg 6deg);
+    }
 
-        .center-dot {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: 50% 100%;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.15));
+      z-index: 2;
+    }
 
-        .clock-number {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
-            transform: translate(-50%, -50%);
-            user-select: none;
-        }
+    .hand.hour {
+      width: 6px;
+      height: 50px;
+      background: var(--accent1);
+      border-radius: 6px 6px 0 0;
+    }
 
-        .time-text {
-            text-align: center;
-            font-size: 1.5em;
-            color: var(--primary);
-            margin-top: 15px;
-        }
+    .hand.minute {
+      width: 4px;
+      height: 70px;
+      background: var(--accent2);
+      border-radius: 4px 4px 0 0;
+    }
 
-        #startBtn {
-            display: block;
-            width: 200px;
-            margin: 30px auto;
-            padding: 15px;
-            background: var(--accent2);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+    .center-dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
 
-        @media (max-width: 480px) {
-            .clock-wrapper {
-                width: 160px;
-                height: 160px;
-            }
-            .clock-number {
-                font-size: 14px;
-            }
-        }
-    </style>
+    .example-clocks {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .example-clock-wrapper {
+      text-align: center;
+      background: rgba(255,255,255,0.8);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      flex: 1;
+      min-width: 200px;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .example-clock-wrapper:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    }
+
+    .example-clock-wrapper div:last-child {
+      font-weight: 700;
+      margin-top: 15px;
+      font-size: 1.4em;
+      color: var(--primary);
+    }
+
+    .clock.small {
+      width: 180px;
+      height: 180px;
+    }
+
+    .clock.small .hand.hour {
+      height: 40px;
+      width: 5px;
+    }
+
+    .clock.small .hand.minute {
+      height: 60px;
+      width: 3px;
+    }
+
+    .clock.small .center-dot {
+      width: 12px;
+      height: 12px;
+    }
+
+    .btn {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      margin: 50px auto 20px;
+      padding: 16px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      background-color: var(--accent2);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: not-allowed;
+      box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(52, 152, 219, 0.4);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn.enabled {
+      cursor: pointer;
+      background-color: var(--accent1);
+      box-shadow: 0 6px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn.enabled:hover {
+      box-shadow: 0 12px 20px rgba(255, 107, 107, 0.4);
+    }
+
+    .disabled {
+      opacity: 0.8;
+    }
+
+    ul, ol {
+      padding-left: 25px;
+      line-height: 1.7;
+    }
+
+    li {
+      margin-bottom: 12px;
+      position: relative;
+      padding-left: 10px;
+    }
+
+    li::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+
+    p {
+      line-height: 1.7;
+      font-size: 1.05em;
+    }
+
+    .tip-box {
+      background: rgba(52, 152, 219, 0.1);
+      border-left: 5px solid var(--accent2);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 25px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tip-box::after {
+      content: '💡';
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      font-size: 1.5em;
+      opacity: 0.2;
+    }
+
+    .tip-box p {
+      margin-top: 0;
+      font-weight: 500;
+    }
+
+    .example-clock-wrapper p {
+      font-size: 1em;
+      color: #666;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .clock-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    
+    .clock-number {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+      color: var(--primary);
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .clock.small .clock-number {
+      font-size: 14px;
+      width: 20px;
+      height: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+      
+      .example-clocks {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .clock {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .clock.small {
+        width: 160px;
+        height: 160px;
+      }
+
+      h2 {
+        font-size: 1.6em;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    .float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .emoji {
+      font-size: 1.2em;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+      animation-delay: calc(var(--i) * 0.2s);
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Пример 7:00 -->
-        <div class="clock-section">
-            <div class="clock-wrapper">
-                <div class="clock-face">
-                    <div class="hand hour-hand" style="transform: rotate(210deg)"></div>
-                    <div class="hand minute-hand" style="transform: rotate(0deg)"></div>
-                    <div class="center-dot"></div>
-                </div>
-                <div class="time-text">7:00</div>
-            </div>
-        </div>
+  <div class="container fade-in">
+    <h2><span class="emoji" style="--i:1">⏰</span> Как читать время? <span class="emoji" style="--i:2">🕒</span></h2>
+    
+    <div class="section">
+      <p>Определять время по часам просто и весело! Вот как это сделать:</p>
+      
+      <ol>
+        <li>Сначала найдите <strong>короткую часовую стрелку</strong> <span class="emoji">🕒</span> — она показывает <strong>часы</strong></li>
+        <li>Затем посмотрите на <strong>длинную минутную стрелку</strong> <span class="emoji">🕑</span> — она указывает <strong>минуты</strong></li>
+        <li>Когда минутная стрелка на 12 (вертикально вверх) — это ровный час (00 минут)</li>
+      </ol>
 
-        <!-- Пример 2:30 -->
-        <div class="clock-section">
-            <div class="clock-wrapper">
-                <div class="clock-face">
-                    <div class="hand hour-hand" style="transform: rotate(75deg)"></div>
-                    <div class="hand minute-hand" style="transform: rotate(180deg)"></div>
-                    <div class="center-dot"></div>
-                </div>
-                <div class="time-text">2:30</div>
-            </div>
+      <div class="example-clocks">
+        <div class="example-clock-wrapper float" style="animation-delay: 0.2s">
+          <div class="clock small" id="ex1">
+            <div class="hand hour" style="transform: rotate(210deg);"></div>
+            <div class="hand minute" style="transform: rotate(0deg);"></div>
+            <div class="center-dot"></div>
+            <div class="clock-face"></div>
+          </div>
+          <div>7:00 <span class="emoji">🕖</span></div>
+          <p>Часовая на 7, минутная на 12</p>
         </div>
-
-        <!-- Пример 10:15 -->
-        <div class="clock-section">
-            <div class="clock-wrapper">
-                <div class="clock-face">
-                    <div class="hand hour-hand" style="transform: rotate(300deg)"></div>
-                    <div class="hand minute-hand" style="transform: rotate(90deg)"></div>
-                    <div class="center-dot"></div>
-                </div>
-                <div class="time-text">10:15</div>
-            </div>
+        
+        <div class="example-clock-wrapper float" style="animation-delay: 0.4s">
+          <div class="clock small" id="ex2">
+            <div class="hand hour" style="transform: rotate(75deg);"></div>
+            <div class="hand minute" style="transform: rotate(180deg);"></div>
+            <div class="center-dot"></div>
+            <div class="clock-face"></div>
+          </div>
+          <div>2:30 <span class="emoji">🕝</span></div>
+          <p>Часовая между 2 и 3, минутная на 6</p>
         </div>
-
-        <button id="startBtn" disabled>
-            Перейти к тренажёру (<span id="countdown">30</span>)
-        </button>
+        
+        <div class="example-clock-wrapper float" style="animation-delay: 0.6s">
+          <div class="clock small" id="ex5">
+            <div class="hand hour" style="transform: rotate(300deg);"></div>
+            <div class="hand minute" style="transform: rotate(90deg);"></div>
+            <div class="center-dot"></div>
+            <div class="clock-face"></div>
+          </div>
+          <div>10:15 <span class="emoji">🕙</span></div>
+          <p>Часовая на 10, минутная на 3</p>
+        </div>
+      </div>
+      
+      <div class="tip-box">
+        <p><strong>Совет:</strong> Каждая цифра на циферблате — это 5 минут. Например:</p>
+        <ul>
+          <li>1 = 5 минут</li>
+          <li>2 = 10 минут</li>
+          <li>3 = 15 минут</li>
+          <li>...</li>
+          <li>12 = 60 минут (или 00)</li>
+        </ul>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Динамическое создание цифр
-            function createClockNumbers() {
-                const clocks = document.querySelectorAll('.clock-face');
-                
-                clocks.forEach(clock => {
-                    const size = clock.offsetWidth;
-                    const radius = size / 2 - 25;
-                    const center = size / 2;
+    <h2><span class="emoji" style="--i:3">⏱️</span> Зачем уметь определять время? <span class="emoji" style="--i:4">📅</span></h2>
+    <div class="section">
+      <p>Умение читать время помогает:</p>
+      <ul>
+        <li><span class="emoji">🏫</span> Приходить вовремя в школу</li>
+        <li><span class="emoji">🚌</span> Успевать на автобус</li>
+        <li><span class="emoji">📅</span> Планировать день и отдых</li>
+        <li><span class="emoji">🤝</span> Встречаться с друзьями вовремя</li>
+        <li><span class="emoji">⏱️</span> Контролировать время за компьютером</li>
+        <li><span class="emoji">📺</span> Не пропускать любимые мультфильмы</li>
+      </ul>
+    </div>
 
-                    for (let i = 1; i <= 12; i++) {
-                        const angle = (i * 30 - 90) * Math.PI / 180;
-                        const x = center + radius * Math.cos(angle);
-                        const y = center + radius * Math.sin(angle);
+    <a id="startBtn" class="btn disabled">Перейти к тренажёру (<span id="countdown">30</span>)</a>
+  </div>
 
-                        const number = document.createElement('div');
-                        number.className = 'clock-number';
-                        number.textContent = i;
-                        number.style.left = `${x}px`;
-                        number.style.top = `${y}px`;
-                        clock.appendChild(number);
-                    }
-                });
-            }
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      function createClockNumbers() {
+        const clocks = document.querySelectorAll('.clock');
+        
+        clocks.forEach(clock => {
+          const clockSize = clock.offsetWidth;
+          const radius = clockSize / 2 - (clock.classList.contains('small') ? 20 : 25);
+          const center = clockSize / 2;
+          const clockFace = clock.querySelector('.clock-face');
+          
+          clockFace.innerHTML = '';
 
-            // Таймер для кнопки
-            let counter = 30;
-            const btn = document.getElementById('startBtn');
-            const countdown = document.getElementById('countdown');
+          for (let i = 1; i <= 12; i++) {
+            const angle = (i * 30 - 90) * Math.PI / 180;
+            const x = center + radius * Math.cos(angle);
+            const y = center + radius * Math.sin(angle) * 1.05;
 
-            const timer = setInterval(() => {
-                counter--;
-                countdown.textContent = counter;
-                if(counter <= 0) {
-                    clearInterval(timer);
-                    btn.disabled = false;
-                    btn.textContent = 'Начать тренировку!';
-                    btn.style.backgroundColor = '#ff6b6b';
-                    btn.onclick = () => window.location.href = 'trainer.html';
-                }
-            }, 1000);
+            const number = document.createElement('div');
+            number.className = 'clock-number' + (clock.classList.contains('small') ? ' small' : '');
+            number.textContent = i;
+            number.style.left = `${x}px`;
+            number.style.top = `${y}px`;
 
-            // Инициализация часов
-            createClockNumbers();
-            window.addEventListener('resize', createClockNumbers);
+            clockFace.appendChild(number);
+          }
         });
-    </script>
+      }
+
+      createClockNumbers();
+      window.addEventListener('resize', createClockNumbers);
+
+      let counter = 30;
+      const countdown = document.getElementById('countdown');
+      const btn = document.getElementById('startBtn');
+
+      const interval = setInterval(() => {
+        counter--;
+        countdown.textContent = counter;
+        if (counter <= 0) {
+          clearInterval(interval);
+          btn.classList.add('enabled');
+          btn.classList.remove('disabled');
+          btn.textContent = 'Перейти к тренажёру';
+          btn.onclick = () => {
+            window.location.href = "trainer.html";
+          };
+        }
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
