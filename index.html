@@ -127,7 +127,7 @@
     .number {
       position: absolute;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 14px;
       width: 20px;
       height: 20px;
       display: flex;
@@ -152,6 +152,8 @@
       border-radius: 15px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       transition: all 0.3s;
+      flex: 1;
+      min-width: 160px;
     }
 
     .example-clock-wrapper:hover {
@@ -231,6 +233,24 @@
       line-height: 1.6;
     }
 
+    .tip-box {
+      background: rgba(52, 152, 219, 0.1);
+      border-left: 4px solid var(--accent2);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    .tip-box p {
+      margin-top: 0;
+    }
+
+    .example-clock-wrapper p {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+    }
+
     @media (max-width: 768px) {
       .container {
         padding: 20px;
@@ -264,9 +284,17 @@
 </head>
 <body>
   <div class="container fade-in">
-    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path><path d="M8.56 3.69a9 9 0 0 0-2.92 1.67"></path></svg> Как читать время?</h2>
+    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Как читать время? ⏰</h2>
+    
     <div class="section">
-      <p>Сначала смотри на часовую стрелку — она укажет <strong>час</strong>, затем на минутную — она покажет <strong>минуты</strong>.</p>
+      <p>Определять время по часам просто и весело! Вот как это сделать:</p>
+      
+      <ol>
+        <li>Сначала найдите <strong>короткую часовую стрелку</strong> 🕒 — она показывает <strong>часы</strong></li>
+        <li>Затем посмотрите на <strong>длинную минутную стрелку</strong> 🕑 — она указывает <strong>минуты</strong></li>
+        <li>Когда минутная стрелка на 12 (вертикально вверх) — это ровный час (00 минут)</li>
+      </ol>
+
       <div class="example-clocks">
         <div class="example-clock-wrapper">
           <div class="clock small" id="ex1">
@@ -274,51 +302,40 @@
             <div class="hand minute" style="transform: rotate(0deg);"></div>
             <div class="center-dot"></div>
           </div>
-          <div>7:00</div>
+          <div>7:00 🕖</div>
+          <p>Часовая на 7, минутная на 12</p>
         </div>
+        
         <div class="example-clock-wrapper">
           <div class="clock small" id="ex2">
             <div class="hand hour" style="transform: rotate(75deg);"></div>
             <div class="hand minute" style="transform: rotate(180deg);"></div>
             <div class="center-dot"></div>
           </div>
-          <div>2:30</div>
+          <div>2:30 🕝</div>
+          <p>Часовая между 2 и 3, минутная на 6</p>
         </div>
-      </div>
-    </div>
-
-    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Как определить время в 24-часовом формате?</h2>
-    <div class="section">
-      <ol>
-        <li>Сначала смотри на <strong>короткую стрелку</strong> — она показывает <strong>часы</strong>.</li>
-        <li>Затем на <strong>длинную стрелку</strong> — она указывает <strong>минуты</strong>.</li>
-        <li>Для перевода минут:
-          <ul>
-            <li>1 = 5 минут</li>
-            <li>2 = 10 минут</li>
-            <li>3 = 15 минут</li>
-            <li>...</li>
-            <li>12 = 0 минут</li>
-          </ul>
-        </li>
-      </ol>
-      <div class="example-clocks">
+        
         <div class="example-clock-wrapper">
-          <div class="clock small" id="ex3">
-            <div class="hand hour" style="transform: rotate(75deg);"></div>
-            <div class="hand minute" style="transform: rotate(180deg);"></div>
-            <div class="center-dot"></div>
-          </div>
-          <div>02:30</div>
-        </div>
-        <div class="example-clock-wrapper">
-          <div class="clock small" id="ex4">
-            <div class="hand hour" style="transform: rotate(195deg);"></div>
+          <div class="clock small" id="ex5">
+            <div class="hand hour" style="transform: rotate(300deg);"></div>
             <div class="hand minute" style="transform: rotate(90deg);"></div>
             <div class="center-dot"></div>
           </div>
-          <div>06:15</div>
+          <div>10:15 🕙</div>
+          <p>Часовая на 10, минутная на 3</p>
         </div>
+      </div>
+      
+      <div class="tip-box">
+        <p>💡 <strong>Совет:</strong> Каждая цифра на циферблате — это 5 минут. Например:</p>
+        <ul>
+          <li>1 = 5 минут</li>
+          <li>2 = 10 минут</li>
+          <li>3 = 15 минут</li>
+          <li>...</li>
+          <li>12 = 60 минут (или 00)</li>
+        </ul>
       </div>
     </div>
 
@@ -330,6 +347,8 @@
         <li>🚌 Успевать на автобус</li>
         <li>📅 Планировать день и отдых</li>
         <li>🤝 Встречаться с друзьями вовремя</li>
+        <li>⏱️ Контролировать время за компьютером</li>
+        <li>📺 Не пропускать любимые мультфильмы</li>
       </ul>
     </div>
 
@@ -353,7 +372,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      ['ex1', 'ex2', 'ex3', 'ex4'].forEach(id => {
+      ['ex1', 'ex2', 'ex5'].forEach(id => {
         placeNumbers(document.getElementById(id), 12);
       });
 
